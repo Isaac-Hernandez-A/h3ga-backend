@@ -4,7 +4,6 @@ const TODOS: Rol[] = ['asesor', 'auxiliar', 'supervisor'];
 const ASESOR: Rol[] = ['asesor'];
 const ASESOR_AUXILIAR: Rol[] = ['asesor', 'auxiliar'];
 const ASESOR_SUPERVISOR: Rol[] = ['asesor', 'supervisor'];
-const AUXILIAR_SUPERVISOR: Rol[] = ['auxiliar', 'supervisor'];
 const SUPERVISOR: Rol[] = ['supervisor'];
 
 // Roles permitidos por ruta, según la Tabla 2 (Permisos por rol del sistema) de la Memoria.
@@ -16,7 +15,8 @@ const SUPERVISOR: Rol[] = ['supervisor'];
 // - etapas.leer: el supervisor las consulta (monitorea el avance de clientes y asesores).
 // - etl.importar: solo supervisor (la tabla no menciona el ETL).
 // - catalogos.leer: todos los roles (la tabla no menciona catálogos).
-// - avisos: el asesor queda fuera porque su columna está vacía en la tabla.
+// - avisos: la columna del asesor está vacía en la tabla; se confirmó que también los ve y atiende
+//   (de sus clientes).
 export const PERMISOS_PROVISIONALES = false;
 
 export const PERMISOS = {
@@ -34,7 +34,7 @@ export const PERMISOS = {
   tramites: { leer: ASESOR, escribir: ASESOR },
   diagnosticos: { leer: ASESOR, escribir: ASESOR },
   agenda: { leer: TODOS, escribir: ASESOR },
-  avisos: { leer: AUXILIAR_SUPERVISOR, atender: AUXILIAR_SUPERVISOR },
+  avisos: { leer: TODOS, atender: TODOS },
   reportes: { leer: ASESOR_SUPERVISOR },
   etl: { importar: SUPERVISOR },
 };
