@@ -1,4 +1,6 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable, NotFoundException, NotImplementedException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { CreateHistorialLaboralDto } from './dto/create-historial-laboral.dto';
@@ -19,12 +21,18 @@ import { RegimenPrincipal } from './entities/regimen-principal.entity';
 
 @Injectable()
 export class ClientesService {
+  constructor(@InjectRepository(Cliente) private readonly clientes: Repository<Cliente>) {}
+
   async listarClientes(): Promise<Cliente[]> {
     throw new NotImplementedException();
   }
 
+  // Única ruta con lectura real: demuestra el flujo de los tres guards. El acceso ya lo validó
+  // ClienteAccessGuard; el 404 solo cubre una eliminación entre el guard y la consulta.
   async obtenerCliente(clienteId: string): Promise<Cliente> {
-    throw new NotImplementedException();
+    const cliente = await this.clientes.findOneBy({ id: clienteId });
+    if (!cliente) throw new NotFoundException('Cliente no encontrado.');
+    return cliente;
   }
 
   async crearCliente(dto: CreateClienteDto): Promise<Cliente> {

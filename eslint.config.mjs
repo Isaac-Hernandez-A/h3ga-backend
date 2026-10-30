@@ -20,8 +20,10 @@ export default tseslint.config(
     rules: { '@typescript-eslint/no-unused-vars': 'off' },
   },
   {
-    files: ['db/**/*.mjs'],
-    languageOptions: { globals: { process: 'readonly', console: 'readonly', URL: 'readonly' } },
+    files: ['db/**/*.mjs', 'apps/api/scripts/**/*.mjs'],
+    languageOptions: {
+      globals: { process: 'readonly', console: 'readonly', URL: 'readonly', Buffer: 'readonly' },
+    },
   },
   {
     files: ['**/pages/**/*.vue', '**/app.vue'],

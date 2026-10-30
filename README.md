@@ -47,6 +47,26 @@ Si el puerto 5432 está ocupado, define `POSTGRES_PORT` en `.env` y usa ese puer
    ```
 3. Apunta `DATABASE_URL` en `.env` a esa base (`postgresql://mi_usuario:mi_contrasena@localhost:5432/h3ga`). Las variables `POSTGRES_*` solo las usa Docker.
 
+### Probar el control de acceso en Swagger
+
+La API solo **valida** tokens JWT (HS256, `JWT_SECRET`); el login lo emite otro módulo. En desarrollo se genera un token de prueba:
+
+```bash
+pnpm dev:token --rol asesor                  # roles: asesor, auxiliar, supervisor
+pnpm dev:token --rol asesor --sub <uuid>     # sub = id de usuarios.id (opcional)
+```
+
+Pega el token en **Authorize** de <http://localhost:3001/api/docs> y prueba `GET /api/v1/clientes/{clienteId}`, la ruta de ejemplo que usa los tres guards (`JwtAuthGuard`, `RolesGuard`, `ClienteAccessGuard`):
+
+| Resultado | Cuándo                                                                     |
+| --------- | -------------------------------------------------------------------------- |
+| 401       | Token ausente, vencido, con firma inválida o con un rol fuera del contrato |
+| 403       | El rol no está permitido en la ruta (según la Tabla 2)                     |
+| 404       | El cliente no existe o el usuario no tiene acceso a él (no se distingue)   |
+| 200       | Asesor: cliente propio. Supervisor: cualquier cliente existente            |
+
+`dev:token` se niega a ejecutarse con `NODE_ENV=production`, y la aplicación se niega a arrancar en producción si `JWT_SECRET` falta o es el valor de ejemplo.
+
 ### Migraciones
 
 Los cambios de esquema son archivos SQL en `db/migrations`, con nombre `AAAAMMDDHHMM_descripcion.sql` (la marca de tiempo evita choques entre personas).

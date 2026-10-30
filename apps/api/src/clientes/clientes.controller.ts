@@ -1,6 +1,25 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Put } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
+import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 import { PERMISOS } from '../common/auth/permisos';
+import { RolesGuard } from '../common/auth/roles.guard';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
@@ -34,10 +53,14 @@ export class ClientesController {
     return this.service.listarClientes();
   }
 
+  // Ruta de ejemplo del control de acceso: autenticación (JwtAuthGuard), rol (RolesGuard) y
+  // pertenencia al cliente (ClienteAccessGuard), en ese orden.
   @Get('clientes/:clienteId')
+  @UseGuards(JwtAuthGuard, RolesGuard, ClienteAccessGuard)
   @Roles(...PERMISOS.clientes.leer)
   @ApiOperation({ summary: 'Obtener un cliente' })
   @ApiOkResponse({ type: Cliente })
+  @ApiNotFoundResponse({ description: 'El cliente no existe o el usuario no tiene acceso a él.' })
   obtenerCliente(@Param('clienteId', ParseUUIDPipe) clienteId: string): Promise<Cliente> {
     return this.service.obtenerCliente(clienteId);
   }

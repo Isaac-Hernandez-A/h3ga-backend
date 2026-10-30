@@ -15,7 +15,8 @@
     "test": "pnpm -r --if-present test",
     "db:up": "docker compose up -d --wait postgres",
     "db:down": "docker compose down",
-    "db:migrate": "node --env-file-if-exists=.env db/migrate.mjs"
+    "db:migrate": "node --env-file-if-exists=.env db/migrate.mjs",
+    "dev:token": "node --env-file-if-exists=.env apps/api/scripts/dev-token.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

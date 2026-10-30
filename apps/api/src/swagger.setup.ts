@@ -27,7 +27,8 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle('H3GA API')
     .setDescription(
       'Contrato REST del sistema H3GA Seguros y Pensiones. Las rutas están esbozadas: ' +
-        'responden 501 hasta implementar la lógica de negocio. El token JWT lo emite el módulo de login.',
+        'responden 501 hasta implementar la lógica de negocio. El token JWT lo emite el módulo de login. ' +
+        'Para probar en desarrollo: `pnpm dev:token --rol asesor` y pegar el token en Authorize.',
     )
     .setVersion('0.1.0')
     .addBearerAuth();
