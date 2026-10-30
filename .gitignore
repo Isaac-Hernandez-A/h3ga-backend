@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Diccionario original (la fuente de verdad es docs/diccionario.md)
+docs/*.docx
