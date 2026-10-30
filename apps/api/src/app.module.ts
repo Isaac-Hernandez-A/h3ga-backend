@@ -4,6 +4,8 @@ import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AgendaModule } from './agenda/agenda.module';
 import { AvisosModule } from './avisos/avisos.module';
+import { ControlAccesoModule } from './common/auth/control-acceso.module';
+import { validarEntorno } from './common/config/validar-entorno';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ClientesModule } from './clientes/clientes.module';
 import { DiagnosticosModule } from './diagnosticos/diagnosticos.module';
@@ -17,7 +19,12 @@ import { UsuariosRolesModule } from './usuarios-roles/usuarios-roles.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env', '../../.env'] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '../../.env'],
+      validate: validarEntorno,
+    }),
+    ControlAccesoModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
