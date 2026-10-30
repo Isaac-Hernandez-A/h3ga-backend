@@ -15,6 +15,11 @@ export default tseslint.config(
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
   {
+    // Servicios esbozados: reciben parámetros que aún no usan (sin lógica de negocio).
+    files: ['apps/api/src/**/*.service.ts'],
+    rules: { '@typescript-eslint/no-unused-vars': 'off' },
+  },
+  {
     files: ['db/**/*.mjs'],
     languageOptions: { globals: { process: 'readonly', console: 'readonly', URL: 'readonly' } },
   },
