@@ -1,24 +1,40 @@
 export type Rol = 'asesor' | 'auxiliar' | 'supervisor';
 
 const TODOS: Rol[] = ['asesor', 'auxiliar', 'supervisor'];
+const ASESOR: Rol[] = ['asesor'];
+const ASESOR_AUXILIAR: Rol[] = ['asesor', 'auxiliar'];
 const ASESOR_SUPERVISOR: Rol[] = ['asesor', 'supervisor'];
+const AUXILIAR_SUPERVISOR: Rol[] = ['auxiliar', 'supervisor'];
 const SUPERVISOR: Rol[] = ['supervisor'];
 
-// PROVISIONAL: matriz supuesta mientras no se confirme la Tabla 2 (roles por módulo) de la Memoria.
-// Es el único lugar donde se definen los roles permitidos por ruta; los controladores la consumen.
-// Al confirmarla, ajustar los valores y poner PERMISOS_PROVISIONALES en false.
-export const PERMISOS_PROVISIONALES = true;
+// Roles permitidos por ruta, según la Tabla 2 (Permisos por rol del sistema) de la Memoria.
+// Es el único lugar donde se definen; los controladores la consumen con @Roles(...).
+//
+// Lo que la Tabla 2 no dice y se asumió (confirmar):
+// - clientes.crear: solo asesor (la tabla habla de "gestionar sus clientes", no de quién los registra).
+// - agenda.escribir: solo asesor (la tabla solo menciona consultar).
+// - etapas.leer: el supervisor las consulta (monitorea el avance de clientes y asesores).
+// - etl.importar: solo supervisor (la tabla no menciona el ETL).
+// - catalogos.leer: todos los roles (la tabla no menciona catálogos).
+// - avisos: el asesor queda fuera porque su columna está vacía en la tabla.
+export const PERMISOS_PROVISIONALES = false;
 
 export const PERMISOS = {
   catalogos: { leer: TODOS },
   usuarios: { leer: SUPERVISOR, escribir: SUPERVISOR },
-  clientes: { leer: TODOS, crear: ASESOR_SUPERVISOR, editar: TODOS, auxiliares: ASESOR_SUPERVISOR },
-  documentos: { leer: TODOS, escribir: TODOS },
-  etapas: { leer: TODOS, escribir: ASESOR_SUPERVISOR },
-  tramites: { leer: TODOS, escribir: TODOS },
-  diagnosticos: { leer: TODOS, escribir: ASESOR_SUPERVISOR },
-  agenda: { leer: ASESOR_SUPERVISOR, escribir: ASESOR_SUPERVISOR },
-  avisos: { leer: TODOS, atender: TODOS },
-  reportes: { leer: SUPERVISOR },
+  clientes: {
+    leer: ASESOR_SUPERVISOR,
+    crear: ASESOR,
+    editar: ASESOR,
+    auxiliares: ASESOR,
+    reasignar: SUPERVISOR,
+  },
+  documentos: { leer: TODOS, subir: ASESOR_AUXILIAR, revisar: TODOS },
+  etapas: { leer: ASESOR_SUPERVISOR, escribir: ASESOR },
+  tramites: { leer: ASESOR, escribir: ASESOR },
+  diagnosticos: { leer: ASESOR, escribir: ASESOR },
+  agenda: { leer: TODOS, escribir: ASESOR },
+  avisos: { leer: AUXILIAR_SUPERVISOR, atender: AUXILIAR_SUPERVISOR },
+  reportes: { leer: ASESOR_SUPERVISOR },
   etl: { importar: SUPERVISOR },
 };

@@ -3,6 +3,7 @@ import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { CreateHistorialLaboralDto } from './dto/create-historial-laboral.dto';
 import { CreateInformacionIsssteDto } from './dto/create-informacion-issste.dto';
+import { ReasignarClienteDto } from './dto/reasignar-cliente.dto';
 import { ReemplazarObjetivosEspecificosDto } from './dto/reemplazar-objetivos-especificos.dto';
 import { UpdateClienteAuxiliarDto } from './dto/update-cliente-auxiliar.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
@@ -31,6 +32,10 @@ export class ClientesService {
   }
 
   async actualizarCliente(clienteId: string, dto: UpdateClienteDto): Promise<Cliente> {
+    throw new NotImplementedException();
+  }
+
+  async reasignarAsesor(clienteId: string, dto: ReasignarClienteDto): Promise<Cliente> {
     throw new NotImplementedException();
   }
 

@@ -35,7 +35,7 @@ export class DocumentosController {
   }
 
   @Post('clientes/:clienteId/documentos')
-  @Roles(...PERMISOS.documentos.escribir)
+  @Roles(...PERMISOS.documentos.subir)
   @ApiOperation({ summary: 'Registrar un documento del cliente' })
   @ApiCreatedResponse({ type: DocumentoCliente })
   crearDocumento(
@@ -46,8 +46,8 @@ export class DocumentosController {
   }
 
   @Patch('clientes/:clienteId/documentos/:documentoId')
-  @Roles(...PERMISOS.documentos.escribir)
-  @ApiOperation({ summary: 'Actualizar el estatus u observaciones de un documento' })
+  @Roles(...PERMISOS.documentos.revisar)
+  @ApiOperation({ summary: 'Revisar un documento: actualizar su estatus u observaciones' })
   @ApiOkResponse({ type: DocumentoCliente })
   actualizarDocumento(
     @Param('clienteId', ParseUUIDPipe) clienteId: string,

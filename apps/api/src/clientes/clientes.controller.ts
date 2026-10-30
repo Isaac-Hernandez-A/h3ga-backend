@@ -6,6 +6,7 @@ import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { CreateHistorialLaboralDto } from './dto/create-historial-laboral.dto';
 import { CreateInformacionIsssteDto } from './dto/create-informacion-issste.dto';
+import { ReasignarClienteDto } from './dto/reasignar-cliente.dto';
 import { ReemplazarObjetivosEspecificosDto } from './dto/reemplazar-objetivos-especificos.dto';
 import { UpdateClienteAuxiliarDto } from './dto/update-cliente-auxiliar.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
@@ -58,6 +59,17 @@ export class ClientesController {
     @Body() dto: UpdateClienteDto,
   ): Promise<Cliente> {
     return this.service.actualizarCliente(clienteId, dto);
+  }
+
+  @Patch('clientes/:clienteId/asesor')
+  @Roles(...PERMISOS.clientes.reasignar)
+  @ApiOperation({ summary: 'Reasignar el expediente del cliente a otro asesor' })
+  @ApiOkResponse({ type: Cliente })
+  reasignarAsesor(
+    @Param('clienteId', ParseUUIDPipe) clienteId: string,
+    @Body() dto: ReasignarClienteDto,
+  ): Promise<Cliente> {
+    return this.service.reasignarAsesor(clienteId, dto);
   }
 
   @Get('clientes/:clienteId/auxiliares')
