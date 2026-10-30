@@ -1,4 +1,4 @@
-export type Rol = 'asesor' | 'auxiliar' | 'supervisor';
+import { Rol } from './authenticated-user';
 
 const TODOS: Rol[] = ['asesor', 'auxiliar', 'supervisor'];
 const ASESOR: Rol[] = ['asesor'];

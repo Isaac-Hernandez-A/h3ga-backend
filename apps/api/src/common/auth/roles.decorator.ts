@@ -5,7 +5,7 @@ import {
   ApiForbiddenResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Rol } from './permisos';
+import { Rol } from './authenticated-user';
 
 export const ROLES_KEY = 'roles';
 
