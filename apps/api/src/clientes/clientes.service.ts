@@ -10,6 +10,9 @@ import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { aplicarAlcanceClientes } from '../common/auth/clientes-accesibles';
 import { ROL_ID } from '../common/auth/roles-sistema';
 import { traducirErrorBd } from '../common/database/errores-postgres';
+import { EstatusTramite } from '../etapas/entities/estatus-tramite.entity';
+import { EtapaProceso } from '../etapas/entities/etapa-proceso.entity';
+import { EtapaTramite } from '../etapas/entities/etapa-tramite.entity';
 import { Usuario } from '../usuarios-roles/entities/usuario.entity';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { CreateHistorialLaboralDto } from './dto/create-historial-laboral.dto';
@@ -54,10 +57,31 @@ export class ClientesService {
     return cliente;
   }
 
-  // asesor_id sale siempre del token: el que venga en el cuerpo se ignora.
+  // asesor_id sale siempre del token: el que venga en el cuerpo se ignora. En la misma transacción se
+  // crean las 16 etapas del proceso (una por fila de etapas_proceso) en "Por iniciar": el asesor las
+  // va actualizando a mano. Si algo falla, no queda ni el cliente ni sus etapas.
   async crear(usuario: AuthenticatedUser, dto: CreateClienteDto): Promise<Cliente> {
     try {
-      return await this.clientes.save(this.clientes.create({ ...dto, asesor_id: usuario.sub }));
+      return await this.ds.transaction(async (manager) => {
+        const cliente = await manager.save(
+          manager.create(Cliente, { ...dto, asesor_id: usuario.sub }),
+        );
+        const inicial = await manager.findOneByOrFail(EstatusTramite, { nombre: 'Por iniciar' });
+        const pasos = await manager.find(EtapaProceso);
+        const ahora = new Date();
+        await manager.insert(
+          EtapaTramite,
+          pasos.map((paso) => ({
+            cliente_id: cliente.id,
+            etapa_id: paso.id,
+            estatus_id: inicial.id,
+            avance_porcentaje: inicial.avance_porcentaje_fijo ?? 0,
+            creado_el: ahora,
+            actualizado_el: ahora,
+          })),
+        );
+        return cliente;
+      });
     } catch (error) {
       return traducirErrorBd(error, ERRORES_CLIENTE);
     }

@@ -1,9 +1,13 @@
 import { randomUUID } from 'node:crypto';
+import { EntityManager } from 'typeorm';
+import { EtapaTramite } from '../etapas/entities/etapa-tramite.entity';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
 import {
   crearUsuarioPrueba,
   cuerpoCliente,
   curpFicticia,
+  DOMINIO_USUARIOS,
+  ID_ESTATUS,
   IdsCatalogo,
   idsDeCatalogo,
   insertarCliente,
@@ -81,6 +85,50 @@ describeConBd('Clientes y autorizaciones del auxiliar (aplicación real y base d
       [json.id],
     );
     expect(filas[0].asesor_id).toBe(asesor.id);
+  });
+
+  it('CP-15b crear deja las 16 etapas del cliente, una por paso, en Por iniciar con avance 10', async () => {
+    const { estado, json } = await pedir('POST', '/clientes', t(asesor), cuerpoCliente(catalogo));
+    expect(estado).toBe(201);
+    const filas = await ctx.ds.query<
+      { numero_paso: number; estatus_id: number; avance_porcentaje: number }[]
+    >(
+      `SELECT ep.numero_paso, et.estatus_id, et.avance_porcentaje
+         FROM etapas_tramite et JOIN etapas_proceso ep ON ep.id = et.etapa_id
+        WHERE et.cliente_id = $1 ORDER BY ep.numero_paso`,
+      [json.id],
+    );
+    expect(filas.map((f) => f.numero_paso)).toEqual(Array.from({ length: 16 }, (_, i) => i));
+    expect(filas.every((f) => f.estatus_id === ID_ESTATUS['Por iniciar'])).toBe(true);
+    expect(filas.every((f) => f.avance_porcentaje === 10)).toBe(true);
+  });
+
+  it('CP-15c si falla la creación de las etapas, no queda el cliente (rollback)', async () => {
+    const correo = `rollback-${randomUUID()}${DOMINIO_USUARIOS}`;
+    const original = EntityManager.prototype.insert;
+    const espia = jest.spyOn(EntityManager.prototype, 'insert').mockImplementation(function (
+      this: EntityManager,
+      destino,
+      datos,
+    ) {
+      if (destino === EtapaTramite) return Promise.reject(new Error('fallo simulado'));
+      return original.call(this, destino, datos);
+    });
+    try {
+      const { estado } = await pedir(
+        'POST',
+        '/clientes',
+        t(asesor),
+        cuerpoCliente(catalogo, { correo_electronico: correo }),
+      );
+      expect(estado).toBe(500);
+    } finally {
+      espia.mockRestore();
+    }
+    const filas = await ctx.ds.query('SELECT 1 FROM clientes WHERE correo_electronico = $1', [
+      correo,
+    ]);
+    expect(filas).toHaveLength(0);
   });
 
   it('CP-16 CURP con formato inválido responde 400; CURP repetida responde 409', async () => {

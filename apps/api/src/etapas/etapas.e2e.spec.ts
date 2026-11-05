@@ -1,6 +1,7 @@
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
 import {
   autorizarEnBd,
+  cuerpoCliente,
   crearUsuarioPrueba,
   ID_ESTATUS,
   IdsCatalogo,
@@ -146,6 +147,41 @@ describeConBd('Etapas: cambio de estatus por HTTP (aplicación real y base de pr
       t(asesor),
     );
     expect(cruzada.estado).toBe(404);
+  });
+
+  it('GET etapas lista las 16 etapas en orden con su nombre y el avance global; el ajeno recibe 404', async () => {
+    const creado = await fetch(`${ctx.base}/clientes`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${t(asesor)}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(cuerpoCliente(catalogo)),
+    });
+    const { id: clienteId } = (await creado.json()) as { id: string };
+    const ruta = `/clientes/${clienteId}/etapas`;
+
+    const lista = await pedir('GET', ruta, t(asesor));
+    expect(lista.estado).toBe(200);
+    const cuerpo = lista.json as unknown as {
+      avance_global: number;
+      etapas: { numero_paso: number; nombre: string; estatus_id: number }[];
+    };
+    expect(cuerpo.etapas.map((e) => e.numero_paso)).toEqual(
+      Array.from({ length: 16 }, (_, i) => i),
+    );
+    expect(cuerpo.etapas[0].nombre).toBe('Diagnóstico inicial');
+    expect(cuerpo.avance_global).toBe(10);
+
+    // El asesor marca a mano: la etapa 0 Finalizada (100) y la 1 No aplica (fuera del global).
+    const id = (paso: number) =>
+      cuerpo.etapas.find((e) => e.numero_paso === paso) as never as { id: string };
+    await pedir('PATCH', `${ruta}/${id(0).id}`, t(asesor), { estatus_id: ID_ESTATUS.Finalizado });
+    await pedir('PATCH', `${ruta}/${id(1).id}`, t(asesor), { estatus_id: ID_ESTATUS['No aplica'] });
+    const despues = (await pedir('GET', ruta, t(asesor))).json as unknown as {
+      avance_global: number;
+    };
+    // (100 + 14 etapas de 10) / 15 = 16
+    expect(despues.avance_global).toBe(16);
+
+    expect((await pedir('GET', ruta, t(otroAsesor))).estado).toBe(404);
   });
 
   it('CP-28 asesor ajeno recibe 404; auxiliar recibe 403 al escribir etapas', async () => {

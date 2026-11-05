@@ -16,6 +16,7 @@ import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
 import { CambiarEstatusDto } from './dto/cambiar-estatus.dto';
+import { EtapasClienteRespuesta } from './dto/etapas-cliente-respuesta.dto';
 import { EstatusTramite } from './entities/estatus-tramite.entity';
 import { EtapaProceso } from './entities/etapa-proceso.entity';
 import { EtapaTramite } from './entities/etapa-tramite.entity';
@@ -31,8 +32,10 @@ export class EtapasController {
   @Get('clientes/:clienteId/etapas')
   @Roles(...PERMISOS.etapas.leer)
   @ApiOperation({ summary: 'Listar las etapas del cliente' })
-  @ApiOkResponse({ type: EtapaTramite, isArray: true })
-  listarEtapas(@Param('clienteId', ParseUUIDPipe) clienteId: string): Promise<EtapaTramite[]> {
+  @ApiOkResponse({ type: EtapasClienteRespuesta })
+  listarEtapas(
+    @Param('clienteId', ParseUUIDPipe) clienteId: string,
+  ): Promise<EtapasClienteRespuesta> {
     return this.service.listarEtapas(clienteId);
   }
 

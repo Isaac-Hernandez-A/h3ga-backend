@@ -182,9 +182,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,asesor,supera los guards,501
 /api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,auxiliar,supera los guards,501
 /api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,supervisor,supera los guards,501
-/api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,500
 /api/v1/clientes/:clienteId/etapas,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,500
 /api/v1/clientes/:clienteId/etapas,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/etapas,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas,POST,supervisor,403,403

@@ -10,6 +10,7 @@ import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { fechaCancun } from '../common/fechas';
 import { CambiarEstatusDto } from './dto/cambiar-estatus.dto';
 import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
+import { EtapasClienteRespuesta } from './dto/etapas-cliente-respuesta.dto';
 import { EstatusTramite } from './entities/estatus-tramite.entity';
 import { EtapaProceso } from './entities/etapa-proceso.entity';
 import { EtapaTramite } from './entities/etapa-tramite.entity';
@@ -31,8 +32,22 @@ export class EtapasService {
     private readonly ds: DataSource,
   ) {}
 
-  async listarEtapas(clienteId: string): Promise<EtapaTramite[]> {
-    throw new NotImplementedException();
+  // Las etapas del cliente en orden de paso (0 a 15), con nombre del catálogo, y su avance global.
+  async listarEtapas(clienteId: string): Promise<EtapasClienteRespuesta> {
+    const [etapas, pasos, avanceGlobal] = await Promise.all([
+      this.etapas.find({ where: { cliente_id: clienteId } }),
+      this.ds.getRepository(EtapaProceso).find(),
+      this.avanceGlobal(clienteId),
+    ]);
+    const porId = new Map(pasos.map((p) => [p.id, p]));
+    const lista = etapas
+      .map((e) => ({
+        ...e,
+        numero_paso: porId.get(e.etapa_id)?.numero_paso ?? -1,
+        nombre: porId.get(e.etapa_id)?.nombre ?? '',
+      }))
+      .sort((a, b) => a.numero_paso - b.numero_paso);
+    return { avance_global: avanceGlobal, etapas: lista };
   }
 
   async crearEtapa(clienteId: string, dto: CreateEtapaTramiteDto): Promise<EtapaTramite> {
