@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateDocumentoClienteDto } from './dto/create-documento-cliente.dto';
@@ -9,6 +19,7 @@ import { TipoDocumento } from './entities/tipo-documento.entity';
 import { DocumentosService } from './documentos.service';
 
 @ApiTags('documentos')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class DocumentosController {
   constructor(private readonly service: DocumentosService) {}

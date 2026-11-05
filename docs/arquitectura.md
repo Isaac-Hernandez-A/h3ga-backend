@@ -47,12 +47,12 @@ Transversal en `AppModule`: `ConfigModule` global con `validarEntorno` (en produ
 
 ## Estado de implementación
 
-| Capa                                                   | Estado                                             |
-| ------------------------------------------------------ | -------------------------------------------------- |
-| Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                              |
-| Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho; cableado solo en `GET /clientes/:clienteId` |
-| Lógica de negocio de los servicios                     | **No hecha**: 79 de 81 rutas responden 501         |
-| Subida a Spaces, reportes, ETL                         | Esbozo                                             |
+| Capa                                                   | Estado                                            |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                             |
+| Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 81 rutas (matriz probada) |
+| Lógica de negocio de los servicios                     | **No hecha**: 79 de 81 rutas responden 501        |
+| Subida a Spaces, reportes, ETL                         | Esbozo                                            |
 
 ## Control de acceso
 
@@ -61,8 +61,10 @@ Permisos por rol en un solo archivo (`common/auth/permisos.ts`), consumidos con 
 | Guard                | Hace                                                                                                                                                          | Falla con                                                      |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
 | `JwtAuthGuard`       | Valida `Authorization: Bearer`, HS256; exige `sub` (uuid), `rol` válido y `exp`. No consulta la BD.                                                           | 401                                                            |
-| `RolesGuard`         | Compara el rol con `@Roles(...)` (el del método anula al del controlador).                                                                                    | 403                                                            |
+| `RolesGuard`         | Compara el rol con `@Roles(...)` (el del método anula al del controlador). Se niega por defecto: una ruta sin `@Roles` ni `@Publico()` responde 403.          | 403                                                            |
 | `ClienteAccessGuard` | En rutas con `:clienteId`: asesor → `clientes.asesor_id = sub`; auxiliar → registro activo en `cliente_auxiliares`; supervisor → cualquier cliente existente. | 404 (mismo mensaje exista o no, para no revelar la existencia) |
+
+`JwtAuthGuard` y `RolesGuard` son globales (`APP_GUARD`, en ese orden); las rutas públicas se marcan con `@Publico()`. `ClienteAccessGuard` se declara a nivel de controlador en los cinco con rutas `:clienteId` e ignora las rutas sin cliente.
 
 ### Secuencia de autorización de una petición a un cliente
 

@@ -1,10 +1,13 @@
 import { INestApplication } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AddressInfo } from 'node:net';
 import { configureApp } from '../app.setup';
 import { Rol } from '../common/auth/authenticated-user';
+import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { RolesGuard } from '../common/auth/roles.guard';
 import { ClientesController } from './clientes.controller';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './entities/cliente.entity';
@@ -58,6 +61,9 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
       controllers: [ClientesController],
       providers: [
         ClientesService,
+        // Mismos guards globales que AppModule (JWT y roles); el de cliente va en el controlador.
+        { provide: APP_GUARD, useClass: JwtAuthGuard },
+        { provide: APP_GUARD, useClass: RolesGuard },
         { provide: getRepositoryToken(Cliente), useValue: repoClientes },
         { provide: getRepositoryToken(ClienteAuxiliar), useValue: repoAuxiliares },
       ],

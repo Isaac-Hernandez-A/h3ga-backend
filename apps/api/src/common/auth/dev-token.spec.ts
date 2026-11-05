@@ -1,4 +1,5 @@
 import { ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
@@ -33,8 +34,12 @@ describe('script dev:token', () => {
       expect(codigo).toBe(0);
 
       const peticion: Record<string, unknown> = { headers: { authorization: `Bearer ${token}` } };
-      const ctx = { switchToHttp: () => ({ getRequest: () => peticion }) } as ExecutionContext;
-      const guard = new JwtAuthGuard(new JwtService({ secret: SECRETO_PRUEBA }));
+      const ctx = {
+        getHandler: () => function ruta() {},
+        getClass: () => class Controlador {},
+        switchToHttp: () => ({ getRequest: () => peticion }),
+      } as unknown as ExecutionContext;
+      const guard = new JwtAuthGuard(new JwtService({ secret: SECRETO_PRUEBA }), new Reflector());
       await expect(guard.canActivate(ctx)).resolves.toBe(true);
       expect(peticion[REQUEST_USER_KEY]).toEqual({ sub: SUB, rol });
     },

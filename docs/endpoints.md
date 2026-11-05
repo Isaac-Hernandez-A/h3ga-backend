@@ -4,7 +4,7 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 - **Total: 81 rutas.** Implementadas: 2 (`GET /health` y `GET /clientes/:clienteId`). Las otras 79 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
-- **Aplicación real de los guards:** hoy solo `GET /clientes/:clienteId` encadena `JwtAuthGuard` → `RolesGuard` → `ClienteAccessGuard`. En las demás rutas el rol está _declarado_ pero aún no se hace cumplir (no hay guard global); cablearlos en cada ruta queda pendiente.
+- **Aplicación real de los guards (las 81 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
 
 ## Resumen por módulo

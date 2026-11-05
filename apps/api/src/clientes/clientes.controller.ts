@@ -17,9 +17,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
-import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 import { PERMISOS } from '../common/auth/permisos';
-import { RolesGuard } from '../common/auth/roles.guard';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
@@ -41,6 +39,7 @@ import { RegimenPrincipal } from './entities/regimen-principal.entity';
 import { ClientesService } from './clientes.service';
 
 @ApiTags('clientes')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class ClientesController {
   constructor(private readonly service: ClientesService) {}
@@ -53,10 +52,9 @@ export class ClientesController {
     return this.service.listarClientes();
   }
 
-  // Ruta de ejemplo del control de acceso: autenticación (JwtAuthGuard), rol (RolesGuard) y
-  // pertenencia al cliente (ClienteAccessGuard), en ese orden.
+  // Autenticación (JwtAuthGuard) y rol (RolesGuard) son globales; la pertenencia al cliente
+  // (ClienteAccessGuard) se aplica a todo el controlador.
   @Get('clientes/:clienteId')
-  @UseGuards(JwtAuthGuard, RolesGuard, ClienteAccessGuard)
   @Roles(...PERMISOS.clientes.consultar)
   @ApiOperation({ summary: 'Obtener un cliente' })
   @ApiOkResponse({ type: Cliente })

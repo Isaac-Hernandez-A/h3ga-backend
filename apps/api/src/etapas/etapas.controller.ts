@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
@@ -11,6 +21,7 @@ import { EtapaTramiteHistorial } from './entities/etapa-tramite-historial.entity
 import { EtapasService } from './etapas.service';
 
 @ApiTags('etapas')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class EtapasController {
   constructor(private readonly service: EtapasService) {}

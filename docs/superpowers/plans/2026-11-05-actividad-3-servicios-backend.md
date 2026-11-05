@@ -94,8 +94,8 @@ it('CP-06 auxiliar: autorización activa pasa; sin registro o con activo=false r
 it('CP-07 supervisor accede a cualquier cliente existente; inexistente da el mismo 404 que sin acceso', ...)
 ```
 
-- [ ] **Paso 3:** la prueba de matriz lee las rutas con `DiscoveryService` y los metadatos de `@Roles`. Exporta su resultado a `docs/pruebas-matriz-acceso.csv` (ruta, método, rol, código esperado, código obtenido).
-- [ ] **Commit:** `feat(auth): guards globales y matriz de acceso probada en las 81 rutas`
+- [x] **Paso 3:** la prueba de matriz lee las rutas con `DiscoveryService` y los metadatos de `@Roles`. Exporta su resultado a `docs/pruebas-matriz-acceso.csv` (ruta, método, rol, código esperado, código obtenido).
+- [x] **Commit:** `feat(auth): guards globales y matriz de acceso probada en las 81 rutas`
 
 ---
 

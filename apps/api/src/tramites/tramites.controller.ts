@@ -1,5 +1,16 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateCorreccionClienteDto } from './dto/create-correccion-cliente.dto';
@@ -13,6 +24,7 @@ import { UnificacionNssSecundario } from './entities/unificacion-nss-secundario.
 import { TramitesService } from './tramites.service';
 
 @ApiTags('tramites')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class TramitesController {
   constructor(private readonly service: TramitesService) {}
