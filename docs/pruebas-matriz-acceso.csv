@@ -50,12 +50,12 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/catalogos/regimenes,GET,asesor,supera los guards,501
 /api/v1/catalogos/regimenes,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/regimenes,GET,supervisor,supera los guards,501
-/api/v1/catalogos/roles,GET,asesor,supera los guards,501
-/api/v1/catalogos/roles,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/roles,GET,supervisor,supera los guards,501
-/api/v1/catalogos/tipos-asesor,GET,asesor,supera los guards,501
-/api/v1/catalogos/tipos-asesor,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/tipos-asesor,GET,supervisor,supera los guards,501
+/api/v1/catalogos/roles,GET,asesor,supera los guards,200
+/api/v1/catalogos/roles,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/roles,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-asesor,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-asesor,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-asesor,GET,supervisor,supera los guards,200
 /api/v1/catalogos/tipos-correccion,GET,asesor,supera los guards,501
 /api/v1/catalogos/tipos-correccion,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/tipos-correccion,GET,supervisor,supera los guards,501
@@ -232,13 +232,13 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/reportes,GET,supervisor,supera los guards,501
 /api/v1/usuarios,GET,asesor,403,403
 /api/v1/usuarios,GET,auxiliar,403,403
-/api/v1/usuarios,GET,supervisor,supera los guards,501
+/api/v1/usuarios,GET,supervisor,supera los guards,200
 /api/v1/usuarios,POST,asesor,403,403
 /api/v1/usuarios,POST,auxiliar,403,403
 /api/v1/usuarios,POST,supervisor,supera los guards,400
 /api/v1/usuarios/:usuarioId,GET,asesor,403,403
 /api/v1/usuarios/:usuarioId,GET,auxiliar,403,403
-/api/v1/usuarios/:usuarioId,GET,supervisor,supera los guards,501
+/api/v1/usuarios/:usuarioId,GET,supervisor,supera los guards,404
 /api/v1/usuarios/:usuarioId,PATCH,asesor,403,403
 /api/v1/usuarios/:usuarioId,PATCH,auxiliar,403,403
-/api/v1/usuarios/:usuarioId,PATCH,supervisor,supera los guards,501
+/api/v1/usuarios/:usuarioId,PATCH,supervisor,supera los guards,404

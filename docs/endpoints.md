@@ -2,7 +2,7 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 81 rutas.** Implementadas: 2 (`GET /health` y `GET /clientes/:clienteId`). Las otras 79 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 81 rutas.** Implementadas: 8 (`GET /health`, `GET /clientes/:clienteId` y las 6 de `usuarios-roles`). Las otras 73 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
 - **Aplicación real de los guards (las 81 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
@@ -25,14 +25,14 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## usuarios-roles
 
-| Método | Ruta                             | Descripción                                   | Roles                        | Estado |
-| ------ | -------------------------------- | --------------------------------------------- | ---------------------------- | ------ |
-| GET    | `/api/v1/usuarios`               | Listar usuarios                               | supervisor                   | 501    |
-| GET    | `/api/v1/usuarios/:usuarioId`    | Obtener un usuario                            | supervisor                   | 501    |
-| POST   | `/api/v1/usuarios`               | Crear un usuario                              | supervisor                   | 501    |
-| PATCH  | `/api/v1/usuarios/:usuarioId`    | Actualizar o desactivar un usuario            | supervisor                   | 501    |
-| GET    | `/api/v1/catalogos/roles`        | Listar roles                                  | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/tipos-asesor` | Listar tipos de asesor (tabla de otro módulo) | asesor, auxiliar, supervisor | 501    |
+| Método | Ruta                             | Descripción                                   | Roles                        | Estado       |
+| ------ | -------------------------------- | --------------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/usuarios`               | Listar usuarios                               | supervisor                   | Implementada |
+| GET    | `/api/v1/usuarios/:usuarioId`    | Obtener un usuario                            | supervisor                   | Implementada |
+| POST   | `/api/v1/usuarios`               | Crear un usuario                              | supervisor                   | Implementada |
+| PATCH  | `/api/v1/usuarios/:usuarioId`    | Actualizar o desactivar un usuario            | supervisor                   | Implementada |
+| GET    | `/api/v1/catalogos/roles`        | Listar roles                                  | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/catalogos/tipos-asesor` | Listar tipos de asesor (tabla de otro módulo) | asesor, auxiliar, supervisor | Implementada |
 
 ## clientes
 

@@ -19,6 +19,7 @@ import {
   tokenDe,
   tokenVencido,
 } from './common/testing/tokens';
+import { repositorioVacio } from './common/testing/repositorio-vacio';
 import { Cliente } from './clientes/entities/cliente.entity';
 import { ClienteAuxiliar } from './clientes/entities/cliente-auxiliar.entity';
 import { HealthController } from './health/health.controller';
@@ -67,7 +68,11 @@ const dataSourceFalso = {
   entityMetadatas: [],
   options: { type: 'postgres' },
   getRepository: (entidad: unknown) =>
-    entidad === Cliente ? repoClientes : entidad === ClienteAuxiliar ? repoAuxiliares : {},
+    entidad === Cliente
+      ? repoClientes
+      : entidad === ClienteAuxiliar
+        ? repoAuxiliares
+        : repositorioVacio(),
 };
 
 @Global()

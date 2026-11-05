@@ -122,7 +122,7 @@ it('CP-12 tipo_asesor_id inexistente responde 400; nulo es válido', ...)
 it('CP-13 los tres roles pueden leer el catálogo de roles', ...)
 ```
 
-- [ ] **Commit:** `feat(usuarios): alta, edición y baja de usuarios con contraseña cifrada`
+- [x] **Commit:** `feat(usuarios): alta, edición y baja de usuarios con contraseña cifrada`
 
 ---
 

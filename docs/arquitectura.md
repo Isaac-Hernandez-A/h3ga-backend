@@ -47,12 +47,12 @@ Transversal en `AppModule`: `ConfigModule` global con `validarEntorno` (en produ
 
 ## Estado de implementación
 
-| Capa                                                   | Estado                                            |
-| ------------------------------------------------------ | ------------------------------------------------- |
-| Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                             |
-| Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 81 rutas (matriz probada) |
-| Lógica de negocio de los servicios                     | **No hecha**: 79 de 81 rutas responden 501        |
-| Subida a Spaces, reportes, ETL                         | Esbozo                                            |
+| Capa                                                   | Estado                                                             |
+| ------------------------------------------------------ | ------------------------------------------------------------------ |
+| Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                                              |
+| Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 81 rutas (matriz probada)                  |
+| Lógica de negocio de los servicios                     | **Parcial**: usuarios y roles hechos; 73 de 81 rutas responden 501 |
+| Subida a Spaces, reportes, ETL                         | Esbozo                                                             |
 
 ## Control de acceso
 
