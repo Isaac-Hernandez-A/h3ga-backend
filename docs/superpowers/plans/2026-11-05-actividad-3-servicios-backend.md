@@ -181,7 +181,7 @@ it('CP-28 asesor ajeno recibe 404; auxiliar recibe 403 al escribir etapas', ...)
 ```
 
 - [ ] **Paso 3:** `cambiarEstatus` usa una sola transacción de TypeORM que actualiza la etapa e inserta el historial. La prueba CP-25 fuerza el fallo del segundo paso.
-- [ ] **Commit:** `feat(etapas): reglas de avance, bitácora de estatus y transacción atómica`
+- [x] **Commit:** `feat(etapas): reglas de avance, bitácora de estatus y transacción atómica`
 
 ---
 

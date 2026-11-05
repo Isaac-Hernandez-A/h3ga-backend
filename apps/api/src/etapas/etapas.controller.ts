@@ -9,11 +9,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
+import { CurrentUser } from '../common/auth/current-user.decorator';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
-import { UpdateEtapaTramiteDto } from './dto/update-etapa-tramite.dto';
+import { CambiarEstatusDto } from './dto/cambiar-estatus.dto';
 import { EstatusTramite } from './entities/estatus-tramite.entity';
 import { EtapaProceso } from './entities/etapa-proceso.entity';
 import { EtapaTramite } from './entities/etapa-tramite.entity';
@@ -50,11 +52,12 @@ export class EtapasController {
   @ApiOperation({ summary: 'Actualizar estatus, avance o acción de una etapa' })
   @ApiOkResponse({ type: EtapaTramite })
   actualizarEtapa(
+    @CurrentUser() usuario: AuthenticatedUser,
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Param('etapaTramiteId', ParseUUIDPipe) etapaTramiteId: string,
-    @Body() dto: UpdateEtapaTramiteDto,
+    @Body() dto: CambiarEstatusDto,
   ): Promise<EtapaTramite> {
-    return this.service.actualizarEtapa(clienteId, etapaTramiteId, dto);
+    return this.service.cambiarEstatus(usuario, clienteId, etapaTramiteId, dto);
   }
 
   @Get('clientes/:clienteId/etapas/:etapaTramiteId/historial')
@@ -65,7 +68,7 @@ export class EtapasController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Param('etapaTramiteId', ParseUUIDPipe) etapaTramiteId: string,
   ): Promise<EtapaTramiteHistorial[]> {
-    return this.service.listarHistorialEtapa(clienteId, etapaTramiteId);
+    return this.service.listarHistorial(clienteId, etapaTramiteId);
   }
 
   @Get('catalogos/etapas')

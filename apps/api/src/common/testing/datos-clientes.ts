@@ -150,10 +150,43 @@ export async function autorizarEnBd(
   );
 }
 
+// ids de estatus_tramite fijados por el diccionario (no son autoincrementales).
+export const ID_ESTATUS = {
+  'No aplica': 1,
+  'Por iniciar': 2,
+  'En proceso cliente': 3,
+  'En proceso asesor': 4,
+  'En proceso Instituto': 5,
+  Finalizado: 6,
+  Bloqueado: 7,
+  Cancelado: 8,
+  Detenido: 9,
+} as const;
+
+// Inserta una etapa del cliente (numeroPaso 0 a 15) directamente en la base. Devuelve su id.
+export async function insertarEtapa(
+  ds: DataSource,
+  clienteId: string,
+  numeroPaso: number,
+  estatusId: number,
+  avance: number,
+): Promise<string> {
+  const filas = await ds.query<{ id: string }[]>(
+    `INSERT INTO etapas_tramite (cliente_id, etapa_id, estatus_id, avance_porcentaje, creado_el, actualizado_el)
+     SELECT $1, ep.id, $3, $4, now(), now() FROM etapas_proceso ep WHERE ep.numero_paso = $2
+     RETURNING id`,
+    [clienteId, numeroPaso, estatusId, avance],
+  );
+  return filas[0].id;
+}
+
 // Borra, en orden de dependencias, lo creado por las pruebas (solo filas con la marca de prueba).
 export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   const clientes = `(SELECT id FROM clientes WHERE referido_por = '${MARCA_CLIENTE}')`;
   const usuarios = `(SELECT id FROM usuarios WHERE correo_electronico LIKE '%${DOMINIO_USUARIOS}')`;
+  const etapas = `(SELECT id FROM etapas_tramite WHERE cliente_id IN ${clientes})`;
+  await ds.query(`DELETE FROM etapas_tramite_historial WHERE etapa_tramite_id IN ${etapas}`);
+  await ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN ${clientes}`);
   await ds.query(`DELETE FROM cliente_objetivos_especificos WHERE cliente_id IN ${clientes}`);
   await ds.query(`DELETE FROM historial_laboral WHERE cliente_id IN ${clientes}`);
   await ds.query(

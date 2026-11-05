@@ -188,12 +188,12 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/etapas,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/etapas,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas,POST,supervisor,403,403
-/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,asesor,supera los guards,500
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,supervisor,403,403
-/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,asesor,supera los guards,404
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,supervisor,supera los guards,404
 /api/v1/clientes/:clienteId/historial-laboral,GET,asesor,supera los guards,501
 /api/v1/clientes/:clienteId/historial-laboral,GET,auxiliar,403,403
 /api/v1/clientes/:clienteId/historial-laboral,GET,supervisor,supera los guards,501
