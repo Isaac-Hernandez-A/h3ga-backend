@@ -46,7 +46,7 @@ export class ClientesController {
   constructor(private readonly service: ClientesService) {}
 
   @Get('clientes')
-  @Roles(...PERMISOS.clientes.leer)
+  @Roles(...PERMISOS.clientes.consultar)
   @ApiOperation({ summary: 'Listar clientes' })
   @ApiOkResponse({ type: Cliente, isArray: true })
   listarClientes(): Promise<Cliente[]> {
@@ -57,7 +57,7 @@ export class ClientesController {
   // pertenencia al cliente (ClienteAccessGuard), en ese orden.
   @Get('clientes/:clienteId')
   @UseGuards(JwtAuthGuard, RolesGuard, ClienteAccessGuard)
-  @Roles(...PERMISOS.clientes.leer)
+  @Roles(...PERMISOS.clientes.consultar)
   @ApiOperation({ summary: 'Obtener un cliente' })
   @ApiOkResponse({ type: Cliente })
   @ApiNotFoundResponse({ description: 'El cliente no existe o el usuario no tiene acceso a él.' })

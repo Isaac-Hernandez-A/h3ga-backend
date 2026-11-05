@@ -51,6 +51,9 @@ export class ClientesService {
     throw new NotImplementedException();
   }
 
+  // PENDIENTE (RF-41): cliente_auxiliares.autorizado_por es NOT NULL y el DTO no lo recibe. Al
+  // implementar este método, llenarlo con el `sub` del usuario autenticado (que el controlador debe
+  // pasar con @CurrentUser()) y fecha_autorizacion con la hora del servidor.
   async asignarAuxiliar(
     clienteId: string,
     dto: CreateClienteAuxiliarDto,
