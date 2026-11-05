@@ -5,8 +5,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { QueryFailedError, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { ROL_ID } from '../common/auth/roles-sistema';
+import { codigoPostgres } from '../common/database/errores-postgres';
 import { PasswordHasher } from '../common/seguridad/password-hasher';
 import { ActualizarUsuarioDto } from './dto/actualizar-usuario.dto';
 import { CrearUsuarioDto } from './dto/crear-usuario.dto';
@@ -18,15 +19,6 @@ import { Usuario } from './entities/usuario.entity';
 // Códigos de error de PostgreSQL que el servicio traduce a respuestas HTTP.
 const VIOLACION_UNICA = '23505';
 const VIOLACION_LLAVE_FORANEA = '23503';
-
-function codigoPostgres(error: unknown): string | undefined {
-  if (!(error instanceof QueryFailedError)) return undefined;
-  const { driverError, code } = error as QueryFailedError & {
-    driverError?: { code?: string };
-    code?: string;
-  };
-  return driverError?.code ?? code;
-}
 
 // Mapea la entidad a la respuesta pública: solo se copian campos conocidos, nunca contrasena_hash.
 function aRespuesta(usuario: Usuario): UsuarioRespuesta {

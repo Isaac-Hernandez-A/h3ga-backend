@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateClienteAuxiliarDto } from './create-cliente-auxiliar.dto';
+import { IsBoolean } from 'class-validator';
 
-export class UpdateClienteAuxiliarDto extends PartialType(CreateClienteAuxiliarDto) {}
+// Solo se activa o desactiva la autorización; el auxiliar de una fila no cambia.
+export class UpdateClienteAuxiliarDto {
+  @IsBoolean()
+  activo: boolean;
+}

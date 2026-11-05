@@ -151,7 +151,7 @@ it('CP-21 PUT historial-laboral es idempotente: dos PUT iguales dejan un solo re
 ```
 
 - [ ] **Paso 3:** convierte el `it.todo` del listado por rol en la prueba CP-14.
-- [ ] **Commit:** `feat(clientes): listado por rol, alta, reasignación y autorizaciones del auxiliar`
+- [x] **Commit:** `feat(clientes): listado por rol, alta, reasignación y autorizaciones del auxiliar`
 
 ---
 

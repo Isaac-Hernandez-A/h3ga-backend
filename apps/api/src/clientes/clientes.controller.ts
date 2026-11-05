@@ -16,7 +16,9 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
+import { CurrentUser } from '../common/auth/current-user.decorator';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
@@ -48,8 +50,8 @@ export class ClientesController {
   @Roles(...PERMISOS.clientes.consultar)
   @ApiOperation({ summary: 'Listar clientes' })
   @ApiOkResponse({ type: Cliente, isArray: true })
-  listarClientes(): Promise<Cliente[]> {
-    return this.service.listarClientes();
+  listarClientes(@CurrentUser() usuario: AuthenticatedUser): Promise<Cliente[]> {
+    return this.service.listar(usuario);
   }
 
   // Autenticación (JwtAuthGuard) y rol (RolesGuard) son globales; la pertenencia al cliente
@@ -67,8 +69,11 @@ export class ClientesController {
   @Roles(...PERMISOS.clientes.crear)
   @ApiOperation({ summary: 'Registrar un cliente' })
   @ApiCreatedResponse({ type: Cliente })
-  crearCliente(@Body() dto: CreateClienteDto): Promise<Cliente> {
-    return this.service.crearCliente(dto);
+  crearCliente(
+    @CurrentUser() usuario: AuthenticatedUser,
+    @Body() dto: CreateClienteDto,
+  ): Promise<Cliente> {
+    return this.service.crear(usuario, dto);
   }
 
   @Patch('clientes/:clienteId')
@@ -79,7 +84,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: UpdateClienteDto,
   ): Promise<Cliente> {
-    return this.service.actualizarCliente(clienteId, dto);
+    return this.service.actualizar(clienteId, dto);
   }
 
   @Patch('clientes/:clienteId/asesor')
@@ -90,7 +95,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: ReasignarClienteDto,
   ): Promise<Cliente> {
-    return this.service.reasignarAsesor(clienteId, dto);
+    return this.service.reasignarAsesor(clienteId, dto.asesor_id);
   }
 
   @Get('clientes/:clienteId/auxiliares')
@@ -108,10 +113,11 @@ export class ClientesController {
   @ApiOperation({ summary: 'Asignar un auxiliar al cliente' })
   @ApiCreatedResponse({ type: ClienteAuxiliar })
   asignarAuxiliar(
+    @CurrentUser() usuario: AuthenticatedUser,
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: CreateClienteAuxiliarDto,
   ): Promise<ClienteAuxiliar> {
-    return this.service.asignarAuxiliar(clienteId, dto);
+    return this.service.autorizarAuxiliar(usuario, clienteId, dto.auxiliar_id);
   }
 
   @Patch('clientes/:clienteId/auxiliares/:clienteAuxiliarId')
@@ -123,7 +129,7 @@ export class ClientesController {
     @Param('clienteAuxiliarId', ParseUUIDPipe) clienteAuxiliarId: string,
     @Body() dto: UpdateClienteAuxiliarDto,
   ): Promise<ClienteAuxiliar> {
-    return this.service.actualizarAuxiliar(clienteId, clienteAuxiliarId, dto);
+    return this.service.cambiarAutorizacion(clienteId, clienteAuxiliarId, dto.activo);
   }
 
   @Get('clientes/:clienteId/historial-laboral')
@@ -144,7 +150,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: CreateHistorialLaboralDto,
   ): Promise<HistorialLaboral> {
-    return this.service.guardarHistorialLaboral(clienteId, dto);
+    return this.service.reemplazarHistorialLaboral(clienteId, dto);
   }
 
   @Get('clientes/:clienteId/historial-laboral/issste')
@@ -186,7 +192,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: ReemplazarObjetivosEspecificosDto,
   ): Promise<ClienteObjetivoEspecifico[]> {
-    return this.service.reemplazarObjetivosEspecificos(clienteId, dto);
+    return this.service.reemplazarObjetivosEspecificos(clienteId, dto.objetivo_ids);
   }
 
   @Get('catalogos/regimenes')

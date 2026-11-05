@@ -1,13 +1,19 @@
-import { Injectable, NotFoundException, NotImplementedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  NotImplementedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
+import { DataSource, Repository } from 'typeorm';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
+import { aplicarAlcanceClientes } from '../common/auth/clientes-accesibles';
+import { ROL_ID } from '../common/auth/roles-sistema';
+import { traducirErrorBd } from '../common/database/errores-postgres';
+import { Usuario } from '../usuarios-roles/entities/usuario.entity';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { CreateHistorialLaboralDto } from './dto/create-historial-laboral.dto';
 import { CreateInformacionIsssteDto } from './dto/create-informacion-issste.dto';
-import { ReasignarClienteDto } from './dto/reasignar-cliente.dto';
-import { ReemplazarObjetivosEspecificosDto } from './dto/reemplazar-objetivos-especificos.dto';
-import { UpdateClienteAuxiliarDto } from './dto/update-cliente-auxiliar.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { Afore } from './entities/afore.entity';
 import { Cliente } from './entities/cliente.entity';
@@ -19,65 +25,126 @@ import { LeyProbable } from './entities/ley-probable.entity';
 import { ObjetivoEspecificoInicial } from './entities/objetivo-especifico-inicial.entity';
 import { RegimenPrincipal } from './entities/regimen-principal.entity';
 
+const ERRORES_CLIENTE = {
+  unica: 'Ya existe un cliente con esa CURP.',
+  llaveForanea: 'El régimen, la ley probable o la AFORE indicados no existen.',
+};
+
 @Injectable()
 export class ClientesService {
-  constructor(@InjectRepository(Cliente) private readonly clientes: Repository<Cliente>) {}
+  constructor(
+    @InjectRepository(Cliente) private readonly clientes: Repository<Cliente>,
+    @InjectRepository(ClienteAuxiliar) private readonly auxiliares: Repository<ClienteAuxiliar>,
+    @InjectRepository(HistorialLaboral) private readonly historiales: Repository<HistorialLaboral>,
+    private readonly ds: DataSource,
+  ) {}
 
-  async listarClientes(): Promise<Cliente[]> {
-    throw new NotImplementedException();
+  // Cada rol ve solo su alcance (ver aplicarAlcanceClientes): asesor los suyos, auxiliar los autorizados
+  // activos, supervisor todos.
+  async listar(usuario: AuthenticatedUser): Promise<Cliente[]> {
+    const qb = this.clientes.createQueryBuilder('c');
+    aplicarAlcanceClientes(qb, usuario, 'c');
+    return qb.orderBy('c.fecha_ingreso', 'DESC').addOrderBy('c.id', 'ASC').getMany();
   }
 
-  // Única ruta con lectura real: demuestra el flujo de los tres guards. El acceso ya lo validó
-  // ClienteAccessGuard; el 404 solo cubre una eliminación entre el guard y la consulta.
+  // El acceso ya lo validó ClienteAccessGuard; el 404 solo cubre una eliminación entre el guard y la consulta.
   async obtenerCliente(clienteId: string): Promise<Cliente> {
     const cliente = await this.clientes.findOneBy({ id: clienteId });
     if (!cliente) throw new NotFoundException('Cliente no encontrado.');
     return cliente;
   }
 
-  async crearCliente(dto: CreateClienteDto): Promise<Cliente> {
-    throw new NotImplementedException();
+  // asesor_id sale siempre del token: el que venga en el cuerpo se ignora.
+  async crear(usuario: AuthenticatedUser, dto: CreateClienteDto): Promise<Cliente> {
+    try {
+      return await this.clientes.save(this.clientes.create({ ...dto, asesor_id: usuario.sub }));
+    } catch (error) {
+      return traducirErrorBd(error, ERRORES_CLIENTE);
+    }
   }
 
-  async actualizarCliente(clienteId: string, dto: UpdateClienteDto): Promise<Cliente> {
-    throw new NotImplementedException();
+  async actualizar(clienteId: string, dto: UpdateClienteDto): Promise<Cliente> {
+    if (Object.keys(dto).length > 0) {
+      let afectadas: number | undefined;
+      try {
+        ({ affected: afectadas } = await this.clientes.update({ id: clienteId }, dto));
+      } catch (error) {
+        traducirErrorBd(error, ERRORES_CLIENTE);
+      }
+      if (!afectadas) throw new NotFoundException('Cliente no encontrado.');
+    }
+    return this.obtenerCliente(clienteId);
   }
 
-  async reasignarAsesor(clienteId: string, dto: ReasignarClienteDto): Promise<Cliente> {
-    throw new NotImplementedException();
+  // El destino debe ser un usuario con rol asesor.
+  async reasignarAsesor(clienteId: string, nuevoAsesorId: string): Promise<Cliente> {
+    await this.exigirUsuarioConRol(nuevoAsesorId, 'asesor');
+    const { affected } = await this.clientes.update(
+      { id: clienteId },
+      { asesor_id: nuevoAsesorId },
+    );
+    if (!affected) throw new NotFoundException('Cliente no encontrado.');
+    return this.obtenerCliente(clienteId);
   }
 
   async listarAuxiliares(clienteId: string): Promise<ClienteAuxiliar[]> {
     throw new NotImplementedException();
   }
 
-  // PENDIENTE (RF-41): cliente_auxiliares.autorizado_por es NOT NULL y el DTO no lo recibe. Al
-  // implementar este método, llenarlo con el `sub` del usuario autenticado (que el controlador debe
-  // pasar con @CurrentUser()) y fecha_autorizacion con la hora del servidor.
-  async asignarAuxiliar(
+  // RF-41: guarda quién autorizó (el `sub` del token) y cuándo (hora del servidor). Un solo INSERT ...
+  // ON CONFLICT: repetir el par (cliente, auxiliar) reactiva la misma fila, sin duplicar aunque haya
+  // peticiones simultáneas.
+  async autorizarAuxiliar(
+    usuario: AuthenticatedUser,
     clienteId: string,
-    dto: CreateClienteAuxiliarDto,
+    auxiliarId: string,
   ): Promise<ClienteAuxiliar> {
-    throw new NotImplementedException();
+    await this.exigirUsuarioConRol(auxiliarId, 'auxiliar');
+    await this.auxiliares.upsert(
+      {
+        cliente_id: clienteId,
+        auxiliar_id: auxiliarId,
+        autorizado_por: usuario.sub,
+        fecha_autorizacion: new Date(),
+        activo: true,
+      },
+      ['cliente_id', 'auxiliar_id'],
+    );
+    return this.auxiliares.findOneByOrFail({ cliente_id: clienteId, auxiliar_id: auxiliarId });
   }
 
-  async actualizarAuxiliar(
+  // Activar o desactivar. El acceso del auxiliar se evalúa en cada petición, así que desactivar surte
+  // efecto en la siguiente.
+  async cambiarAutorizacion(
     clienteId: string,
     clienteAuxiliarId: string,
-    dto: UpdateClienteAuxiliarDto,
+    activo: boolean,
   ): Promise<ClienteAuxiliar> {
-    throw new NotImplementedException();
+    const { affected } = await this.auxiliares.update(
+      { id: clienteAuxiliarId, cliente_id: clienteId },
+      { activo },
+    );
+    if (!affected) throw new NotFoundException('Autorización no encontrada.');
+    return this.auxiliares.findOneByOrFail({ id: clienteAuxiliarId });
   }
 
   async obtenerHistorialLaboral(clienteId: string): Promise<HistorialLaboral> {
     throw new NotImplementedException();
   }
 
-  async guardarHistorialLaboral(
+  // historial_laboral.cliente_id es UNIQUE: PUT es un upsert, dos PUT iguales dejan un solo registro.
+  async reemplazarHistorialLaboral(
     clienteId: string,
     dto: CreateHistorialLaboralDto,
   ): Promise<HistorialLaboral> {
-    throw new NotImplementedException();
+    try {
+      await this.historiales.upsert({ ...dto, cliente_id: clienteId, activo: dto.activo ?? true }, [
+        'cliente_id',
+      ]);
+    } catch (error) {
+      traducirErrorBd(error, {});
+    }
+    return this.historiales.findOneByOrFail({ cliente_id: clienteId });
   }
 
   async obtenerInformacionIssste(clienteId: string): Promise<InformacionIssste> {
@@ -95,11 +162,28 @@ export class ClientesService {
     throw new NotImplementedException();
   }
 
+  // Borra e inserta en una sola transacción: si algún objetivo no existe, queda el conjunto anterior.
   async reemplazarObjetivosEspecificos(
     clienteId: string,
-    dto: ReemplazarObjetivosEspecificosDto,
+    objetivoIds: number[],
   ): Promise<ClienteObjetivoEspecifico[]> {
-    throw new NotImplementedException();
+    try {
+      await this.ds.transaction(async (manager) => {
+        await manager.delete(ClienteObjetivoEspecifico, { cliente_id: clienteId });
+        if (objetivoIds.length > 0) {
+          await manager.insert(
+            ClienteObjetivoEspecifico,
+            objetivoIds.map((objetivo_id) => ({ cliente_id: clienteId, objetivo_id })),
+          );
+        }
+      });
+    } catch (error) {
+      traducirErrorBd(error, { llaveForanea: 'Algún objetivo específico no existe.' });
+    }
+    return this.ds.getRepository(ClienteObjetivoEspecifico).find({
+      where: { cliente_id: clienteId },
+      order: { objetivo_id: 'ASC' },
+    });
   }
 
   async listarRegimenes(): Promise<RegimenPrincipal[]> {
@@ -116,5 +200,14 @@ export class ClientesService {
 
   async listarObjetivosEspecificosInicial(): Promise<ObjetivoEspecificoInicial[]> {
     throw new NotImplementedException();
+  }
+
+  private async exigirUsuarioConRol(usuarioId: string, rol: 'asesor' | 'auxiliar'): Promise<void> {
+    const existe = await this.ds
+      .getRepository(Usuario)
+      .exists({ where: { id: usuarioId, rol_id: ROL_ID[rol] } });
+    if (!existe) {
+      throw new BadRequestException(`El usuario indicado no existe o no es ${rol}.`);
+    }
   }
 }

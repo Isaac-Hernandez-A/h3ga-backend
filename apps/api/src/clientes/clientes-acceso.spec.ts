@@ -4,6 +4,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AddressInfo } from 'node:net';
+import { DataSource } from 'typeorm';
 import { configureApp } from '../app.setup';
 import { Rol } from '../common/auth/authenticated-user';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
@@ -12,6 +13,7 @@ import { ClientesController } from './clientes.controller';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './entities/cliente.entity';
 import { ClienteAuxiliar } from './entities/cliente-auxiliar.entity';
+import { HistorialLaboral } from './entities/historial-laboral.entity';
 
 // Prueba de la cadena JwtAuthGuard -> RolesGuard -> ClienteAccessGuard sobre GET /api/v1/clientes/:clienteId,
 // por HTTP y con repositorios simulados. Los tres roles pueden consultar un cliente; el auxiliar solo los
@@ -66,6 +68,9 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
         { provide: APP_GUARD, useClass: RolesGuard },
         { provide: getRepositoryToken(Cliente), useValue: repoClientes },
         { provide: getRepositoryToken(ClienteAuxiliar), useValue: repoAuxiliares },
+        // Dependencias del servicio que esta ruta (solo lectura) no usa.
+        { provide: getRepositoryToken(HistorialLaboral), useValue: {} },
+        { provide: DataSource, useValue: {} },
       ],
     }).compile();
     app = modulo.createNestApplication();

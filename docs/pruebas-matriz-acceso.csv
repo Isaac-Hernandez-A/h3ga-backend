@@ -71,16 +71,16 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/catalogos/tipos-inconsistencia,GET,asesor,supera los guards,501
 /api/v1/catalogos/tipos-inconsistencia,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/tipos-inconsistencia,GET,supervisor,supera los guards,501
-/api/v1/clientes,GET,asesor,supera los guards,501
-/api/v1/clientes,GET,auxiliar,supera los guards,501
-/api/v1/clientes,GET,supervisor,supera los guards,501
+/api/v1/clientes,GET,asesor,supera los guards,500
+/api/v1/clientes,GET,auxiliar,supera los guards,500
+/api/v1/clientes,GET,supervisor,supera los guards,500
 /api/v1/clientes,POST,asesor,supera los guards,400
 /api/v1/clientes,POST,auxiliar,403,403
 /api/v1/clientes,POST,supervisor,403,403
 /api/v1/clientes/:clienteId,GET,asesor,supera los guards,200
 /api/v1/clientes/:clienteId,GET,auxiliar,supera los guards,200
 /api/v1/clientes/:clienteId,GET,supervisor,supera los guards,200
-/api/v1/clientes/:clienteId,PATCH,asesor,supera los guards,501
+/api/v1/clientes/:clienteId,PATCH,asesor,supera los guards,200
 /api/v1/clientes/:clienteId,PATCH,auxiliar,403,403
 /api/v1/clientes/:clienteId,PATCH,supervisor,403,403
 /api/v1/clientes/:clienteId/asesor,PATCH,asesor,403,403
@@ -92,7 +92,7 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/auxiliares,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/auxiliares,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/auxiliares,POST,supervisor,403,403
-/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,auxiliar,403,403
 /api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,supervisor,403,403
 /api/v1/clientes/:clienteId/correcciones,GET,asesor,supera los guards,501

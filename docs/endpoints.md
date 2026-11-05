@@ -2,7 +2,7 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 81 rutas.** Implementadas: 8 (`GET /health`, `GET /clientes/:clienteId` y las 6 de `usuarios-roles`). Las otras 73 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 81 rutas.** Implementadas: 16 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id). Las otras 65 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
 - **Aplicación real de los guards (las 81 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
@@ -38,20 +38,20 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 | Método | Ruta                                                        | Descripción                                        | Roles                        | Estado       |
 | ------ | ----------------------------------------------------------- | -------------------------------------------------- | ---------------------------- | ------------ |
-| GET    | `/api/v1/clientes`                                          | Listar clientes                                    | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/clientes`                                          | Listar clientes                                    | asesor, auxiliar, supervisor | Implementada |
 | GET    | `/api/v1/clientes/:clienteId`                               | Obtener un cliente                                 | asesor, auxiliar, supervisor | Implementada |
-| POST   | `/api/v1/clientes`                                          | Registrar un cliente                               | asesor                       | 501          |
-| PATCH  | `/api/v1/clientes/:clienteId`                               | Actualizar un cliente                              | asesor                       | 501          |
-| PATCH  | `/api/v1/clientes/:clienteId/asesor`                        | Reasignar el expediente del cliente a otro asesor  | supervisor                   | 501          |
+| POST   | `/api/v1/clientes`                                          | Registrar un cliente                               | asesor                       | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId`                               | Actualizar un cliente                              | asesor                       | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId/asesor`                        | Reasignar el expediente del cliente a otro asesor  | supervisor                   | Implementada |
 | GET    | `/api/v1/clientes/:clienteId/auxiliares`                    | Listar auxiliares asignados al cliente             | asesor, supervisor           | 501          |
-| POST   | `/api/v1/clientes/:clienteId/auxiliares`                    | Asignar un auxiliar al cliente                     | asesor                       | 501          |
-| PATCH  | `/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId` | Activar o desactivar la asignación de un auxiliar  | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/auxiliares`                    | Asignar un auxiliar al cliente                     | asesor                       | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId` | Activar o desactivar la asignación de un auxiliar  | asesor                       | Implementada |
 | GET    | `/api/v1/clientes/:clienteId/historial-laboral`             | Obtener el historial laboral                       | asesor, supervisor           | 501          |
-| PUT    | `/api/v1/clientes/:clienteId/historial-laboral`             | Crear o reemplazar el historial laboral            | asesor                       | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/historial-laboral`             | Crear o reemplazar el historial laboral            | asesor                       | Implementada |
 | GET    | `/api/v1/clientes/:clienteId/historial-laboral/issste`      | Obtener la información ISSSTE                      | asesor, supervisor           | 501          |
 | PUT    | `/api/v1/clientes/:clienteId/historial-laboral/issste`      | Crear o reemplazar la información ISSSTE           | asesor                       | 501          |
 | GET    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Listar los objetivos específicos marcados (F0)     | asesor, supervisor           | 501          |
-| PUT    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Reemplazar los objetivos específicos marcados (F0) | asesor                       | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Reemplazar los objetivos específicos marcados (F0) | asesor                       | Implementada |
 | GET    | `/api/v1/catalogos/regimenes`                               | Listar regímenes                                   | asesor, auxiliar, supervisor | 501          |
 | GET    | `/api/v1/catalogos/leyes-probables`                         | Listar leyes probables                             | asesor, auxiliar, supervisor | 501          |
 | GET    | `/api/v1/catalogos/afores`                                  | Listar AFORE                                       | asesor, auxiliar, supervisor | 501          |
