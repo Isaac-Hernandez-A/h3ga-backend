@@ -2,9 +2,9 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 81 rutas.** Implementadas: 29 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda y 2 de avisos (bandeja generada al consultar y atender). Las otras 52 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 82 rutas.** Implementadas: 34 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar). Las otras 48 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
-- **Aplicación real de los guards (las 81 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
+- **Aplicación real de los guards (las 82 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
 
 ## Resumen por módulo
@@ -13,7 +13,7 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 | -------------- | ----- |
 | usuarios-roles | 6     |
 | clientes       | 18    |
-| documentos     | 5     |
+| documentos     | 6     |
 | etapas         | 6     |
 | tramites       | 9     |
 | diagnosticos   | 27    |
@@ -59,13 +59,14 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## documentos
 
-| Método | Ruta                                                  | Descripción                                                 | Roles                        | Estado |
-| ------ | ----------------------------------------------------- | ----------------------------------------------------------- | ---------------------------- | ------ |
-| GET    | `/api/v1/clientes/:clienteId/documentos`              | Listar documentos del cliente                               | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/clientes/:clienteId/documentos/:documentoId` | Obtener un documento                                        | asesor, auxiliar, supervisor | 501    |
-| POST   | `/api/v1/clientes/:clienteId/documentos`              | Registrar un documento del cliente                          | asesor, auxiliar             | 501    |
-| PATCH  | `/api/v1/clientes/:clienteId/documentos/:documentoId` | Revisar un documento: actualizar su estatus u observaciones | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/tipos-documento`                   | Listar tipos de documento                                   | asesor, auxiliar, supervisor | 501    |
+| Método | Ruta                                                            | Descripción                                                 | Roles                        | Estado       |
+| ------ | --------------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/clientes/:clienteId/documentos`                        | Listar documentos del cliente                               | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/documentos/:documentoId`           | Obtener un documento                                        | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/documentos/:documentoId/descargar` | Descargar el archivo de un documento                        | asesor, auxiliar, supervisor | Implementada |
+| POST   | `/api/v1/clientes/:clienteId/documentos`                        | Subir un documento (multipart: PDF, JPG o PNG, máx. 10 MB)  | asesor, auxiliar             | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId/documentos/:documentoId`           | Revisar un documento: actualizar su estatus u observaciones | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/catalogos/tipos-documento`                             | Listar tipos de documento                                   | asesor, auxiliar, supervisor | 501          |
 
 ## etapas
 

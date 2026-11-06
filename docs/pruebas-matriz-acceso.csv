@@ -170,18 +170,21 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,POST,supervisor,403,403
-/api/v1/clientes/:clienteId/documentos,GET,asesor,supera los guards,501
-/api/v1/clientes/:clienteId/documentos,GET,auxiliar,supera los guards,501
-/api/v1/clientes/:clienteId/documentos,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/documentos,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/documentos,GET,auxiliar,supera los guards,200
+/api/v1/clientes/:clienteId/documentos,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/documentos,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/documentos,POST,auxiliar,supera los guards,400
 /api/v1/clientes/:clienteId/documentos,POST,supervisor,403,403
-/api/v1/clientes/:clienteId/documentos/:documentoId,GET,asesor,supera los guards,501
-/api/v1/clientes/:clienteId/documentos/:documentoId,GET,auxiliar,supera los guards,501
-/api/v1/clientes/:clienteId/documentos/:documentoId,GET,supervisor,supera los guards,501
-/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,asesor,supera los guards,501
-/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,auxiliar,supera los guards,501
-/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/documentos/:documentoId,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,GET,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,GET,supervisor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,asesor,supera los guards,500
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,auxiliar,supera los guards,500
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,supervisor,supera los guards,500
+/api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,supervisor,supera los guards,404
 /api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,500
 /api/v1/clientes/:clienteId/etapas,GET,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,500

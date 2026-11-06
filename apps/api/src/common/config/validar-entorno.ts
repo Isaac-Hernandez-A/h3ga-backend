@@ -1,3 +1,5 @@
+import { VARIABLES_SPACES } from '../../documentos/storage/variables-spaces';
+
 // Marcador que trae .env.example; nunca debe usarse como secreto real.
 export const JWT_SECRET_EJEMPLO = 'CAMBIAR_SECRETO_JWT';
 
@@ -11,5 +13,23 @@ export function validarEntorno(config: Record<string, unknown>): Record<string, 
       );
     }
   }
+  validarAlmacenamiento(config);
   return config;
+}
+
+// STORAGE_DRIVER: local (por defecto) o spaces. Con spaces deben estar las cinco variables SPACES_*; el
+// mensaje nombra las que faltan, nunca sus valores.
+function validarAlmacenamiento(config: Record<string, unknown>): void {
+  const driver = typeof config.STORAGE_DRIVER === 'string' ? config.STORAGE_DRIVER.trim() : '';
+  if (driver === '' || driver === 'local') return;
+  if (driver !== 'spaces') {
+    throw new Error(`STORAGE_DRIVER debe ser "local" o "spaces" (recibido: "${driver}").`);
+  }
+  const faltan = VARIABLES_SPACES.filter((nombre) => {
+    const valor = config[nombre];
+    return typeof valor !== 'string' || valor.trim() === '';
+  });
+  if (faltan.length > 0) {
+    throw new Error(`STORAGE_DRIVER=spaces requiere definir: ${faltan.join(', ')}.`);
+  }
 }

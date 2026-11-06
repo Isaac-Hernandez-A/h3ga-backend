@@ -228,6 +228,7 @@ export async function fijarCompromiso(
 export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   const clientes = `(SELECT id FROM clientes WHERE referido_por = '${MARCA_CLIENTE}')`;
   const usuarios = `(SELECT id FROM usuarios WHERE correo_electronico LIKE '%${DOMINIO_USUARIOS}')`;
+  await ds.query(`DELETE FROM documentos_clientes WHERE cliente_id IN ${clientes}`);
   const eventos = `(SELECT id FROM eventos_agenda WHERE cliente_id IN ${clientes})`;
   const etapasDeAvisos = `(SELECT id FROM etapas_tramite WHERE cliente_id IN ${clientes})`;
   await ds.query(

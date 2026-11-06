@@ -231,7 +231,7 @@ describe('Matriz de acceso (rutas reales del router)', () => {
   });
 
   it('CP-01 sin token responde 401 en todas las rutas salvo /health', async () => {
-    expect(rutas).toHaveLength(81);
+    expect(rutas).toHaveLength(82);
     const fallos: string[] = [];
     for (const ruta of rutas) {
       const { estado } = await pedir(ruta);

@@ -79,6 +79,15 @@ pnpm db:test:prepare   # crea h3ga_test si no existe y le aplica las migraciones
 - `npx jest` en `apps/api` lee esa variable del `.env`. Sin ella, las suites con base real se omiten.
 - En el CI corre sobre un PostgreSQL efímero (servicio del flujo de GitHub Actions).
 
+### Almacenamiento de documentos
+
+Los archivos de los clientes (PDF, JPG o PNG, máximo 10 MB) se guardan con `STORAGE_DRIVER`:
+
+- `local` (por defecto): en `STORAGE_LOCAL_DIR` (por defecto `./almacenamiento`, ignorado por Git). Para desarrollo y pruebas.
+- `spaces`: DigitalOcean Spaces. Exige `SPACES_KEY`, `SPACES_SECRET`, `SPACES_REGION`, `SPACES_ENDPOINT` y `SPACES_BUCKET`; si falta alguna, la API no arranca y el mensaje nombra cuáles faltan (nunca sus valores).
+
+Los valores reales de `SPACES_*` solo van en el `.env` o en las variables del servidor, nunca en el repositorio.
+
 ### Migraciones
 
 Los cambios de esquema son archivos SQL en `db/migrations`, con nombre `AAAAMMDDHHMM_descripcion.sql` (la marca de tiempo evita choques entre personas).

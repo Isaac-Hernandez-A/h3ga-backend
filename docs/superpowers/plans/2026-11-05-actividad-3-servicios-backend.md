@@ -271,7 +271,7 @@ it('CP-48 descargar el documento de un cliente ajeno responde 404', ...)
 it('CP-49 adaptador de Spaces con cliente S3 simulado usa la clave esperada y nunca expone credenciales', ...)
 ```
 
-- [ ] **Commit:** `feat(documentos): repositorio documental con almacenamiento intercambiable`
+- [x] **Commit:** `feat(documentos): repositorio documental con almacenamiento intercambiable`
 
 ---
 
