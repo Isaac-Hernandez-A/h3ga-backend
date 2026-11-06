@@ -13,6 +13,7 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "pnpm -r --if-present test",
+    "test:reporte": "node scripts/reporte-pruebas.mjs",
     "db:up": "docker compose up -d --wait postgres",
     "db:down": "docker compose down",
     "db:migrate": "node --env-file-if-exists=.env db/migrate.mjs",

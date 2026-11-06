@@ -9,19 +9,20 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## Resumen por módulo
 
-| Módulo         | Rutas |
-| -------------- | ----- |
-| usuarios-roles | 6     |
-| clientes       | 19    |
-| documentos     | 6     |
-| etapas         | 6     |
-| tramites       | 9     |
-| diagnosticos   | 27    |
-| agenda         | 4     |
-| avisos         | 3     |
-| reportes       | 1     |
-| etl            | 1     |
-| health         | 1     |
+| Módulo         | Rutas  | Implementadas | Esbozo (501) |
+| -------------- | ------ | ------------- | ------------ |
+| usuarios-roles | 6      | 6             | 0            |
+| clientes       | 19     | 10            | 9            |
+| documentos     | 6      | 5             | 1            |
+| etapas         | 6      | 3             | 3            |
+| tramites       | 9      | 3             | 6            |
+| diagnosticos   | 27     | 1             | 26           |
+| agenda         | 4      | 4             | 0            |
+| avisos         | 3      | 2             | 1            |
+| reportes       | 1      | 0             | 1            |
+| etl            | 1      | 0             | 1            |
+| health         | 1      | 1             | 0            |
+| **Total**      | **83** | **35**        | **48**       |
 
 ## usuarios-roles
 

@@ -317,7 +317,7 @@ it('CP-55 el reporte lista cada prueba cuyo título empieza con CP- y su resulta
 ```
 
 - [ ] **Paso 3:** regenera `docs/endpoints.md` (rutas implementadas contra el total) y actualiza en `docs/arquitectura.md` la tabla de estado. No debe quedar ningún `it.todo` de listado ni de avisos.
-- [ ] **Commit:** `docs: reporte de pruebas y estado de implementación de la Actividad 3`
+- [x] **Commit:** `docs: reporte de pruebas y estado de implementación de la Actividad 3`
 
 ---
 

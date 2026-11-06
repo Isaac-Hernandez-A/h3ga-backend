@@ -6,8 +6,8 @@ Describe lo que **está construido** en `apps/api` (NestJS 11 + TypeORM sobre Po
 
 Monorepo pnpm: `apps/api` (NestJS), `apps/web` (Nuxt 3, aún sin funcionalidad), `db/migrations` (SQL versionado), `docs`.
 
-- Base de datos: PostgreSQL. El esquema solo cambia con migraciones SQL (`db/migrations`, 10 archivos); TypeORM únicamente mapea tablas (`synchronize: false`, `migrationsRun: false`).
-- Archivos de clientes: DigitalOcean Spaces (variables `SPACES_*` definidas; la subida aún no está implementada).
+- Base de datos: PostgreSQL. El esquema solo cambia con migraciones SQL (`db/migrations`, 11 archivos); TypeORM únicamente mapea tablas (`synchronize: false`, `migrationsRun: false`).
+- Archivos de clientes: `StorageService` intercambiable (`STORAGE_DRIVER=local|spaces`): disco local en desarrollo y DigitalOcean Spaces en producción (variables `SPACES_*`). El formato F0 se genera en PDF con pdfkit.
 - Autenticación: la API **solo valida** el JWT (HS256, secreto `JWT_SECRET`); el login y la emisión del token son de otro módulo.
 - Contrato: prefijo `/api/v1`; Swagger en `/api/docs`.
 
@@ -20,7 +20,7 @@ flowchart LR
     F[AllExceptionsFilter · ValidationPipe]
   end
   API -->|TypeORM| DB[(PostgreSQL)]
-  API -.->|pendiente| SP[(DigitalOcean Spaces)]
+  API -->|StorageService| SP[(Disco local o<br/>DigitalOcean Spaces)]
   Login[Módulo de login<br/>otro estudiante] -.->|emite JWT| Web
 ```
 
@@ -30,29 +30,43 @@ flowchart LR
 | ---------------------------- | ---------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
 | ControlAccesoModule (global) | `common/auth`    | —                           | usa `Cliente`, `ClienteAuxiliar`                                                                                                                          | —     |
 | UsuariosRolesModule          | `usuarios-roles` | `usuarios-roles.controller` | Rol, TipoAsesor, Usuario                                                                                                                                  | 6     |
-| ClientesModule               | `clientes`       | `clientes.controller`       | Cliente, ClienteAuxiliar, ClienteObjetivoEspecifico, HistorialLaboral, InformacionIssste, RegimenPrincipal, LeyProbable, Afore, ObjetivoEspecificoInicial | 18    |
-| DocumentosModule             | `documentos`     | `documentos.controller`     | DocumentoCliente, TipoDocumento                                                                                                                           | 5     |
+| ClientesModule               | `clientes`       | `clientes.controller`       | Cliente, ClienteAuxiliar, ClienteObjetivoEspecifico, HistorialLaboral, InformacionIssste, RegimenPrincipal, LeyProbable, Afore, ObjetivoEspecificoInicial | 19    |
+| DocumentosModule             | `documentos`     | `documentos.controller`     | DocumentoCliente, TipoDocumento                                                                                                                           | 6     |
 | EtapasModule                 | `etapas`         | `etapas.controller`         | EtapaProceso, EtapaTramite, EtapaTramiteHistorial, EstatusTramite                                                                                         | 6     |
 | TramitesModule               | `tramites`       | `tramites.controller`       | CorreccionCliente, TipoCorreccion, UnificacionNssDetalle, UnificacionNssSecundario                                                                        | 9     |
 | DiagnosticosModule           | `diagnosticos`   | `diagnosticos.controller`   | 25 entidades de F1 (diagnóstico, catálogos, puentes, escenarios, plan de acción, situación patrimonial…)                                                  | 27    |
 | AgendaModule                 | `agenda`         | `agenda.controller`         | EventoAgenda                                                                                                                                              | 4     |
 | AvisosModule                 | `avisos`         | `avisos.controller`         | Aviso                                                                                                                                                     | 3     |
-| ReportesModule               | `reportes`       | `reportes.controller`       | —                                                                                                                                                         | 1     |
+| ReportesModule               | `reportes`       | `reportes.controller`       | — (`F0PdfService` lee clientes, catálogos e historial laboral)                                                                                            | 1     |
 | EtlModule                    | `etl`            | `etl.controller`            | —                                                                                                                                                         | 1     |
 | (AppModule)                  | `health`         | `health.controller`         | —                                                                                                                                                         | 1     |
 
-Total: 49 entidades mapeadas, 81 rutas. Cada módulo sigue el patrón controlador → servicio → entidades/DTO.
+Total: 49 entidades mapeadas, 83 rutas. Cada módulo sigue el patrón controlador → servicio → entidades/DTO.
 
 Transversal en `AppModule`: `ConfigModule` global con `validarEntorno` (en producción no arranca si `JWT_SECRET` falta o es el marcador del ejemplo), `TypeOrmModule`, y `AllExceptionsFilter` (respuesta de error uniforme `{ statusCode, error, message, path, timestamp }`). En `configureApp`: prefijo global, `ValidationPipe` (`whitelist`, `forbidNonWhitelisted`, `transform`) y `ClassSerializerInterceptor` (`usuarios.contrasena_hash` nunca sale en una respuesta).
 
 ## Estado de implementación
 
-| Capa                                                   | Estado                                                             |
-| ------------------------------------------------------ | ------------------------------------------------------------------ |
-| Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                                              |
-| Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 81 rutas (matriz probada)                  |
-| Lógica de negocio de los servicios                     | **Parcial**: usuarios y roles hechos; 73 de 81 rutas responden 501 |
-| Subida a Spaces, reportes, ETL                         | Esbozo                                                             |
+**35 de 83 rutas implementadas; las otras 48 responden 501.** El detalle por ruta está en `endpoints.md`; los resultados de las pruebas, en `pruebas-resultados.md` (lo genera `node scripts/reporte-pruebas.mjs`).
+
+| Módulo         | Implementadas | Qué hay                                                                                                                                           | Pendiente (501)                                                             |
+| -------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| usuarios-roles | 6 de 6        | Alta, edición y baja con contraseña cifrada (bcrypt), catálogos de roles y tipos de asesor                                                        | —                                                                           |
+| clientes       | 10 de 19      | Listado por rol, alta con sus 16 etapas, edición, reasignación, autorizaciones del auxiliar, historial laboral, objetivos específicos, PDF del F0 | ISSSTE, listado de auxiliares, lecturas de historial y objetivos, catálogos |
+| etapas         | 3 de 6        | Lista de las 16 etapas con avance global, cambio de estatus con bitácora atómica, historial de solo lectura                                       | Alta de etapa, catálogos de etapas y estatus                                |
+| tramites       | 3 de 9        | Correcciones F2 (se aplican al expediente al finalizar la etapa 2), unificación de NSS F3 con secundarios                                         | Listados, detalle y edición de correcciones, catálogo                       |
+| diagnosticos   | 1 de 27       | Dictamen de recuperación de semanas (F4) que actualiza `semanas_imss_reconocidas`                                                                 | El resto del diagnóstico especializado F1                                   |
+| agenda         | 4 de 4        | Alta, consulta y reagendado por rol                                                                                                               | —                                                                           |
+| avisos         | 2 de 3        | Bandeja generada al consultar, sin duplicados; atender                                                                                            | Obtener un aviso                                                            |
+| documentos     | 5 de 6        | Subida multipart con reemplazo, revisión, descarga, lista y detalle; almacenamiento local o Spaces                                                | Catálogo de tipos de documento                                              |
+| reportes, etl  | 0 de 2        | Esbozo                                                                                                                                            | Reportes y ETL desde Excel                                                  |
+| health         | 1 de 1        | `GET /health` (pública)                                                                                                                           | —                                                                           |
+
+| Capa transversal                                       | Estado                                                                                                         |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                                                                                          |
+| Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 83 rutas (matriz probada)                                                              |
+| Pruebas                                                | 33 suites, 231 pruebas (todas pasan), 0 `it.todo`; casos CP-01 a CP-55 documentados en `pruebas-resultados.md` |
 
 ## Control de acceso
 

@@ -108,6 +108,7 @@ pnpm dev     # api (http://localhost:3001) y web (http://localhost:3000)
 pnpm build
 pnpm lint
 pnpm test
+pnpm test:reporte   # corre las pruebas y escribe docs/pruebas-resultados.md
 pnpm format  # aplica Prettier
 ```
 
