@@ -9,15 +9,16 @@ const partes = [];
 process.stdin.on('data', (p) => partes.push(p)).on('end', async () => {
   const lector = new PDFParse({ data: new Uint8Array(Buffer.concat(partes)) });
   try {
-    const { text } = await lector.getText();
-    process.stdout.write(JSON.stringify(text));
+    const { pages } = await lector.getText();
+    process.stdout.write(JSON.stringify(pages.map((p) => p.text)));
   } finally {
     await lector.destroy();
   }
 });
 `;
 
-export function textoDePdf(pdf: Buffer): Promise<string> {
+// Texto de cada página del PDF, en orden.
+export function textosPorPagina(pdf: Buffer): Promise<string[]> {
   return new Promise((resolver, rechazar) => {
     // apps/api: desde ahí se resuelve pdf-parse.
     const proceso = spawn(process.execPath, ['-e', SCRIPT], {
@@ -33,8 +34,13 @@ export function textoDePdf(pdf: Buffer): Promise<string> {
         rechazar(new Error(`pdf-parse falló (${codigo}): ${Buffer.concat(errores).toString()}`));
         return;
       }
-      resolver(JSON.parse(Buffer.concat(salida).toString('utf8')) as string);
+      resolver(JSON.parse(Buffer.concat(salida).toString('utf8')) as string[]);
     });
     proceso.stdin.end(pdf);
   });
+}
+
+// Todo el texto del PDF junto.
+export async function textoDePdf(pdf: Buffer): Promise<string> {
+  return (await textosPorPagina(pdf)).join('\n');
 }

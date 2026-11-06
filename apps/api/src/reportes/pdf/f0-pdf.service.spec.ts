@@ -10,7 +10,7 @@ import {
   limpiarDatosClientes,
   UsuarioPrueba,
 } from '../../common/testing/datos-clientes';
-import { textoDePdf as textoDe } from '../../common/testing/texto-de-pdf';
+import { textoDePdf as textoDe, textosPorPagina } from '../../common/testing/texto-de-pdf';
 import { F0PdfService } from './f0-pdf.service';
 
 // Generación del formato F0 contra la base de pruebas real; el texto se lee de vuelta con pdf-parse.
@@ -80,6 +80,69 @@ describeConBd('F0PdfService (base de pruebas)', () => {
     const texto = await textoDe(pdf);
     expect(texto).toContain('Cliente');
     expect(texto).not.toMatch(/undefined|null|NaN/);
+  });
+
+  it('el PDF replica el formato oficial: 2 páginas, encabezado en cada una y las 6 secciones', async () => {
+    const clienteId = await insertarCliente(ctx.ds, catalogo, asesor.id);
+    const paginas = await textosPorPagina(await servicio.generar(clienteId));
+    expect(paginas).toHaveLength(2);
+
+    const [p1, p2] = paginas;
+    for (const pagina of paginas) {
+      expect(pagina).toContain('CONSULTORÍA EN PENSIONES');
+      expect(pagina).toContain('DIAGNÓSTICO INICIAL');
+      expect(pagina).toContain('UNIDAD PREMIUM');
+      expect(pagina).toContain('Recuperación de Semanas');
+    }
+    for (const texto of [
+      '1. Datos Generales del Cliente (asegurado)',
+      'Nombre completo:',
+      'Régimen IMSS (73 / 97):',
+      'Régimen ISSSTE (Cuentas Ind / Décimo Trans.)',
+      'Subdelegación IMSS probable:',
+      '2. Documentación inicial',
+      'Constancia de Semanas Cotizadas',
+      '3. Diagnóstico Inicial',
+      'Pensionarse lo antes posible',
+      'Mejorar monto de pensión',
+      'Negativa de pensión',
+      '13. Juicio y jurisdicción',
+    ]) {
+      expect(p1).toContain(texto);
+    }
+    for (const texto of [
+      '4. Correcciones y Validaciones',
+      'Corrección CURP',
+      'Actualización IMSS',
+      '5. Historial Laboral',
+      'Semanas reconocidas IMSS',
+      'Vigencia de derechos',
+      '6. Observaciones Generales',
+      'NOTAS IMPORTANTES:',
+      'Documento diseñado para control interno y seguimiento de clientes.',
+      'asistentehega@gmail.com',
+      'https://h3ga.vercel.app/',
+    ]) {
+      expect(p2).toContain(texto);
+    }
+    expect(p1 + p2).not.toContain('Régimn');
+  });
+
+  it('observaciones muy largas hacen crecer el formato a una tercera página sin perder las notas', async () => {
+    const largo = Array.from(
+      { length: 60 },
+      (_, i) => `Observación ficticia número ${i + 1}.`,
+    ).join(' ');
+    const clienteId = await insertarCliente(ctx.ds, catalogo, asesor.id, {
+      observaciones_generales: largo,
+    });
+    const paginas = await textosPorPagina(await servicio.generar(clienteId));
+    expect(paginas.length).toBeGreaterThanOrEqual(3);
+    // Los renglones se cortan donde cae el margen: se compara con los espacios normalizados.
+    const todo = paginas.join('\n').replace(/\s+/g, ' ');
+    expect(todo).toContain('Observación ficticia número 1.');
+    expect(todo).toContain('Observación ficticia número 60.');
+    expect(todo).toContain('NOTAS IMPORTANTES:');
   });
 
   it('un cliente que no existe responde 404', async () => {
