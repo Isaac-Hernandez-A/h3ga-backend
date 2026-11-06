@@ -200,10 +200,40 @@ export async function insertarDiagnosticoF1(
   return filas[0].id;
 }
 
+// Inserta un evento de agenda directamente en la base. Devuelve su id.
+export async function insertarEvento(
+  ds: DataSource,
+  clienteId: string,
+  asesorId: string,
+  fecha: string,
+  estatus: 'pendiente' | 'cumplido' | 'reagendado' | 'cancelado' = 'pendiente',
+): Promise<string> {
+  const filas = await ds.query<{ id: string }[]>(
+    `INSERT INTO eventos_agenda (asesor_id, cliente_id, fecha, hora, motivo, estatus)
+     VALUES ($1, $2, $3, '10:00', 'Cita ficticia de prueba', $4) RETURNING id`,
+    [asesorId, clienteId, fecha, estatus],
+  );
+  return filas[0].id;
+}
+
+export async function fijarCompromiso(
+  ds: DataSource,
+  etapaId: string,
+  fecha: string,
+): Promise<void> {
+  await ds.query('UPDATE etapas_tramite SET fecha_compromiso = $2 WHERE id = $1', [etapaId, fecha]);
+}
+
 // Borra, en orden de dependencias, lo creado por las pruebas (solo filas con la marca de prueba).
 export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   const clientes = `(SELECT id FROM clientes WHERE referido_por = '${MARCA_CLIENTE}')`;
   const usuarios = `(SELECT id FROM usuarios WHERE correo_electronico LIKE '%${DOMINIO_USUARIOS}')`;
+  const eventos = `(SELECT id FROM eventos_agenda WHERE cliente_id IN ${clientes})`;
+  const etapasDeAvisos = `(SELECT id FROM etapas_tramite WHERE cliente_id IN ${clientes})`;
+  await ds.query(
+    `DELETE FROM avisos WHERE evento_id IN ${eventos} OR etapa_tramite_id IN ${etapasDeAvisos}`,
+  );
+  await ds.query(`DELETE FROM eventos_agenda WHERE cliente_id IN ${clientes}`);
   const diagnosticos = `(SELECT id FROM diagnostico_especializado WHERE cliente_id IN ${clientes})`;
   const correcciones = `(SELECT id FROM correcciones_cliente WHERE cliente_id IN ${clientes})`;
   const unificaciones = `(SELECT id FROM unificacion_nss_detalle WHERE correccion_id IN ${correcciones})`;

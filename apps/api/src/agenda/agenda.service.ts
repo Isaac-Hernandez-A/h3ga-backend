@@ -1,24 +1,77 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
+import { aplicarAlcanceClientes } from '../common/auth/clientes-accesibles';
+import { traducirErrorBd } from '../common/database/errores-postgres';
+import { Cliente } from '../clientes/entities/cliente.entity';
 import { CreateEventoAgendaDto } from './dto/create-evento-agenda.dto';
 import { ListarAgendaQueryDto } from './dto/listar-agenda-query.dto';
 import { UpdateEventoAgendaDto } from './dto/update-evento-agenda.dto';
 import { EventoAgenda } from './entities/evento-agenda.entity';
 
+const ERRORES_EVENTO = {
+  llaveForanea: 'El cliente indicado no existe.',
+  dato: 'La fecha u hora del evento no es válida.',
+};
+
 @Injectable()
 export class AgendaService {
-  async listarEventos(consulta: ListarAgendaQueryDto): Promise<EventoAgenda[]> {
-    throw new NotImplementedException();
+  constructor(@InjectRepository(EventoAgenda) private readonly eventos: Repository<EventoAgenda>) {}
+
+  // Eventos de los clientes dentro del alcance del usuario (asesor: sus clientes; auxiliar: los
+  // autorizados activos; supervisor: todos). Opcionalmente filtra por fecha y estatus.
+  async listarEventos(
+    usuario: AuthenticatedUser,
+    consulta: ListarAgendaQueryDto,
+  ): Promise<EventoAgenda[]> {
+    const qb = this.conAlcance(usuario);
+    if (consulta.fecha) qb.andWhere('e.fecha = :fecha', { fecha: consulta.fecha });
+    if (consulta.estatus) qb.andWhere('e.estatus = :estatus', { estatus: consulta.estatus });
+    return qb
+      .orderBy('e.fecha', 'ASC')
+      .addOrderBy('e.hora', 'ASC')
+      .addOrderBy('e.id', 'ASC')
+      .getMany();
   }
 
-  async obtenerEvento(eventoId: string): Promise<EventoAgenda> {
-    throw new NotImplementedException();
+  // 404 si el evento no existe o es de un cliente fuera del alcance (mismo mensaje en ambos casos).
+  async obtenerEvento(usuario: AuthenticatedUser, eventoId: string): Promise<EventoAgenda> {
+    const evento = await this.conAlcance(usuario)
+      .andWhere('e.id = :eventoId', { eventoId })
+      .getOne();
+    if (!evento) throw new NotFoundException('Evento no encontrado.');
+    return evento;
   }
 
-  async crearEvento(dto: CreateEventoAgendaDto): Promise<EventoAgenda> {
-    throw new NotImplementedException();
+  // asesor_id sale siempre del token. El acceso al cliente lo validó ClienteAccessGuard (cliente_id
+  // del cuerpo).
+  async crearEvento(usuario: AuthenticatedUser, dto: CreateEventoAgendaDto): Promise<EventoAgenda> {
+    try {
+      return await this.eventos.save(this.eventos.create({ ...dto, asesor_id: usuario.sub }));
+    } catch (error) {
+      return traducirErrorBd(error, ERRORES_EVENTO);
+    }
   }
 
-  async actualizarEvento(eventoId: string, dto: UpdateEventoAgendaDto): Promise<EventoAgenda> {
-    throw new NotImplementedException();
+  async actualizarEvento(
+    usuario: AuthenticatedUser,
+    eventoId: string,
+    dto: UpdateEventoAgendaDto,
+  ): Promise<EventoAgenda> {
+    await this.obtenerEvento(usuario, eventoId);
+    if (Object.keys(dto).length > 0) {
+      try {
+        await this.eventos.update({ id: eventoId }, dto);
+      } catch (error) {
+        traducirErrorBd(error, ERRORES_EVENTO);
+      }
+    }
+    return this.obtenerEvento(usuario, eventoId);
+  }
+
+  private conAlcance(usuario: AuthenticatedUser) {
+    const qb = this.eventos.createQueryBuilder('e').innerJoin(Cliente, 'c', 'c.id = e.cliente_id');
+    return aplicarAlcanceClientes(qb, usuario, 'c');
   }
 }

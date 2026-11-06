@@ -2,7 +2,7 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 81 rutas.** Implementadas: 23 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial) y 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4). Las otras 58 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 81 rutas.** Implementadas: 29 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda y 2 de avisos (bandeja generada al consultar y atender). Las otras 52 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
 - **Aplicación real de los guards (las 81 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
@@ -126,20 +126,20 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## agenda
 
-| Método | Ruta                       | Descripción                             | Roles                        | Estado |
-| ------ | -------------------------- | --------------------------------------- | ---------------------------- | ------ |
-| GET    | `/api/v1/agenda`           | Listar eventos de la agenda             | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/agenda/:eventoId` | Obtener un evento                       | asesor, auxiliar, supervisor | 501    |
-| POST   | `/api/v1/agenda`           | Agendar un evento                       | asesor                       | 501    |
-| PATCH  | `/api/v1/agenda/:eventoId` | Reagendar, cumplir o cancelar un evento | asesor                       | 501    |
+| Método | Ruta                       | Descripción                             | Roles                        | Estado       |
+| ------ | -------------------------- | --------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/agenda`           | Listar eventos de la agenda             | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/agenda/:eventoId` | Obtener un evento                       | asesor, auxiliar, supervisor | Implementada |
+| POST   | `/api/v1/agenda`           | Agendar un evento                       | asesor                       | Implementada |
+| PATCH  | `/api/v1/agenda/:eventoId` | Reagendar, cumplir o cancelar un evento | asesor                       | Implementada |
 
 ## avisos
 
-| Método | Ruta                              | Descripción                   | Roles                        | Estado |
-| ------ | --------------------------------- | ----------------------------- | ---------------------------- | ------ |
-| GET    | `/api/v1/avisos`                  | Listar avisos                 | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/avisos/:avisoId`         | Obtener un aviso              | asesor, auxiliar, supervisor | 501    |
-| PATCH  | `/api/v1/avisos/:avisoId/atender` | Marcar un aviso como atendido | asesor, auxiliar, supervisor | 501    |
+| Método | Ruta                              | Descripción                   | Roles                        | Estado       |
+| ------ | --------------------------------- | ----------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/avisos`                  | Listar avisos                 | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/avisos/:avisoId`         | Obtener un aviso              | asesor, auxiliar, supervisor | 501          |
+| PATCH  | `/api/v1/avisos/:avisoId/atender` | Marcar un aviso como atendido | asesor, auxiliar, supervisor | Implementada |
 
 ## reportes
 

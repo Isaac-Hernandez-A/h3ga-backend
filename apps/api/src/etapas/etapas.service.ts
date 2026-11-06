@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
-import { fechaCancun } from '../common/fechas';
+import { fechaLocal } from '../common/fechas';
 import { TramitesService } from '../tramites/tramites.service';
 import { CambiarEstatusDto } from './dto/cambiar-estatus.dto';
 import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
@@ -105,7 +105,7 @@ export class EtapasService {
       if (cambiaEstatus) {
         cambios.estatus_id = estatusNuevoId;
         if (nuevo === 'Bloqueado') cambios.motivo_rechazo = motivo;
-        if (nuevo === 'Finalizado') cambios.fecha_completada = fechaCancun();
+        if (nuevo === 'Finalizado') cambios.fecha_completada = fechaLocal(new Date());
         if (esReactivacion(anterior, nuevo)) cambios.reactivado_en = new Date();
       }
 

@@ -1,25 +1,25 @@
 ruta,metodo,rol,codigo_esperado,codigo_obtenido
-/api/v1/agenda,GET,asesor,supera los guards,501
-/api/v1/agenda,GET,auxiliar,supera los guards,501
-/api/v1/agenda,GET,supervisor,supera los guards,501
+/api/v1/agenda,GET,asesor,supera los guards,500
+/api/v1/agenda,GET,auxiliar,supera los guards,500
+/api/v1/agenda,GET,supervisor,supera los guards,500
 /api/v1/agenda,POST,asesor,supera los guards,400
 /api/v1/agenda,POST,auxiliar,403,403
 /api/v1/agenda,POST,supervisor,403,403
-/api/v1/agenda/:eventoId,GET,asesor,supera los guards,501
-/api/v1/agenda/:eventoId,GET,auxiliar,supera los guards,501
-/api/v1/agenda/:eventoId,GET,supervisor,supera los guards,501
-/api/v1/agenda/:eventoId,PATCH,asesor,supera los guards,501
+/api/v1/agenda/:eventoId,GET,asesor,supera los guards,500
+/api/v1/agenda/:eventoId,GET,auxiliar,supera los guards,500
+/api/v1/agenda/:eventoId,GET,supervisor,supera los guards,500
+/api/v1/agenda/:eventoId,PATCH,asesor,supera los guards,500
 /api/v1/agenda/:eventoId,PATCH,auxiliar,403,403
 /api/v1/agenda/:eventoId,PATCH,supervisor,403,403
-/api/v1/avisos,GET,asesor,supera los guards,501
-/api/v1/avisos,GET,auxiliar,supera los guards,501
-/api/v1/avisos,GET,supervisor,supera los guards,501
+/api/v1/avisos,GET,asesor,supera los guards,500
+/api/v1/avisos,GET,auxiliar,supera los guards,500
+/api/v1/avisos,GET,supervisor,supera los guards,500
 /api/v1/avisos/:avisoId,GET,asesor,supera los guards,501
 /api/v1/avisos/:avisoId,GET,auxiliar,supera los guards,501
 /api/v1/avisos/:avisoId,GET,supervisor,supera los guards,501
-/api/v1/avisos/:avisoId/atender,PATCH,asesor,supera los guards,501
-/api/v1/avisos/:avisoId/atender,PATCH,auxiliar,supera los guards,501
-/api/v1/avisos/:avisoId/atender,PATCH,supervisor,supera los guards,501
+/api/v1/avisos/:avisoId/atender,PATCH,asesor,supera los guards,500
+/api/v1/avisos/:avisoId/atender,PATCH,auxiliar,supera los guards,500
+/api/v1/avisos/:avisoId/atender,PATCH,supervisor,supera los guards,500
 /api/v1/catalogos/afores,GET,asesor,supera los guards,501
 /api/v1/catalogos/afores,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/afores,GET,supervisor,supera los guards,501

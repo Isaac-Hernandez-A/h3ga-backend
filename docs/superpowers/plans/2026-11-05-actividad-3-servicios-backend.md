@@ -242,7 +242,7 @@ it('CP-43 con 1,000 eventos sembrados, agenda y avisos responden en menos de 5 s
 ```
 
 - [ ] **Paso 3:** convierte el `it.todo` de avisos en CP-42. Aplica la migración solo en la base local.
-- [ ] **Commit:** `feat(agenda,avisos): agenda por rol y avisos generados al consultar, sin duplicados`
+- [x] **Commit:** `feat(agenda,avisos): agenda por rol y avisos generados al consultar, sin duplicados`
 
 ---
 
