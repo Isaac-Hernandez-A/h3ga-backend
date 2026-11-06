@@ -180,10 +180,42 @@ export async function insertarEtapa(
   return filas[0].id;
 }
 
+// Inserta un diagnóstico especializado (F1) mínimo, con solo las columnas NOT NULL. Devuelve su id.
+export async function insertarDiagnosticoF1(
+  ds: DataSource,
+  clienteId: string,
+  asesorId: string,
+): Promise<string> {
+  const filas = await ds.query<{ id: string }[]>(
+    `INSERT INTO diagnostico_especializado
+       (cliente_id, asesor_id, cotizo_antes_julio_1997, tipo_pension_probable, edad_objetivo_pension,
+        tiene_conservacion_derechos, dentro_de_conservacion, conviene_pensionar_ahora,
+        semanas_efectivas_pension, trabaja_cuenta_propia, conclusion_modalidad_10,
+        dado_de_baja_regimen_obligatorio, conclusion_modalidad_40, justificacion_estrategia)
+     VALUES ($1, $2, false, 'vejez', 65, 'si', 'si', 'si', 500, 'no', 'aplica', 'si', 'aplica',
+             'Dato ficticio de prueba.')
+     RETURNING id`,
+    [clienteId, asesorId],
+  );
+  return filas[0].id;
+}
+
 // Borra, en orden de dependencias, lo creado por las pruebas (solo filas con la marca de prueba).
 export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   const clientes = `(SELECT id FROM clientes WHERE referido_por = '${MARCA_CLIENTE}')`;
   const usuarios = `(SELECT id FROM usuarios WHERE correo_electronico LIKE '%${DOMINIO_USUARIOS}')`;
+  const diagnosticos = `(SELECT id FROM diagnostico_especializado WHERE cliente_id IN ${clientes})`;
+  const correcciones = `(SELECT id FROM correcciones_cliente WHERE cliente_id IN ${clientes})`;
+  const unificaciones = `(SELECT id FROM unificacion_nss_detalle WHERE correccion_id IN ${correcciones})`;
+  await ds.query(
+    `DELETE FROM analisis_recuperacion_semanas WHERE diagnostico_id IN ${diagnosticos}`,
+  );
+  await ds.query(`DELETE FROM diagnostico_especializado WHERE cliente_id IN ${clientes}`);
+  await ds.query(
+    `DELETE FROM unificacion_nss_secundarios WHERE unificacion_id IN ${unificaciones}`,
+  );
+  await ds.query(`DELETE FROM unificacion_nss_detalle WHERE correccion_id IN ${correcciones}`);
+  await ds.query(`DELETE FROM correcciones_cliente WHERE cliente_id IN ${clientes}`);
   const etapas = `(SELECT id FROM etapas_tramite WHERE cliente_id IN ${clientes})`;
   await ds.query(`DELETE FROM etapas_tramite_historial WHERE etapa_tramite_id IN ${etapas}`);
   await ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN ${clientes}`);

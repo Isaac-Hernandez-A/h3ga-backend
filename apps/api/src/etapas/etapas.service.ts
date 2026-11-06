@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { fechaCancun } from '../common/fechas';
+import { TramitesService } from '../tramites/tramites.service';
 import { CambiarEstatusDto } from './dto/cambiar-estatus.dto';
 import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
 import { EtapasClienteRespuesta } from './dto/etapas-cliente-respuesta.dto';
@@ -30,6 +31,7 @@ export class EtapasService {
     @InjectRepository(EtapaTramiteHistorial)
     private readonly historial: Repository<EtapaTramiteHistorial>,
     private readonly ds: DataSource,
+    private readonly tramites: TramitesService,
   ) {}
 
   // Las etapas del cliente en orden de paso (0 a 15), con nombre del catálogo, y su avance global.
@@ -117,6 +119,14 @@ export class EtapasService {
           cambiado_por: usuario.sub,
           fecha_cambio: new Date(),
         });
+      }
+      // D2: al finalizar la etapa 2 (corrección de datos personales) las correcciones F2 se copian al
+      // expediente, dentro de esta misma transacción.
+      if (cambiaEstatus && nuevo === 'Finalizado') {
+        const paso = await manager.findOneByOrFail(EtapaProceso, { id: etapa.etapa_id });
+        if (paso.numero_paso === 2) {
+          await this.tramites.aplicarCorreccionesAlExpediente(manager, clienteId);
+        }
       }
       return manager.findOneByOrFail(EtapaTramite, { id: etapa.id });
     });

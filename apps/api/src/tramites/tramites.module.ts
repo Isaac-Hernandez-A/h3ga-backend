@@ -18,6 +18,6 @@ import { UnificacionNssSecundario } from './entities/unificacion-nss-secundario.
   ],
   controllers: [TramitesController],
   providers: [TramitesService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, TramitesService],
 })
 export class TramitesModule {}

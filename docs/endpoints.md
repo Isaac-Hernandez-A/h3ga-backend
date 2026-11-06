@@ -2,7 +2,7 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 81 rutas.** Implementadas: 19 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id) y 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial). Las otras 62 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 81 rutas.** Implementadas: 23 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial) y 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4). Las otras 58 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
 - **Aplicación real de los guards (las 81 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
@@ -80,49 +80,49 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## tramites
 
-| Método | Ruta                                                                                 | Descripción                                         | Roles                        | Estado |
-| ------ | ------------------------------------------------------------------------------------ | --------------------------------------------------- | ---------------------------- | ------ |
-| GET    | `/api/v1/clientes/:clienteId/correcciones`                                           | Listar correcciones del cliente                     | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/correcciones`                                           | Registrar una corrección                            | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/correcciones/:correccionId`                             | Obtener una corrección                              | asesor                       | 501    |
-| PATCH  | `/api/v1/clientes/:clienteId/correcciones/:correccionId`                             | Actualizar una corrección                           | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss`             | Obtener el detalle de unificación de NSS            | asesor                       | 501    |
-| PUT    | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss`             | Crear o reemplazar el detalle de unificación de NSS | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios` | Listar los NSS secundarios                          | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios` | Agregar un NSS secundario                           | asesor                       | 501    |
-| GET    | `/api/v1/catalogos/tipos-correccion`                                                 | Listar tipos de corrección                          | asesor, auxiliar, supervisor | 501    |
+| Método | Ruta                                                                                 | Descripción                                         | Roles                        | Estado       |
+| ------ | ------------------------------------------------------------------------------------ | --------------------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/clientes/:clienteId/correcciones`                                           | Listar correcciones del cliente                     | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/correcciones`                                           | Registrar una corrección                            | asesor                       | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/correcciones/:correccionId`                             | Obtener una corrección                              | asesor                       | 501          |
+| PATCH  | `/api/v1/clientes/:clienteId/correcciones/:correccionId`                             | Actualizar una corrección                           | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss`             | Obtener el detalle de unificación de NSS            | asesor                       | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss`             | Crear o reemplazar el detalle de unificación de NSS | asesor                       | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios` | Listar los NSS secundarios                          | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios` | Agregar un NSS secundario                           | asesor                       | Implementada |
+| GET    | `/api/v1/catalogos/tipos-correccion`                                                 | Listar tipos de corrección                          | asesor, auxiliar, supervisor | 501          |
 
 ## diagnosticos
 
-| Método | Ruta                                                                  | Descripción                                                | Roles                        | Estado |
-| ------ | --------------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------- | ------ |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico`                             | Obtener el diagnóstico especializado                       | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/diagnostico`                             | Crear el diagnóstico especializado                         | asesor                       | 501    |
-| PATCH  | `/api/v1/clientes/:clienteId/diagnostico`                             | Actualizar el diagnóstico especializado                    | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas`        | Obtener el análisis de recuperación de semanas             | asesor                       | 501    |
-| PUT    | `/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas`        | Crear o reemplazar el análisis de recuperación de semanas  | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo`    | Obtener el análisis de Modalidad 40 retroactiva            | asesor                       | 501    |
-| PUT    | `/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo`    | Crear o reemplazar el análisis de Modalidad 40 retroactiva | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico/escenarios`                  | Listar los escenarios de pensión                           | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/diagnostico/escenarios`                  | Agregar un escenario de pensión                            | asesor                       | 501    |
-| PATCH  | `/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId`     | Actualizar un escenario de pensión                         | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/periodos-inconsistencias`                | Listar los periodos con inconsistencias                    | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/periodos-inconsistencias`                | Agregar un periodo con inconsistencia                      | asesor                       | 501    |
-| PATCH  | `/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId`     | Actualizar un periodo con inconsistencia                   | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico/plan-accion`                 | Listar el plan de acción                                   | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/diagnostico/plan-accion`                 | Agregar una acción al plan                                 | asesor                       | 501    |
-| PATCH  | `/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId`   | Actualizar una acción del plan                             | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial`       | Obtener la situación patrimonial                           | asesor                       | 501    |
-| PUT    | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial`       | Crear o reemplazar la situación patrimonial                | asesor                       | 501    |
-| GET    | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos` | Listar los hijos de la situación patrimonial               | asesor                       | 501    |
-| POST   | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos` | Agregar un hijo a la situación patrimonial                 | asesor                       | 501    |
-| GET    | `/api/v1/catalogos/estrategias-recomendadas`                          | Listar estrategias recomendadas                            | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/objetivos-diagnostico`                             | Listar objetivos del diagnóstico                           | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/tipos-inconsistencia`                              | Listar tipos de inconsistencia detectada                   | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/tipos-gestion-recuperacion`                        | Listar tipos de gestión de recuperación                    | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/tipos-evidencia-recuperacion`                      | Listar tipos de evidencia de recuperación                  | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/objetivos-modalidad-10`                            | Listar objetivos de Modalidad 10                           | asesor, auxiliar, supervisor | 501    |
-| GET    | `/api/v1/catalogos/objetivos-modalidad-40`                            | Listar objetivos de Modalidad 40                           | asesor, auxiliar, supervisor | 501    |
+| Método | Ruta                                                                  | Descripción                                                | Roles                        | Estado       |
+| ------ | --------------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico`                             | Obtener el diagnóstico especializado                       | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/diagnostico`                             | Crear el diagnóstico especializado                         | asesor                       | 501          |
+| PATCH  | `/api/v1/clientes/:clienteId/diagnostico`                             | Actualizar el diagnóstico especializado                    | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas`        | Obtener el análisis de recuperación de semanas             | asesor                       | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas`        | Crear o reemplazar el análisis de recuperación de semanas  | asesor                       | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo`    | Obtener el análisis de Modalidad 40 retroactiva            | asesor                       | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo`    | Crear o reemplazar el análisis de Modalidad 40 retroactiva | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico/escenarios`                  | Listar los escenarios de pensión                           | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/diagnostico/escenarios`                  | Agregar un escenario de pensión                            | asesor                       | 501          |
+| PATCH  | `/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId`     | Actualizar un escenario de pensión                         | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/periodos-inconsistencias`                | Listar los periodos con inconsistencias                    | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/periodos-inconsistencias`                | Agregar un periodo con inconsistencia                      | asesor                       | 501          |
+| PATCH  | `/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId`     | Actualizar un periodo con inconsistencia                   | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico/plan-accion`                 | Listar el plan de acción                                   | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/diagnostico/plan-accion`                 | Agregar una acción al plan                                 | asesor                       | 501          |
+| PATCH  | `/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId`   | Actualizar una acción del plan                             | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial`       | Obtener la situación patrimonial                           | asesor                       | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial`       | Crear o reemplazar la situación patrimonial                | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos` | Listar los hijos de la situación patrimonial               | asesor                       | 501          |
+| POST   | `/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos` | Agregar un hijo a la situación patrimonial                 | asesor                       | 501          |
+| GET    | `/api/v1/catalogos/estrategias-recomendadas`                          | Listar estrategias recomendadas                            | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/objetivos-diagnostico`                             | Listar objetivos del diagnóstico                           | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/tipos-inconsistencia`                              | Listar tipos de inconsistencia detectada                   | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/tipos-gestion-recuperacion`                        | Listar tipos de gestión de recuperación                    | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/tipos-evidencia-recuperacion`                      | Listar tipos de evidencia de recuperación                  | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/objetivos-modalidad-10`                            | Listar objetivos de Modalidad 10                           | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/objetivos-modalidad-40`                            | Listar objetivos de Modalidad 40                           | asesor, auxiliar, supervisor | 501          |
 
 ## agenda
 

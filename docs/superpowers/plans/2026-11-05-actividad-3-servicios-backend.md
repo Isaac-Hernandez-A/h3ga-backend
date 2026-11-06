@@ -210,7 +210,7 @@ it('CP-34 F4: registrar el dictamen actualiza semanas_imss_reconocidas y no toca
 it('CP-35 un asesor no registra correcciones de clientes ajenos (404)', ...)
 ```
 
-- [ ] **Commit:** `feat(tramites): correcciones F2, unificación de NSS F3 y actualización de saldo F4`
+- [x] **Commit:** `feat(tramites): correcciones F2, unificación de NSS F3 y actualización de saldo F4`
 
 ---
 
