@@ -128,6 +128,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/diagnostico,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/diagnostico,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/diagnostico,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,asesor,supera los guards,500
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,auxiliar,supera los guards,500
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,supervisor,supera los guards,500
 /api/v1/clientes/:clienteId/diagnostico/escenarios,GET,asesor,supera los guards,501
 /api/v1/clientes/:clienteId/diagnostico/escenarios,GET,auxiliar,403,403
 /api/v1/clientes/:clienteId/diagnostico/escenarios,GET,supervisor,403,403

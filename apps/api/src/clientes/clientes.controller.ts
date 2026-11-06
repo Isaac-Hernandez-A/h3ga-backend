@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Put,
+  StreamableFile,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -14,6 +15,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
@@ -38,13 +40,17 @@ import { InformacionIssste } from './entities/informacion-issste.entity';
 import { LeyProbable } from './entities/ley-probable.entity';
 import { ObjetivoEspecificoInicial } from './entities/objetivo-especifico-inicial.entity';
 import { RegimenPrincipal } from './entities/regimen-principal.entity';
+import { F0PdfService } from '../reportes/pdf/f0-pdf.service';
 import { ClientesService } from './clientes.service';
 
 @ApiTags('clientes')
 @UseGuards(ClienteAccessGuard)
 @Controller()
 export class ClientesController {
-  constructor(private readonly service: ClientesService) {}
+  constructor(
+    private readonly service: ClientesService,
+    private readonly f0Pdf: F0PdfService,
+  ) {}
 
   @Get('clientes')
   @Roles(...PERMISOS.clientes.consultar)
@@ -193,6 +199,21 @@ export class ClientesController {
     @Body() dto: ReemplazarObjetivosEspecificosDto,
   ): Promise<ClienteObjetivoEspecifico[]> {
     return this.service.reemplazarObjetivosEspecificos(clienteId, dto.objetivo_ids);
+  }
+
+  @Get('clientes/:clienteId/diagnostico-inicial/pdf')
+  @Roles(...PERMISOS.clientes.consultar)
+  @ApiOperation({ summary: 'Descargar el formato F0 (Diagnóstico Inicial) del cliente en PDF' })
+  @ApiProduces('application/pdf')
+  @ApiOkResponse({ description: 'El PDF del formato F0.' })
+  @ApiNotFoundResponse({ description: 'El cliente no existe o el usuario no tiene acceso a él.' })
+  async descargarF0(@Param('clienteId', ParseUUIDPipe) clienteId: string): Promise<StreamableFile> {
+    const pdf = await this.f0Pdf.generar(clienteId);
+    return new StreamableFile(pdf, {
+      type: 'application/pdf',
+      disposition: `attachment; filename="F0-${clienteId}.pdf"`,
+      length: pdf.length,
+    });
   }
 
   @Get('catalogos/regimenes')

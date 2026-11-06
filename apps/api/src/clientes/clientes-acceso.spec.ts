@@ -9,6 +9,7 @@ import { configureApp } from '../app.setup';
 import { Rol } from '../common/auth/authenticated-user';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 import { RolesGuard } from '../common/auth/roles.guard';
+import { F0PdfService } from '../reportes/pdf/f0-pdf.service';
 import { ClientesController } from './clientes.controller';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './entities/cliente.entity';
@@ -71,6 +72,7 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
         // Dependencias del servicio que esta ruta (solo lectura) no usa.
         { provide: getRepositoryToken(HistorialLaboral), useValue: {} },
         { provide: DataSource, useValue: {} },
+        { provide: F0PdfService, useValue: {} },
       ],
     }).compile();
     app = modulo.createNestApplication();

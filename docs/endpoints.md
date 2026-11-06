@@ -2,9 +2,9 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 82 rutas.** Implementadas: 34 (`GET /health`, las 6 de `usuarios-roles` y 9 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral y objetivos específicos, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar). Las otras 48 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 83 rutas.** Implementadas: 35 (`GET /health`, las 6 de `usuarios-roles` y 10 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral, objetivos específicos y PDF del F0, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar). Las otras 48 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
-- **Aplicación real de los guards (las 82 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
+- **Aplicación real de los guards (las 83 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
 
 ## Resumen por módulo
@@ -12,7 +12,7 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 | Módulo         | Rutas |
 | -------------- | ----- |
 | usuarios-roles | 6     |
-| clientes       | 18    |
+| clientes       | 19    |
 | documentos     | 6     |
 | etapas         | 6     |
 | tramites       | 9     |
@@ -36,26 +36,27 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## clientes
 
-| Método | Ruta                                                        | Descripción                                        | Roles                        | Estado       |
-| ------ | ----------------------------------------------------------- | -------------------------------------------------- | ---------------------------- | ------------ |
-| GET    | `/api/v1/clientes`                                          | Listar clientes                                    | asesor, auxiliar, supervisor | Implementada |
-| GET    | `/api/v1/clientes/:clienteId`                               | Obtener un cliente                                 | asesor, auxiliar, supervisor | Implementada |
-| POST   | `/api/v1/clientes`                                          | Registrar un cliente                               | asesor                       | Implementada |
-| PATCH  | `/api/v1/clientes/:clienteId`                               | Actualizar un cliente                              | asesor                       | Implementada |
-| PATCH  | `/api/v1/clientes/:clienteId/asesor`                        | Reasignar el expediente del cliente a otro asesor  | supervisor                   | Implementada |
-| GET    | `/api/v1/clientes/:clienteId/auxiliares`                    | Listar auxiliares asignados al cliente             | asesor, supervisor           | 501          |
-| POST   | `/api/v1/clientes/:clienteId/auxiliares`                    | Asignar un auxiliar al cliente                     | asesor                       | Implementada |
-| PATCH  | `/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId` | Activar o desactivar la asignación de un auxiliar  | asesor                       | Implementada |
-| GET    | `/api/v1/clientes/:clienteId/historial-laboral`             | Obtener el historial laboral                       | asesor, supervisor           | 501          |
-| PUT    | `/api/v1/clientes/:clienteId/historial-laboral`             | Crear o reemplazar el historial laboral            | asesor                       | Implementada |
-| GET    | `/api/v1/clientes/:clienteId/historial-laboral/issste`      | Obtener la información ISSSTE                      | asesor, supervisor           | 501          |
-| PUT    | `/api/v1/clientes/:clienteId/historial-laboral/issste`      | Crear o reemplazar la información ISSSTE           | asesor                       | 501          |
-| GET    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Listar los objetivos específicos marcados (F0)     | asesor, supervisor           | 501          |
-| PUT    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Reemplazar los objetivos específicos marcados (F0) | asesor                       | Implementada |
-| GET    | `/api/v1/catalogos/regimenes`                               | Listar regímenes                                   | asesor, auxiliar, supervisor | 501          |
-| GET    | `/api/v1/catalogos/leyes-probables`                         | Listar leyes probables                             | asesor, auxiliar, supervisor | 501          |
-| GET    | `/api/v1/catalogos/afores`                                  | Listar AFORE                                       | asesor, auxiliar, supervisor | 501          |
-| GET    | `/api/v1/catalogos/objetivos-especificos`                   | Listar el catálogo de objetivos específicos (F0)   | asesor, auxiliar, supervisor | 501          |
+| Método | Ruta                                                        | Descripción                                          | Roles                        | Estado       |
+| ------ | ----------------------------------------------------------- | ---------------------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/clientes`                                          | Listar clientes                                      | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/clientes/:clienteId`                               | Obtener un cliente                                   | asesor, auxiliar, supervisor | Implementada |
+| POST   | `/api/v1/clientes`                                          | Registrar un cliente                                 | asesor                       | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId`                               | Actualizar un cliente                                | asesor                       | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId/asesor`                        | Reasignar el expediente del cliente a otro asesor    | supervisor                   | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/auxiliares`                    | Listar auxiliares asignados al cliente               | asesor, supervisor           | 501          |
+| POST   | `/api/v1/clientes/:clienteId/auxiliares`                    | Asignar un auxiliar al cliente                       | asesor                       | Implementada |
+| PATCH  | `/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId` | Activar o desactivar la asignación de un auxiliar    | asesor                       | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/historial-laboral`             | Obtener el historial laboral                         | asesor, supervisor           | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/historial-laboral`             | Crear o reemplazar el historial laboral              | asesor                       | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/historial-laboral/issste`      | Obtener la información ISSSTE                        | asesor, supervisor           | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/historial-laboral/issste`      | Crear o reemplazar la información ISSSTE             | asesor                       | 501          |
+| GET    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Listar los objetivos específicos marcados (F0)       | asesor, supervisor           | 501          |
+| PUT    | `/api/v1/clientes/:clienteId/objetivos-especificos`         | Reemplazar los objetivos específicos marcados (F0)   | asesor                       | Implementada |
+| GET    | `/api/v1/clientes/:clienteId/diagnostico-inicial/pdf`       | Descargar el formato F0 (Diagnóstico Inicial) en PDF | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/catalogos/regimenes`                               | Listar regímenes                                     | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/leyes-probables`                         | Listar leyes probables                               | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/afores`                                  | Listar AFORE                                         | asesor, auxiliar, supervisor | 501          |
+| GET    | `/api/v1/catalogos/objetivos-especificos`                   | Listar el catálogo de objetivos específicos (F0)     | asesor, auxiliar, supervisor | 501          |
 
 ## documentos
 

@@ -297,7 +297,7 @@ it('CP-54 mide e imprime el tiempo de generación (sin umbral)', ...)
 ```
 
 - [ ] **Paso 3:** agrega la ruta nueva a `docs/endpoints.md` y a la matriz de la Tarea 1 (ya no son 81 rutas: ajusta el total en la prueba CP-01).
-- [ ] **Commit:** `feat(pdf): generación del formato F0 en PDF`
+- [x] **Commit:** `feat(pdf): generación del formato F0 en PDF`
 
 ---
 

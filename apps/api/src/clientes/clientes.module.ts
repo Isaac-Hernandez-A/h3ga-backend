@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ReportesModule } from '../reportes/reportes.module';
 import { ClientesController } from './clientes.controller';
 import { ClientesService } from './clientes.service';
 import { Afore } from './entities/afore.entity';
@@ -14,6 +15,7 @@ import { RegimenPrincipal } from './entities/regimen-principal.entity';
 
 @Module({
   imports: [
+    ReportesModule,
     TypeOrmModule.forFeature([
       Afore,
       Cliente,
