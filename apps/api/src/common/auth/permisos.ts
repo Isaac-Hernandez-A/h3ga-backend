@@ -15,14 +15,21 @@ const SUPERVISOR: Rol[] = ['supervisor'];
 // - etapas.leer: el supervisor las consulta (monitorea el avance de clientes y asesores).
 // - etl.importar: solo supervisor (la tabla no menciona el ETL).
 // - catalogos.leer: todos los roles (la tabla no menciona catálogos).
-// - avisos: la columna del asesor está vacía en la tabla; se confirmó que también los ve y atiende
-//   (de sus clientes).
+// - clientes.consultar: los tres roles pueden listar y ver un cliente, pero el auxiliar solo los que el
+//   asesor le autorizó. En el detalle (:clienteId) lo limita ClienteAccessGuard. El listado no pasa por
+//   ese guard: cuando se implemente, el servicio debe filtrar por rol (asesor: los suyos; auxiliar: los
+//   autorizados; supervisor: todos). El resto de las lecturas del expediente (clientes.leer) no incluye
+//   al auxiliar.
+// - avisos: se confirmó que el asesor también los ve y atiende, pero solo los de sus clientes. El
+//   servicio debe filtrar por rol (asesor: los suyos; auxiliar: los de clientes autorizados;
+//   supervisor: todos).
 export const PERMISOS_PROVISIONALES = false;
 
 export const PERMISOS = {
   catalogos: { leer: TODOS },
   usuarios: { leer: SUPERVISOR, escribir: SUPERVISOR },
   clientes: {
+    consultar: TODOS,
     leer: ASESOR_SUPERVISOR,
     crear: ASESOR,
     editar: ASESOR,

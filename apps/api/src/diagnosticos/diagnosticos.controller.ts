@@ -1,5 +1,16 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateAnalisisModalidad40RetroactivoDto } from './dto/create-analisis-modalidad40-retroactivo.dto';
@@ -32,6 +43,7 @@ import { TipoInconsistenciaDetectada } from './entities/tipo-inconsistencia-dete
 import { DiagnosticosService } from './diagnosticos.service';
 
 @ApiTags('diagnosticos')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class DiagnosticosController {
   constructor(private readonly service: DiagnosticosService) {}

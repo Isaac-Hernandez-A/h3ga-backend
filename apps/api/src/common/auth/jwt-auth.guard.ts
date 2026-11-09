@@ -1,8 +1,10 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { isUUID } from 'class-validator';
 import { AuthenticatedUser, REQUEST_USER_KEY, RequestConUsuario } from './authenticated-user';
 import { normalizarRol } from './normalizar-rol';
+import { IS_PUBLICO_KEY } from './publico.decorator';
 
 interface PeticionHttp extends RequestConUsuario {
   headers: Record<string, string | string[] | undefined>;
@@ -18,9 +20,18 @@ interface PayloadJwt {
 // No emite tokens y no consulta la base de datos: el login es de otro módulo.
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwt: JwtService) {}
+  constructor(
+    private readonly jwt: JwtService,
+    private readonly reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const esPublica = this.reflector.getAllAndOverride<boolean | undefined>(IS_PUBLICO_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (esPublica) return true;
+
     const peticion = context.switchToHttp().getRequest<PeticionHttp>();
     const token = extraerBearer(peticion.headers.authorization);
     if (!token) throw new UnauthorizedException('Token ausente.');

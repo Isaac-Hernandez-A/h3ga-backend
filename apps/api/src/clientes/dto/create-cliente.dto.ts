@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  Matches,
   MaxLength,
 } from 'class-validator';
 import {
@@ -13,6 +14,10 @@ import {
   ObjetivoCliente,
   SexoCliente,
 } from '../../common/enums/db-enums';
+
+// Estructura de la CURP (18 caracteres): 4 letras, fecha AAMMDD, sexo H/M, entidad (2 letras),
+// 3 consonantes internas, homoclave y dígito verificador.
+export const CURP_REGEX = /^[A-Z]{4}\d{6}[HM][A-Z]{2}[A-Z]{3}[A-Z0-9]\d$/;
 
 export class CreateClienteDto {
   @IsString()
@@ -30,8 +35,10 @@ export class CreateClienteDto {
   @IsString()
   telefono: string;
 
+  // Se ignora: el expediente queda a nombre del asesor que lo registra (el `sub` del token).
+  @IsOptional()
   @IsUUID()
-  asesor_id: string;
+  asesor_id?: string;
 
   @IsDateString()
   fecha_ingreso: string;
@@ -41,7 +48,7 @@ export class CreateClienteDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(18)
+  @Matches(CURP_REGEX, { message: 'curp debe tener el formato de una CURP (18 caracteres).' })
   curp?: string;
 
   @IsOptional()

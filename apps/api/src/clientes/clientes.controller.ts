@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Put,
+  StreamableFile,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -14,12 +15,13 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
-import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { CurrentUser } from '../common/auth/current-user.decorator';
 import { PERMISOS } from '../common/auth/permisos';
-import { RolesGuard } from '../common/auth/roles.guard';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateClienteAuxiliarDto } from './dto/create-cliente-auxiliar.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
@@ -38,26 +40,30 @@ import { InformacionIssste } from './entities/informacion-issste.entity';
 import { LeyProbable } from './entities/ley-probable.entity';
 import { ObjetivoEspecificoInicial } from './entities/objetivo-especifico-inicial.entity';
 import { RegimenPrincipal } from './entities/regimen-principal.entity';
+import { F0PdfService } from '../reportes/pdf/f0-pdf.service';
 import { ClientesService } from './clientes.service';
 
 @ApiTags('clientes')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class ClientesController {
-  constructor(private readonly service: ClientesService) {}
+  constructor(
+    private readonly service: ClientesService,
+    private readonly f0Pdf: F0PdfService,
+  ) {}
 
   @Get('clientes')
-  @Roles(...PERMISOS.clientes.leer)
+  @Roles(...PERMISOS.clientes.consultar)
   @ApiOperation({ summary: 'Listar clientes' })
   @ApiOkResponse({ type: Cliente, isArray: true })
-  listarClientes(): Promise<Cliente[]> {
-    return this.service.listarClientes();
+  listarClientes(@CurrentUser() usuario: AuthenticatedUser): Promise<Cliente[]> {
+    return this.service.listar(usuario);
   }
 
-  // Ruta de ejemplo del control de acceso: autenticación (JwtAuthGuard), rol (RolesGuard) y
-  // pertenencia al cliente (ClienteAccessGuard), en ese orden.
+  // Autenticación (JwtAuthGuard) y rol (RolesGuard) son globales; la pertenencia al cliente
+  // (ClienteAccessGuard) se aplica a todo el controlador.
   @Get('clientes/:clienteId')
-  @UseGuards(JwtAuthGuard, RolesGuard, ClienteAccessGuard)
-  @Roles(...PERMISOS.clientes.leer)
+  @Roles(...PERMISOS.clientes.consultar)
   @ApiOperation({ summary: 'Obtener un cliente' })
   @ApiOkResponse({ type: Cliente })
   @ApiNotFoundResponse({ description: 'El cliente no existe o el usuario no tiene acceso a él.' })
@@ -69,8 +75,11 @@ export class ClientesController {
   @Roles(...PERMISOS.clientes.crear)
   @ApiOperation({ summary: 'Registrar un cliente' })
   @ApiCreatedResponse({ type: Cliente })
-  crearCliente(@Body() dto: CreateClienteDto): Promise<Cliente> {
-    return this.service.crearCliente(dto);
+  crearCliente(
+    @CurrentUser() usuario: AuthenticatedUser,
+    @Body() dto: CreateClienteDto,
+  ): Promise<Cliente> {
+    return this.service.crear(usuario, dto);
   }
 
   @Patch('clientes/:clienteId')
@@ -81,7 +90,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: UpdateClienteDto,
   ): Promise<Cliente> {
-    return this.service.actualizarCliente(clienteId, dto);
+    return this.service.actualizar(clienteId, dto);
   }
 
   @Patch('clientes/:clienteId/asesor')
@@ -92,7 +101,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: ReasignarClienteDto,
   ): Promise<Cliente> {
-    return this.service.reasignarAsesor(clienteId, dto);
+    return this.service.reasignarAsesor(clienteId, dto.asesor_id);
   }
 
   @Get('clientes/:clienteId/auxiliares')
@@ -110,10 +119,11 @@ export class ClientesController {
   @ApiOperation({ summary: 'Asignar un auxiliar al cliente' })
   @ApiCreatedResponse({ type: ClienteAuxiliar })
   asignarAuxiliar(
+    @CurrentUser() usuario: AuthenticatedUser,
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: CreateClienteAuxiliarDto,
   ): Promise<ClienteAuxiliar> {
-    return this.service.asignarAuxiliar(clienteId, dto);
+    return this.service.autorizarAuxiliar(usuario, clienteId, dto.auxiliar_id);
   }
 
   @Patch('clientes/:clienteId/auxiliares/:clienteAuxiliarId')
@@ -125,7 +135,7 @@ export class ClientesController {
     @Param('clienteAuxiliarId', ParseUUIDPipe) clienteAuxiliarId: string,
     @Body() dto: UpdateClienteAuxiliarDto,
   ): Promise<ClienteAuxiliar> {
-    return this.service.actualizarAuxiliar(clienteId, clienteAuxiliarId, dto);
+    return this.service.cambiarAutorizacion(clienteId, clienteAuxiliarId, dto.activo);
   }
 
   @Get('clientes/:clienteId/historial-laboral')
@@ -146,7 +156,7 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: CreateHistorialLaboralDto,
   ): Promise<HistorialLaboral> {
-    return this.service.guardarHistorialLaboral(clienteId, dto);
+    return this.service.reemplazarHistorialLaboral(clienteId, dto);
   }
 
   @Get('clientes/:clienteId/historial-laboral/issste')
@@ -188,7 +198,22 @@ export class ClientesController {
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: ReemplazarObjetivosEspecificosDto,
   ): Promise<ClienteObjetivoEspecifico[]> {
-    return this.service.reemplazarObjetivosEspecificos(clienteId, dto);
+    return this.service.reemplazarObjetivosEspecificos(clienteId, dto.objetivo_ids);
+  }
+
+  @Get('clientes/:clienteId/diagnostico-inicial/pdf')
+  @Roles(...PERMISOS.clientes.consultar)
+  @ApiOperation({ summary: 'Descargar el formato F0 (Diagnóstico Inicial) del cliente en PDF' })
+  @ApiProduces('application/pdf')
+  @ApiOkResponse({ description: 'El PDF del formato F0.' })
+  @ApiNotFoundResponse({ description: 'El cliente no existe o el usuario no tiene acceso a él.' })
+  async descargarF0(@Param('clienteId', ParseUUIDPipe) clienteId: string): Promise<StreamableFile> {
+    const pdf = await this.f0Pdf.generar(clienteId);
+    return new StreamableFile(pdf, {
+      type: 'application/pdf',
+      disposition: `attachment; filename="F0-${clienteId}.pdf"`,
+      length: pdf.length,
+    });
   }
 
   @Get('catalogos/regimenes')

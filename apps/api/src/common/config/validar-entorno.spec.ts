@@ -28,3 +28,35 @@ describe('validarEntorno', () => {
     expect(() => validarEntorno({})).not.toThrow();
   });
 });
+
+describe('validarEntorno: almacenamiento de documentos', () => {
+  const spaces = {
+    SPACES_KEY: 'llave-ficticia',
+    SPACES_SECRET: 'secreto-ficticio',
+    SPACES_REGION: 'nyc3',
+    SPACES_ENDPOINT: 'https://nyc3.example.invalid',
+    SPACES_BUCKET: 'bucket-ficticio',
+  };
+
+  it('sin STORAGE_DRIVER o con local no exige variables de Spaces', () => {
+    expect(() => validarEntorno({})).not.toThrow();
+    expect(() => validarEntorno({ STORAGE_DRIVER: 'local' })).not.toThrow();
+  });
+
+  it('un STORAGE_DRIVER desconocido no arranca', () => {
+    expect(() => validarEntorno({ STORAGE_DRIVER: 's3' })).toThrow(/STORAGE_DRIVER/);
+  });
+
+  it('con spaces exige las cinco variables SPACES_* y nombra cuáles faltan sin mostrar valores', () => {
+    expect(() => validarEntorno({ STORAGE_DRIVER: 'spaces', ...spaces })).not.toThrow();
+    const incompleto = { ...spaces, SPACES_SECRET: undefined };
+    expect(() => validarEntorno({ STORAGE_DRIVER: 'spaces', ...incompleto })).toThrow(
+      /SPACES_SECRET/,
+    );
+    try {
+      validarEntorno({ STORAGE_DRIVER: 'spaces', ...incompleto });
+    } catch (error) {
+      expect((error as Error).message).not.toContain('llave-ficticia');
+    }
+  });
+});

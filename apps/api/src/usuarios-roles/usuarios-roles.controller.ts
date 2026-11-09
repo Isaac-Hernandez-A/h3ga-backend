@@ -1,12 +1,13 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { ActualizarUsuarioDto } from './dto/actualizar-usuario.dto';
+import { CrearUsuarioDto } from './dto/crear-usuario.dto';
+import { ListarUsuariosQueryDto } from './dto/listar-usuarios-query.dto';
+import { UsuarioRespuesta } from './dto/usuario-respuesta.dto';
 import { Rol } from './entities/rol.entity';
 import { TipoAsesor } from './entities/tipo-asesor.entity';
-import { Usuario } from './entities/usuario.entity';
 import { UsuariosRolesService } from './usuarios-roles.service';
 
 @ApiTags('usuarios-roles')
@@ -17,36 +18,36 @@ export class UsuariosRolesController {
   @Get('usuarios')
   @Roles(...PERMISOS.usuarios.leer)
   @ApiOperation({ summary: 'Listar usuarios' })
-  @ApiOkResponse({ type: Usuario, isArray: true })
-  listarUsuarios(): Promise<Usuario[]> {
-    return this.service.listarUsuarios();
+  @ApiOkResponse({ type: UsuarioRespuesta, isArray: true })
+  listarUsuarios(@Query() consulta: ListarUsuariosQueryDto): Promise<UsuarioRespuesta[]> {
+    return this.service.listar({ activo: consulta.activo });
   }
 
   @Get('usuarios/:usuarioId')
   @Roles(...PERMISOS.usuarios.leer)
   @ApiOperation({ summary: 'Obtener un usuario' })
-  @ApiOkResponse({ type: Usuario })
-  obtenerUsuario(@Param('usuarioId', ParseUUIDPipe) usuarioId: string): Promise<Usuario> {
-    return this.service.obtenerUsuario(usuarioId);
+  @ApiOkResponse({ type: UsuarioRespuesta })
+  obtenerUsuario(@Param('usuarioId', ParseUUIDPipe) usuarioId: string): Promise<UsuarioRespuesta> {
+    return this.service.obtener(usuarioId);
   }
 
   @Post('usuarios')
   @Roles(...PERMISOS.usuarios.escribir)
   @ApiOperation({ summary: 'Crear un usuario' })
-  @ApiCreatedResponse({ type: Usuario })
-  crearUsuario(@Body() dto: CreateUsuarioDto): Promise<Usuario> {
-    return this.service.crearUsuario(dto);
+  @ApiCreatedResponse({ type: UsuarioRespuesta })
+  crearUsuario(@Body() dto: CrearUsuarioDto): Promise<UsuarioRespuesta> {
+    return this.service.crear(dto);
   }
 
   @Patch('usuarios/:usuarioId')
   @Roles(...PERMISOS.usuarios.escribir)
   @ApiOperation({ summary: 'Actualizar o desactivar un usuario' })
-  @ApiOkResponse({ type: Usuario })
+  @ApiOkResponse({ type: UsuarioRespuesta })
   actualizarUsuario(
     @Param('usuarioId', ParseUUIDPipe) usuarioId: string,
-    @Body() dto: UpdateUsuarioDto,
-  ): Promise<Usuario> {
-    return this.service.actualizarUsuario(usuarioId, dto);
+    @Body() dto: ActualizarUsuarioDto,
+  ): Promise<UsuarioRespuesta> {
+    return this.service.actualizar(usuarioId, dto);
   }
 
   @Get('catalogos/roles')

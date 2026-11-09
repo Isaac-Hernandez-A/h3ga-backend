@@ -1,21 +1,30 @@
 import { INestApplication } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AddressInfo } from 'node:net';
+import { DataSource } from 'typeorm';
 import { configureApp } from '../app.setup';
 import { Rol } from '../common/auth/authenticated-user';
+import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { RolesGuard } from '../common/auth/roles.guard';
+import { F0PdfService } from '../reportes/pdf/f0-pdf.service';
 import { ClientesController } from './clientes.controller';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './entities/cliente.entity';
 import { ClienteAuxiliar } from './entities/cliente-auxiliar.entity';
+import { HistorialLaboral } from './entities/historial-laboral.entity';
 
 // Prueba de la cadena JwtAuthGuard -> RolesGuard -> ClienteAccessGuard sobre GET /api/v1/clientes/:clienteId,
-// por HTTP y con repositorios simulados. Todos los valores son ficticios.
+// por HTTP y con repositorios simulados. Los tres roles pueden consultar un cliente; el auxiliar solo los
+// que tiene autorizados (registro activo en cliente_auxiliares). Todos los valores son ficticios.
 const SECRETO_PRUEBA = 'secreto-ficticio-solo-para-pruebas';
 const ASESOR_A = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 const ASESOR_B = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
 const AUXILIAR = 'a1a1a1a1-a1a1-4a1a-8a1a-a1a1a1a1a1a1';
+const AUXILIAR_INACTIVO = 'a2a2a2a2-a2a2-4a2a-8a2a-a2a2a2a2a2a2';
+const AUXILIAR_SIN_REGISTRO = 'a3a3a3a3-a3a3-4a3a-8a3a-a3a3a3a3a3a3';
 const SUPERVISOR = '55555555-5555-4555-8555-555555555555';
 const CLIENTE_DE_A = 'c1c1c1c1-c1c1-4c1c-8c1c-c1c1c1c1c1c1';
 const CLIENTE_DE_B = 'c2c2c2c2-c2c2-4c2c-8c2c-c2c2c2c2c2c2';
@@ -40,14 +49,13 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
     findOneBy: (where: object) =>
       Promise.resolve(filasClientes.find((f) => coincide(f, where)) ?? null),
   };
+  const filasAuxiliares = [
+    { cliente_id: CLIENTE_DE_A, auxiliar_id: AUXILIAR, activo: true },
+    { cliente_id: CLIENTE_DE_A, auxiliar_id: AUXILIAR_INACTIVO, activo: false },
+  ];
   const repoAuxiliares = {
-    exists: jest.fn(({ where }: { where: object }) =>
-      Promise.resolve(
-        [{ cliente_id: CLIENTE_DE_A, auxiliar_id: AUXILIAR, activo: true }].some((f) =>
-          coincide(f, where),
-        ),
-      ),
-    ),
+    exists: ({ where }: { where: object }) =>
+      Promise.resolve(filasAuxiliares.some((f) => coincide(f, where))),
   };
 
   beforeAll(async () => {
@@ -56,8 +64,15 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
       controllers: [ClientesController],
       providers: [
         ClientesService,
+        // Mismos guards globales que AppModule (JWT y roles); el de cliente va en el controlador.
+        { provide: APP_GUARD, useClass: JwtAuthGuard },
+        { provide: APP_GUARD, useClass: RolesGuard },
         { provide: getRepositoryToken(Cliente), useValue: repoClientes },
         { provide: getRepositoryToken(ClienteAuxiliar), useValue: repoAuxiliares },
+        // Dependencias del servicio que esta ruta (solo lectura) no usa.
+        { provide: getRepositoryToken(HistorialLaboral), useValue: {} },
+        { provide: DataSource, useValue: {} },
+        { provide: F0PdfService, useValue: {} },
       ],
     }).compile();
     app = modulo.createNestApplication();
@@ -103,16 +118,13 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
     });
   });
 
-  describe('403: rol no permitido (Tabla 2: el auxiliar no consulta el expediente)', () => {
-    it('el auxiliar, aunque tenga autorización activa sobre el cliente', async () => {
-      repoAuxiliares.exists.mockClear();
-      expect((await pedir(CLIENTE_DE_A, como('auxiliar', AUXILIAR))).status).toBe(403);
-      // RolesGuard corta antes de que ClienteAccessGuard consulte nada.
-      expect(repoAuxiliares.exists).not.toHaveBeenCalled();
-    });
-  });
-
   describe('200: acceso permitido', () => {
+    it('el auxiliar a un cliente con autorización activa', async () => {
+      const respuesta = await pedir(CLIENTE_DE_A, como('auxiliar', AUXILIAR));
+      expect(respuesta.status).toBe(200);
+      expect(await respuesta.json()).toMatchObject({ id: CLIENTE_DE_A });
+    });
+
     it('el asesor a su propio cliente', async () => {
       const respuesta = await pedir(CLIENTE_DE_A, como('asesor', ASESOR_A));
       expect(respuesta.status).toBe(200);
@@ -126,6 +138,18 @@ describe('GET /api/v1/clientes/:clienteId (flujo de los tres guards)', () => {
   });
 
   describe('404: no se revela si el cliente existe', () => {
+    it('el auxiliar sin ningún registro de autorización sobre el cliente', async () => {
+      expect((await pedir(CLIENTE_DE_A, como('auxiliar', AUXILIAR_SIN_REGISTRO))).status).toBe(404);
+    });
+
+    it('el auxiliar con la autorización inactiva (activo = false)', async () => {
+      expect((await pedir(CLIENTE_DE_A, como('auxiliar', AUXILIAR_INACTIVO))).status).toBe(404);
+    });
+
+    it('el auxiliar con un cliente que no le autorizaron', async () => {
+      expect((await pedir(CLIENTE_DE_B, como('auxiliar', AUXILIAR))).status).toBe(404);
+    });
+
     it('el asesor con un cliente de otro asesor', async () => {
       expect((await pedir(CLIENTE_DE_B, como('asesor', ASESOR_A))).status).toBe(404);
     });

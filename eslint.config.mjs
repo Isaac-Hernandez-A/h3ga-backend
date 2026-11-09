@@ -20,7 +20,7 @@ export default tseslint.config(
     rules: { '@typescript-eslint/no-unused-vars': 'off' },
   },
   {
-    files: ['db/**/*.mjs', 'apps/api/scripts/**/*.mjs'],
+    files: ['db/**/*.mjs', 'scripts/**/*.mjs', 'apps/api/scripts/**/*.mjs'],
     languageOptions: {
       globals: { process: 'readonly', console: 'readonly', URL: 'readonly', Buffer: 'readonly' },
     },

@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 
 # Diccionario original (la fuente de verdad es docs/diccionario.md)
 docs/*.docx
+
+# Archivos subidos con STORAGE_DRIVER=local (desarrollo)
+almacenamiento/

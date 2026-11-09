@@ -1,4 +1,6 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotImplementedException } from '@nestjs/common';
+import { DataSource } from 'typeorm';
+import { Cliente } from '../clientes/entities/cliente.entity';
 import { CreateAnalisisModalidad40RetroactivoDto } from './dto/create-analisis-modalidad40-retroactivo.dto';
 import { CreateAnalisisRecuperacionSemanasDto } from './dto/create-analisis-recuperacion-semanas.dto';
 import { CreateDiagnosticoEspecializadoDto } from './dto/create-diagnostico-especializado.dto';
@@ -29,6 +31,8 @@ import { TipoInconsistenciaDetectada } from './entities/tipo-inconsistencia-dete
 
 @Injectable()
 export class DiagnosticosService {
+  constructor(private readonly ds: DataSource) {}
+
   async obtenerDiagnostico(clienteId: string): Promise<DiagnosticoEspecializado> {
     throw new NotImplementedException();
   }
@@ -51,11 +55,40 @@ export class DiagnosticosService {
     throw new NotImplementedException();
   }
 
+  // F4 (D3): guarda el dictamen (PUT idempotente, 1:1 con el diagnóstico F1) y, si trae las semanas
+  // reconocidas, actualiza clientes.semanas_imss_reconocidas en la MISMA transacción. Nunca modifica
+  // semanas_a_recuperar. Requiere que el cliente ya tenga su diagnóstico especializado.
   async guardarRecuperacionSemanas(
     clienteId: string,
     dto: CreateAnalisisRecuperacionSemanasDto,
   ): Promise<AnalisisRecuperacionSemanas> {
-    throw new NotImplementedException();
+    return this.ds.transaction(async (manager) => {
+      const diagnostico = await manager.findOneBy(DiagnosticoEspecializado, {
+        cliente_id: clienteId,
+      });
+      if (!diagnostico) {
+        throw new ConflictException('El cliente aún no tiene diagnóstico especializado (F1).');
+      }
+      await manager.upsert(
+        AnalisisRecuperacionSemanas,
+        {
+          diagnostico_id: diagnostico.id,
+          aplica: dto.aplica,
+          observaciones: dto.observaciones ?? null,
+        },
+        ['diagnostico_id'],
+      );
+      if (dto.semanas_imss_reconocidas !== undefined) {
+        await manager.update(
+          Cliente,
+          { id: clienteId },
+          { semanas_imss_reconocidas: dto.semanas_imss_reconocidas },
+        );
+      }
+      return manager.findOneByOrFail(AnalisisRecuperacionSemanas, {
+        diagnostico_id: diagnostico.id,
+      });
+    });
   }
 
   async obtenerModalidad40Retroactivo(clienteId: string): Promise<AnalisisModalidad40Retroactivo> {

@@ -1,5 +1,7 @@
 import { Controller, Get, Param, ParseUUIDPipe, Patch, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
+import { CurrentUser } from '../common/auth/current-user.decorator';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { ListarAvisosQueryDto } from './dto/listar-avisos-query.dto';
@@ -15,8 +17,11 @@ export class AvisosController {
   @Roles(...PERMISOS.avisos.leer)
   @ApiOperation({ summary: 'Listar avisos' })
   @ApiOkResponse({ type: Aviso, isArray: true })
-  listarAvisos(@Query() consulta: ListarAvisosQueryDto): Promise<Aviso[]> {
-    return this.service.listarAvisos(consulta);
+  listarAvisos(
+    @CurrentUser() usuario: AuthenticatedUser,
+    @Query() consulta: ListarAvisosQueryDto,
+  ): Promise<Aviso[]> {
+    return this.service.listar(usuario, consulta);
   }
 
   @Get('avisos/:avisoId')
@@ -31,7 +36,10 @@ export class AvisosController {
   @Roles(...PERMISOS.avisos.atender)
   @ApiOperation({ summary: 'Marcar un aviso como atendido' })
   @ApiOkResponse({ type: Aviso })
-  atenderAviso(@Param('avisoId', ParseUUIDPipe) avisoId: string): Promise<Aviso> {
-    return this.service.atenderAviso(avisoId);
+  atenderAviso(
+    @CurrentUser() usuario: AuthenticatedUser,
+    @Param('avisoId', ParseUUIDPipe) avisoId: string,
+  ): Promise<Aviso> {
+    return this.service.atender(usuario, avisoId);
   }
 }

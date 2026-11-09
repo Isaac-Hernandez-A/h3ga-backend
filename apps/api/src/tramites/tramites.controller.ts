@@ -1,5 +1,18 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
+import { CurrentUser } from '../common/auth/current-user.decorator';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { CreateCorreccionClienteDto } from './dto/create-correccion-cliente.dto';
@@ -13,6 +26,7 @@ import { UnificacionNssSecundario } from './entities/unificacion-nss-secundario.
 import { TramitesService } from './tramites.service';
 
 @ApiTags('tramites')
+@UseGuards(ClienteAccessGuard)
 @Controller()
 export class TramitesController {
   constructor(private readonly service: TramitesService) {}
@@ -32,10 +46,11 @@ export class TramitesController {
   @ApiOperation({ summary: 'Registrar una corrección' })
   @ApiCreatedResponse({ type: CorreccionCliente })
   crearCorreccion(
+    @CurrentUser() usuario: AuthenticatedUser,
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
     @Body() dto: CreateCorreccionClienteDto,
   ): Promise<CorreccionCliente> {
-    return this.service.crearCorreccion(clienteId, dto);
+    return this.service.crearCorreccion(usuario, clienteId, dto);
   }
 
   @Get('clientes/:clienteId/correcciones/:correccionId')

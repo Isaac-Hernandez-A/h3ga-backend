@@ -1,6 +1,7 @@
 import { ExecutionContext, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthenticatedUser, REQUEST_USER_KEY, Rol } from './authenticated-user';
+import { Publico } from './publico.decorator';
 import { Roles } from './roles.decorator';
 import { RolesGuard } from './roles.guard';
 
@@ -14,6 +15,9 @@ class ControladorDePrueba {
   sinNadie(): void {}
 
   sinRoles(): void {}
+
+  @Publico()
+  publica(): void {}
 }
 
 @Roles('supervisor')
@@ -65,11 +69,17 @@ describe('RolesGuard', () => {
     );
   });
 
-  it('no restringe una ruta sin @Roles', () => {
-    expect(guard.canActivate(contexto(ControladorDePrueba, 'sinRoles', como('auxiliar')))).toBe(
+  it('responde 403 en una ruta sin @Roles ni @Publico (se niega por defecto)', () => {
+    expect(() =>
+      guard.canActivate(contexto(ControladorDePrueba, 'sinRoles', como('supervisor'))),
+    ).toThrow(ForbiddenException);
+  });
+
+  it('deja pasar una ruta @Publico, con o sin usuario en la petición', () => {
+    expect(guard.canActivate(contexto(ControladorDePrueba, 'publica', como('auxiliar')))).toBe(
       true,
     );
-    expect(guard.canActivate(contexto(ControladorDePrueba, 'sinRoles'))).toBe(true);
+    expect(guard.canActivate(contexto(ControladorDePrueba, 'publica'))).toBe(true);
   });
 
   it('un @Roles() vacío no permite a nadie', () => {

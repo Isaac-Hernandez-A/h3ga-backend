@@ -18,8 +18,9 @@ interface PeticionConCliente extends RequestConUsuario {
 }
 
 // Limita el acceso por cliente en rutas con :clienteId (o cliente_id en el cuerpo). Va después de
-// JwtAuthGuard. Si el cliente no existe, no es accesible para el usuario o no se puede determinar,
-// responde 404 con el mismo mensaje: no revela si el cliente existe.
+// los guards globales (JwtAuthGuard y RolesGuard). Si el cliente no existe o no es accesible para el
+// usuario, responde 404 con el mismo mensaje: no revela si el cliente existe. Las rutas sin id de
+// cliente no se restringen.
 //  - asesor: solo clientes con clientes.asesor_id = sub.
 //  - auxiliar: solo clientes con un registro activo en cliente_auxiliares para ese auxiliar.
 //  - supervisor: todos los clientes existentes.
@@ -32,10 +33,12 @@ export class ClienteAccessGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const peticion = context.switchToHttp().getRequest<PeticionConCliente>();
+    const clienteId = peticion.params?.clienteId ?? peticion.body?.cliente_id;
+    // Se puede aplicar a todo un controlador: las rutas sin cliente (p. ej. los catálogos) se ignoran.
+    if (clienteId === undefined) return true;
+
     const usuario = peticion[REQUEST_USER_KEY];
     if (!usuario) throw new UnauthorizedException();
-
-    const clienteId = peticion.params?.clienteId ?? peticion.body?.cliente_id;
     // Se valida el formato aquí: este guard corre antes que ParseUUIDPipe y un id mal formado
     // provocaría un error de la base en lugar de un 404.
     if (typeof clienteId !== 'string' || !isUUID(clienteId)) throw noEncontrado();

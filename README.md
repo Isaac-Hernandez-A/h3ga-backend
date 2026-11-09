@@ -67,6 +67,27 @@ Pega el token en **Authorize** de <http://localhost:3001/api/docs> y prueba `GET
 
 `dev:token` se niega a ejecutarse con `NODE_ENV=production`, y la aplicación se niega a arrancar en producción si `JWT_SECRET` falta o es el valor de ejemplo.
 
+### Base de pruebas
+
+Las pruebas que necesitan PostgreSQL real (restricciones, transacciones) usan una base aparte, `h3ga_test`, nunca la de desarrollo.
+
+```bash
+pnpm db:test:prepare   # crea h3ga_test si no existe y le aplica las migraciones
+```
+
+- Define `TEST_DATABASE_URL` en `.env` (ver `.env.example`). El nombre de la base debe terminar en `_test` y el host ser local; si no, el script y las pruebas se niegan.
+- `npx jest` en `apps/api` lee esa variable del `.env`. Sin ella, las suites con base real se omiten.
+- En el CI corre sobre un PostgreSQL efímero (servicio del flujo de GitHub Actions).
+
+### Almacenamiento de documentos
+
+Los archivos de los clientes (PDF, JPG o PNG, máximo 10 MB) se guardan con `STORAGE_DRIVER`:
+
+- `local` (por defecto): en `STORAGE_LOCAL_DIR` (por defecto `./almacenamiento`, ignorado por Git). Para desarrollo y pruebas.
+- `spaces`: DigitalOcean Spaces. Exige `SPACES_KEY`, `SPACES_SECRET`, `SPACES_REGION`, `SPACES_ENDPOINT` y `SPACES_BUCKET`; si falta alguna, la API no arranca y el mensaje nombra cuáles faltan (nunca sus valores).
+
+Los valores reales de `SPACES_*` solo van en el `.env` o en las variables del servidor, nunca en el repositorio.
+
 ### Migraciones
 
 Los cambios de esquema son archivos SQL en `db/migrations`, con nombre `AAAAMMDDHHMM_descripcion.sql` (la marca de tiempo evita choques entre personas).
@@ -87,6 +108,7 @@ pnpm dev     # api (http://localhost:3001) y web (http://localhost:3000)
 pnpm build
 pnpm lint
 pnpm test
+pnpm test:reporte   # corre las pruebas y escribe docs/pruebas-resultados.md
 pnpm format  # aplica Prettier
 ```
 

@@ -134,10 +134,10 @@ describe('ClienteAccessGuard', () => {
       expect((clientes.exists as jest.Mock).mock.calls.length).toBe(antes);
     });
 
-    it('recibe 404 si la petición no trae ningún id de cliente', async () => {
-      await expect(guard.canActivate(contexto(como('supervisor', SUPERVISOR), {}))).rejects.toThrow(
-        NotFoundException,
-      );
+    it('ignora una ruta sin id de cliente: no la restringe ni consulta la base', async () => {
+      const consultasAntes = (clientes.exists as jest.Mock).mock.calls.length;
+      await expect(guard.canActivate(contexto(como('asesor', ASESOR_A), {}))).resolves.toBe(true);
+      expect((clientes.exists as jest.Mock).mock.calls.length).toBe(consultasAntes);
     });
 
     it('responde 401 si no hay usuario en la petición', async () => {
