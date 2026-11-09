@@ -1,4 +1,4 @@
-import { dentroDeVentana, fechaLocal, Reloj, ZONA } from './fechas';
+import { dentroDeVentana, fechaLocal, rangoDePeriodo, Reloj, ZONA } from './fechas';
 
 // Zona de negocio: America/Cancun (UTC-5, sin horario de verano).
 describe('fechaLocal', () => {
@@ -45,5 +45,50 @@ describe('Reloj', () => {
     const ahora = new Reloj().ahora().getTime();
     expect(ahora).toBeGreaterThanOrEqual(antes);
     expect(ahora).toBeLessThanOrEqual(Date.now());
+  });
+});
+
+describe('rangoDePeriodo', () => {
+  it('CP-56 semana de lunes a domingo y mes calendario en Cancún; domingo 23:30 pertenece a esa semana, lunes 00:00 a la siguiente', () => {
+    // Semana (lunes a domingo) de cualquier día de ella.
+    for (const dia of ['2026-11-09', '2026-11-11', '2026-11-15']) {
+      expect(rangoDePeriodo('semanal', dia)).toEqual({ desde: '2026-11-09', hasta: '2026-11-15' });
+    }
+    // Semana que cruza el fin de año.
+    expect(rangoDePeriodo('semanal', '2026-12-31')).toEqual({
+      desde: '2026-12-28',
+      hasta: '2027-01-03',
+    });
+    // Mes calendario, con febrero bisiesto y diciembre.
+    expect(rangoDePeriodo('mensual', '2026-11-11')).toEqual({
+      desde: '2026-11-01',
+      hasta: '2026-11-30',
+    });
+    expect(rangoDePeriodo('mensual', '2028-02-10')).toEqual({
+      desde: '2028-02-01',
+      hasta: '2028-02-29',
+    });
+    expect(rangoDePeriodo('mensual', '2026-12-31')).toEqual({
+      desde: '2026-12-01',
+      hasta: '2026-12-31',
+    });
+
+    // Borde de zona: domingo 8 de noviembre, 23:30 en Cancún (04:30 UTC del lunes) sigue en esa semana...
+    const domingoNoche = fechaLocal(new Date('2026-11-09T04:30:00Z'));
+    expect(rangoDePeriodo('semanal', domingoNoche)).toEqual({
+      desde: '2026-11-02',
+      hasta: '2026-11-08',
+    });
+    // ...y el lunes 9 a las 00:00 de Cancún (05:00 UTC) ya es la siguiente.
+    const lunesMadrugada = fechaLocal(new Date('2026-11-09T05:00:00Z'));
+    expect(rangoDePeriodo('semanal', lunesMadrugada)).toEqual({
+      desde: '2026-11-09',
+      hasta: '2026-11-15',
+    });
+  });
+
+  it('rechaza una fecha que no existe en el calendario', () => {
+    expect(() => rangoDePeriodo('semanal', '2026-02-30')).toThrow();
+    expect(() => rangoDePeriodo('mensual', 'no-es-fecha')).toThrow();
   });
 });

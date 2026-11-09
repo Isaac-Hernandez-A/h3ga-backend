@@ -200,6 +200,36 @@ export async function insertarDiagnosticoF1(
   return filas[0].id;
 }
 
+// Deja la etapa como Finalizada con la fecha de término indicada (AAAA-MM-DD).
+export async function marcarFinalizada(
+  ds: DataSource,
+  etapaId: string,
+  fecha: string,
+): Promise<void> {
+  await ds.query(
+    'UPDATE etapas_tramite SET estatus_id = 6, avance_porcentaje = 100, fecha_completada = $2 WHERE id = $1',
+    [etapaId, fecha],
+  );
+}
+
+// Registra una fila de la bitácora de estatus con la fecha y hora indicadas (ISO 8601 con zona).
+export async function insertarCambioDeEstatus(
+  ds: DataSource,
+  etapaId: string,
+  anteriorId: number | null,
+  nuevoId: number,
+  motivo: string | null,
+  usuarioId: string,
+  fechaCambio: string,
+): Promise<void> {
+  await ds.query(
+    `INSERT INTO etapas_tramite_historial
+       (etapa_tramite_id, estatus_anterior_id, estatus_nuevo_id, motivo_rechazo, cambiado_por, fecha_cambio)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [etapaId, anteriorId, nuevoId, motivo, usuarioId, fechaCambio],
+  );
+}
+
 // Inserta un evento de agenda directamente en la base. Devuelve su id.
 export async function insertarEvento(
   ds: DataSource,

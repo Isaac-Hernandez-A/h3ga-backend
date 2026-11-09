@@ -233,9 +233,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/health,GET,asesor,pública,200
 /api/v1/health,GET,auxiliar,pública,200
 /api/v1/health,GET,supervisor,pública,200
-/api/v1/reportes,GET,asesor,supera los guards,501
+/api/v1/reportes,GET,asesor,supera los guards,400
 /api/v1/reportes,GET,auxiliar,403,403
-/api/v1/reportes,GET,supervisor,supera los guards,501
+/api/v1/reportes,GET,supervisor,supera los guards,400
 /api/v1/usuarios,GET,asesor,403,403
 /api/v1/usuarios,GET,auxiliar,403,403
 /api/v1/usuarios,GET,supervisor,supera los guards,200

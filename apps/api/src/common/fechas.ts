@@ -40,3 +40,40 @@ export class Reloj {
     return new Date();
   }
 }
+
+export type PeriodoReporte = 'semanal' | 'mensual';
+
+// Convierte AAAA-MM-DD en milisegundos UTC; lanza si no es una fecha real del calendario.
+function aUtc(fecha: string): number {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(fecha);
+  const instante = m ? Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])) : NaN;
+  if (Number.isNaN(instante) || new Date(instante).toISOString().slice(0, 10) !== fecha) {
+    throw new Error(`Fecha inválida: "${fecha}" (se espera AAAA-MM-DD).`);
+  }
+  return instante;
+}
+
+const aTexto = (instante: number): string => new Date(instante).toISOString().slice(0, 10);
+const DIA_MS = 24 * 60 * 60 * 1000;
+
+// Suma (o resta, si es negativo) días a una fecha AAAA-MM-DD.
+export function sumarDias(fecha: string, dias: number): string {
+  return aTexto(aUtc(fecha) + dias * DIA_MS);
+}
+
+// Periodo que contiene a `fecha` (AAAA-MM-DD de Cancún): semana de lunes a domingo o mes calendario.
+export function rangoDePeriodo(
+  periodo: PeriodoReporte,
+  fecha: string,
+): { desde: string; hasta: string } {
+  const dia = aUtc(fecha);
+  if (periodo === 'semanal') {
+    const desdeSemana = dia - ((new Date(dia).getUTCDay() + 6) % 7) * DIA_MS; // getUTCDay: 0 = domingo
+    return { desde: aTexto(desdeSemana), hasta: aTexto(desdeSemana + 6 * DIA_MS) };
+  }
+  const f = new Date(dia);
+  return {
+    desde: aTexto(Date.UTC(f.getUTCFullYear(), f.getUTCMonth(), 1)),
+    hasta: aTexto(Date.UTC(f.getUTCFullYear(), f.getUTCMonth() + 1, 0)),
+  };
+}
