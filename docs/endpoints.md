@@ -2,9 +2,9 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 83 rutas.** Implementadas: 36 (`GET /health`, las 6 de `usuarios-roles` y 10 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral, objetivos específicos y PDF del F0, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar) y el reporte operativo semanal y mensual (`GET /reportes`). Las otras 47 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 84 rutas.** Implementadas: 37 (`GET /health`, las 6 de `usuarios-roles` y 10 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral, objetivos específicos y PDF del F0, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar) y el reporte operativo semanal y mensual en JSON y en PDF (`GET /reportes` y `GET /reportes/pdf`). Las otras 47 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
-- **Aplicación real de los guards (las 83 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
+- **Aplicación real de los guards (las 84 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
 
 ## Resumen por módulo
@@ -19,10 +19,10 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 | diagnosticos   | 27     | 1             | 26           |
 | agenda         | 4      | 4             | 0            |
 | avisos         | 3      | 2             | 1            |
-| reportes       | 1      | 1             | 0            |
+| reportes       | 2      | 2             | 0            |
 | etl            | 1      | 0             | 1            |
 | health         | 1      | 1             | 0            |
-| **Total**      | **83** | **36**        | **47**       |
+| **Total**      | **84** | **37**        | **47**       |
 
 ## usuarios-roles
 
@@ -146,9 +146,10 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## reportes
 
-| Método | Ruta               | Descripción                                                                                     | Roles              | Estado       |
-| ------ | ------------------ | ----------------------------------------------------------------------------------------------- | ------------------ | ------------ |
-| GET    | `/api/v1/reportes` | Reporte operativo del periodo, semanal o mensual (parámetros `periodo` y `fecha`; etapas 0 a 4) | asesor, supervisor | Implementada |
+| Método | Ruta                   | Descripción                                                                                     | Roles              | Estado       |
+| ------ | ---------------------- | ----------------------------------------------------------------------------------------------- | ------------------ | ------------ |
+| GET    | `/api/v1/reportes`     | Reporte operativo del periodo, semanal o mensual (parámetros `periodo` y `fecha`; etapas 0 a 4) | asesor, supervisor | Implementada |
+| GET    | `/api/v1/reportes/pdf` | Reporte operativo en PDF (mismos parámetros y alcance; diseño del F0)                           | asesor, supervisor | Implementada |
 
 ## etl
 

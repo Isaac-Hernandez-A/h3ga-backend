@@ -1,17 +1,21 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Query, StreamableFile } from '@nestjs/common';
+import { ApiOkResponse, ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { CurrentUser } from '../common/auth/current-user.decorator';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
 import { ConsultaReporteDto } from './dto/consulta-reporte.dto';
+import { ReportePdfService } from './pdf/reporte-pdf.service';
 import { ReporteOperativo } from './reporte-operativo';
 import { ReportesService } from './reportes.service';
 
 @ApiTags('reportes')
 @Controller()
 export class ReportesController {
-  constructor(private readonly service: ReportesService) {}
+  constructor(
+    private readonly service: ReportesService,
+    private readonly pdf: ReportePdfService,
+  ) {}
 
   @Get('reportes')
   @Roles(...PERMISOS.reportes.leer)
@@ -28,5 +32,27 @@ export class ReportesController {
     @Query() consulta: ConsultaReporteDto,
   ): Promise<ReporteOperativo> {
     return this.service.generar(usuario, consulta);
+  }
+
+  @Get('reportes/pdf')
+  @Roles(...PERMISOS.reportes.leer)
+  @ApiOperation({
+    summary: 'Reporte operativo semanal o mensual en PDF',
+    description:
+      'Mismos parámetros, alcance y números que GET /reportes, con el diseño corporativo del formato F0.',
+  })
+  @ApiProduces('application/pdf')
+  @ApiOkResponse({ description: 'El PDF del reporte.' })
+  async generarPdf(
+    @CurrentUser() usuario: AuthenticatedUser,
+    @Query() consulta: ConsultaReporteDto,
+  ): Promise<StreamableFile> {
+    const reporte = await this.service.generar(usuario, consulta);
+    const archivo = await this.pdf.generar(reporte);
+    return new StreamableFile(archivo, {
+      type: 'application/pdf',
+      disposition: `attachment; filename="Reporte-operativo-${reporte.periodo}-${reporte.desde}.pdf"`,
+      length: archivo.length,
+    });
   }
 }

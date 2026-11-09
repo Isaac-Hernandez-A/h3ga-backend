@@ -1,32 +1,24 @@
-import { join } from 'node:path';
-import PDFDocument from 'pdfkit';
 import { ModeloF0 } from './f0-modelo';
+import {
+  ANCHO,
+  AZUL_SECCION,
+  Celda,
+  crearDocumento,
+  CUERPO,
+  CURSIVA,
+  etiqueta,
+  INICIO_CUERPO,
+  LIMITE_INFERIOR,
+  MARGEN_X,
+  NEGRITA,
+  renglones,
+  tabla,
+  titulo,
+  valor,
+} from './pdf-base';
 
-// Dibuja el formato F0 "F0. Diagnóstico Inicial VF2" (Word) en PDF: carta, mismos márgenes, encabezado con
-// logo en cada página, las 6 secciones y sus tablas. Medidas tomadas del .docx (twips: 1 pt = 20 twips);
-// fuente Caladea (equivalente métrico libre de Cambria, la del formato).
-type Doc = InstanceType<typeof PDFDocument>;
-
-const FUENTES = join(__dirname, 'fuentes');
-const LOGO = join(__dirname, 'assets', 'logo-h3ga.png');
-
-const AZUL_TITULO = '#003366';
-const AZUL_SECCION = '#00468C';
-const AZUL_TABLA = '#1F4E78';
-
-const ALTO_PAGINA = 792;
-const MARGEN_X = 56.7; // 1134 twips
-const ANCHO = 498.6; // 9972 twips
-const INICIO_CUERPO = 134;
-const LIMITE_INFERIOR = ALTO_PAGINA - 45;
-const ALTO_FILA = 13.3;
-const RELLENO_X = 5.4;
-const RELLENO_Y = 0.6;
-const tw = (twips: number) => twips / 20;
-
-const CUERPO = 'Cuerpo';
-const NEGRITA = 'Negrita';
-const CURSIVA = 'Cursiva';
+// Dibuja el formato F0 "F0. Diagnóstico Inicial VF2" (Word) en PDF: las 6 secciones y sus tablas sobre las
+// piezas comunes de pdf-base (carta, márgenes, encabezado con logo, fuente Caladea).
 
 const NOTAS = [
   'Documento diseñado para control interno y seguimiento de clientes.',
@@ -34,175 +26,13 @@ const NOTAS = [
   'El presente formato es una herramienta de diagnóstico y planeación. Los cálculos son estimados, con base en la información y documentación proporcionada por el cliente y deben validarse con documentación oficial del IMSS, AFORE y, en su caso, con la resolución emitida por la autoridad competente. La recomendación puede cambiar si existen diferencias en semanas reconocidas, salario base, conservación de derechos, régimen aplicable, edad, topes legales, criterios administrativos o documentación del cliente.',
 ];
 
-interface Celda {
-  ancho: number; // twips
-  texto?: string;
-  cabecera?: boolean;
-  centrado?: boolean;
-  // Casilla a la izquierda de la celda (undefined = sin casilla) y texto que la acompaña.
-  casilla?: boolean;
-  extra?: { etiqueta: string; valor: string };
-}
-
-function encabezado(doc: Doc): void {
-  const x = MARGEN_X;
-  const ancho = 398.4; // el texto se centra a la izquierda del logo
-  doc.fillColor(AZUL_TITULO).font(NEGRITA).fontSize(22);
-  doc.text('CONSULTORÍA EN PENSIONES', x, 34, { width: ancho, align: 'center', lineBreak: false });
-  doc.font(CUERPO).fontSize(20);
-  doc.text('DIAGNÓSTICO INICIAL', x, 62, { width: ancho, align: 'center', lineBreak: false });
-  doc.font(NEGRITA).fontSize(12);
-  doc.text('UNIDAD PREMIUM', x, 87, { width: ancho, align: 'center', lineBreak: false });
-  doc.fillColor('black').font(CURSIVA).fontSize(9);
-  doc.text(
-    'Pensión IMSS/ISSSTE • Modalidad 10 • Modalidad 40 • Corrección de Datos • Recuperación de Semanas',
-    x,
-    112,
-    { width: ancho, align: 'center', lineBreak: false },
-  );
-  doc.image(LOGO, 464.6, 37, { width: 86.9 });
-  doc.x = MARGEN_X;
-  doc.y = INICIO_CUERPO;
-}
-
-function titulo(doc: Doc, y: number, texto: string): void {
-  doc.fillColor(AZUL_SECCION).font(NEGRITA).fontSize(15);
-  doc.text(texto, MARGEN_X, y, { lineBreak: false });
-  doc.fillColor('black');
-}
-
-function casilla(doc: Doc, x: number, y: number, marcada: boolean): void {
-  doc.lineWidth(0.7).strokeColor('black').rect(x, y, 8, 8).stroke();
-  if (marcada) {
-    doc
-      .lineWidth(1.2)
-      .moveTo(x + 1.6, y + 1.6)
-      .lineTo(x + 6.4, y + 6.4)
-      .stroke();
-    doc
-      .moveTo(x + 6.4, y + 1.6)
-      .lineTo(x + 1.6, y + 6.4)
-      .stroke();
-  }
-}
-
-function alturaCelda(doc: Doc, c: Celda): number {
-  const ancho = tw(c.ancho) - 2 * RELLENO_X - (c.casilla !== undefined ? 14 : 0);
-  // "No.:" con número: el número va en un segundo renglón, porque la celda del formato es muy angosta.
-  if (c.extra?.valor) return 2 * ALTO_FILA - 2;
-  if (!c.texto) return ALTO_FILA;
-  doc.font(c.cabecera ? NEGRITA : CUERPO).fontSize(10);
-  return Math.max(ALTO_FILA, doc.heightOfString(c.texto, { width: ancho }) + 2 * RELLENO_Y);
-}
-
-// Dibuja una fila de tabla en `y` y devuelve su alto. Si no cabe en la página, la pasa a la siguiente.
-function fila(
-  doc: Doc,
-  y: number,
-  celdas: Celda[],
-  nuevaPagina: () => number,
-): { y: number; alto: number } {
-  const alto = Math.max(...celdas.map((c) => alturaCelda(doc, c)));
-  if (y + alto > LIMITE_INFERIOR) y = nuevaPagina();
-  let x = MARGEN_X;
-  for (const c of celdas) {
-    const ancho = tw(c.ancho);
-    doc.lineWidth(0.5).strokeColor('black');
-    if (c.cabecera) {
-      doc.rect(x, y, ancho, alto).fillAndStroke(AZUL_TABLA, 'black');
-    } else {
-      doc.rect(x, y, ancho, alto).stroke();
-    }
-    let xTexto = x + RELLENO_X;
-    if (c.casilla !== undefined) {
-      casilla(doc, xTexto - 1, y + (ALTO_FILA - 8) / 2, c.casilla);
-      xTexto += 14;
-    }
-    doc
-      .fillColor(c.cabecera ? 'white' : 'black')
-      .font(c.cabecera ? NEGRITA : CUERPO)
-      .fontSize(10);
-    if (c.extra) {
-      // "No.:" junto a la casilla y, debajo, el número ajustado al ancho de la celda.
-      const { etiqueta: rotulo, valor: numero } = c.extra;
-      doc.text(rotulo, xTexto, y + RELLENO_Y, { lineBreak: false });
-      if (numero) {
-        const disponible = ancho - 2 * RELLENO_X;
-        let tamano = 10;
-        while (tamano > 6 && doc.fontSize(tamano).widthOfString(numero) > disponible) tamano -= 0.5;
-        doc
-          .fontSize(tamano)
-          .text(numero, x + RELLENO_X, y + RELLENO_Y + 11.5, { lineBreak: false });
-      }
-    } else if (c.texto) {
-      doc.text(c.texto, xTexto, y + RELLENO_Y, {
-        width: ancho - 2 * RELLENO_X - (c.casilla !== undefined ? 14 : 0),
-        align: c.centrado ? 'center' : 'left',
-      });
-    }
-    doc.fillColor('black');
-    x += ancho;
-  }
-  return { y, alto };
-}
-
-// Dibuja todas las filas; devuelve el borde inferior de la tabla.
-function tabla(doc: Doc, y: number, filas: Celda[][], nuevaPagina: () => number): number {
-  let actual = y;
-  for (const celdas of filas) {
-    const r = fila(doc, actual, celdas, nuevaPagina);
-    actual = r.y + r.alto;
-  }
-  return actual;
-}
-
-const etiqueta = (texto: string, ancho: number): Celda => ({ ancho, texto });
-const valor = (texto: string, ancho: number): Celda => ({ ancho, texto });
-
-// Parte `texto` en renglones que caben en `ancho` (respeta los saltos de línea).
-function renglones(doc: Doc, texto: string, ancho: number): string[] {
-  doc.font(CUERPO).fontSize(10);
-  const salida: string[] = [];
-  for (const parrafo of texto.split(/\r?\n/)) {
-    let actual = '';
-    for (const palabra of parrafo.split(/\s+/).filter((p) => p !== '')) {
-      const prueba = actual === '' ? palabra : `${actual} ${palabra}`;
-      if (actual !== '' && doc.widthOfString(prueba) > ancho) {
-        salida.push(actual);
-        actual = palabra;
-      } else {
-        actual = prueba;
-      }
-    }
-    salida.push(actual);
-  }
-  return salida;
-}
-
 export function dibujarF0(modelo: ModeloF0): Promise<Buffer> {
-  return new Promise<Buffer>((resolver, rechazar) => {
-    const doc = new PDFDocument({
-      size: 'LETTER',
-      margins: { top: INICIO_CUERPO, bottom: 45, left: MARGEN_X, right: MARGEN_X },
-      info: { Title: 'Diagnóstico Inicial (F0)', Author: 'H3GA Seguros y Pensiones' },
-    });
-    doc.registerFont(CUERPO, join(FUENTES, 'Caladea-Regular.ttf'));
-    doc.registerFont(NEGRITA, join(FUENTES, 'Caladea-Bold.ttf'));
-    doc.registerFont(CURSIVA, join(FUENTES, 'Caladea-Italic.ttf'));
-    const partes: Buffer[] = [];
-    doc.on('data', (p: Buffer) => partes.push(p));
-    doc.on('end', () => resolver(Buffer.concat(partes)));
-    doc.on('error', rechazar);
-
-    // Cada página nueva (explícita o por desbordamiento) lleva el encabezado del formato.
-    doc.on('pageAdded', () => encabezado(doc));
-    const nuevaPagina = (): number => {
-      doc.addPage();
-      return INICIO_CUERPO;
-    };
-
+  const { doc, nuevaPagina, terminado } = crearDocumento({
+    titulo: 'Diagnóstico Inicial (F0)',
+    subtitulo: 'DIAGNÓSTICO INICIAL',
+  });
+  return (async () => {
     try {
-      encabezado(doc);
       const g = modelo.datosGenerales;
 
       // ---------- 1. Datos generales ----------
@@ -461,7 +291,9 @@ export function dibujarF0(modelo: ModeloF0): Promise<Buffer> {
       }
       doc.end();
     } catch (error) {
-      rechazar(error as Error);
+      doc.end();
+      throw error;
     }
-  });
+    return terminado;
+  })();
 }

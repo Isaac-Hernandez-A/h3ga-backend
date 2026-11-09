@@ -236,6 +236,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/reportes,GET,asesor,supera los guards,400
 /api/v1/reportes,GET,auxiliar,403,403
 /api/v1/reportes,GET,supervisor,supera los guards,400
+/api/v1/reportes/pdf,GET,asesor,supera los guards,400
+/api/v1/reportes/pdf,GET,auxiliar,403,403
+/api/v1/reportes/pdf,GET,supervisor,supera los guards,400
 /api/v1/usuarios,GET,asesor,403,403
 /api/v1/usuarios,GET,auxiliar,403,403
 /api/v1/usuarios,GET,supervisor,supera los guards,200

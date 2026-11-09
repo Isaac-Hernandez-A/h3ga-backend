@@ -6,43 +6,45 @@ Generado el 2026-11-09 con `node scripts/reporte-pruebas.mjs` a partir de `jest 
 
 | Suite                                             | Pruebas | Pasan   | Fallan | Tiempo (s) |
 | ------------------------------------------------- | ------- | ------- | ------ | ---------- |
-| acceso-matriz.spec.ts                             | 7       | 7       | 0      | 32.46      |
-| agenda/agenda.e2e.spec.ts                         | 3       | 3       | 0      | 27.10      |
-| avisos/avisos.service.spec.ts                     | 7       | 7       | 0      | 29.80      |
-| clientes/cliente-auxiliar.autorizacion.spec.ts    | 4       | 4       | 0      | 3.35       |
-| clientes/clientes-acceso.spec.ts                  | 14      | 14      | 0      | 24.58      |
-| clientes/clientes.controller.roles.spec.ts        | 8       | 8       | 0      | 24.34      |
-| clientes/clientes.e2e.spec.ts                     | 10      | 10      | 0      | 28.98      |
-| clientes/clientes.service.spec.ts                 | 1       | 1       | 0      | 27.10      |
-| common/auth/cliente-access.guard.spec.ts          | 13      | 13      | 0      | 3.92       |
-| common/auth/clientes-accesibles.spec.ts           | 4       | 4       | 0      | 0.28       |
-| common/auth/dev-token.spec.ts                     | 11      | 11      | 0      | 4.45       |
-| common/auth/jwt-auth.guard.spec.ts                | 11      | 11      | 0      | 2.81       |
-| common/auth/normalizar-rol.spec.ts                | 10      | 10      | 0      | 0.32       |
-| common/auth/permisos.spec.ts                      | 4       | 4       | 0      | 0.48       |
-| common/auth/roles.guard.spec.ts                   | 9       | 9       | 0      | 2.77       |
-| common/config/validar-entorno.spec.ts             | 8       | 8       | 0      | 0.45       |
-| common/fechas.spec.ts                             | 10      | 10      | 0      | 2.11       |
-| common/seguridad/password-hasher.spec.ts          | 3       | 3       | 0      | 2.69       |
-| common/testing/bd-pruebas.spec.ts                 | 5       | 5       | 0      | 4.71       |
-| documentos/documentos.e2e.spec.ts                 | 9       | 9       | 0      | 9.32       |
-| documentos/storage/local-storage.adapter.spec.ts  | 4       | 4       | 0      | 0.58       |
-| documentos/storage/spaces-storage.adapter.spec.ts | 5       | 5       | 0      | 0.82       |
-| etapas/etapas.e2e.spec.ts                         | 6       | 6       | 0      | 29.09      |
-| etapas/etapas.service.spec.ts                     | 5       | 5       | 0      | 27.74      |
-| etapas/reglas-avance.spec.ts                      | 9       | 9       | 0      | 0.42       |
-| health/health.controller.spec.ts                  | 1       | 1       | 0      | 3.08       |
-| reporte-pruebas.spec.ts                           | 3       | 3       | 0      | 0.79       |
-| reportes/pdf/f0-modelo.spec.ts                    | 12      | 12      | 0      | 0.43       |
-| reportes/pdf/f0-pdf.e2e.spec.ts                   | 2       | 2       | 0      | 16.99      |
-| reportes/pdf/f0-pdf.service.spec.ts               | 6       | 6       | 0      | 29.53      |
-| reportes/reportes.e2e.spec.ts                     | 2       | 2       | 0      | 7.05       |
-| reportes/reportes.service.spec.ts                 | 10      | 10      | 0      | 8.61       |
-| tramites/reglas-correcciones.spec.ts              | 9       | 9       | 0      | 1.81       |
-| tramites/tramites.e2e.spec.ts                     | 11      | 11      | 0      | 30.50      |
-| usuarios-roles/usuarios-roles.e2e.spec.ts         | 11      | 11      | 0      | 29.46      |
-| usuarios-roles/usuarios-roles.service.spec.ts     | 12      | 12      | 0      | 3.25       |
-| **Total**                                         | **259** | **259** | **0**  | **422.18** |
+| acceso-matriz.spec.ts                             | 7       | 7       | 0      | 31.92      |
+| agenda/agenda.e2e.spec.ts                         | 3       | 3       | 0      | 27.80      |
+| avisos/avisos.service.spec.ts                     | 7       | 7       | 0      | 29.32      |
+| clientes/cliente-auxiliar.autorizacion.spec.ts    | 4       | 4       | 0      | 2.57       |
+| clientes/clientes-acceso.spec.ts                  | 14      | 14      | 0      | 4.62       |
+| clientes/clientes.controller.roles.spec.ts        | 8       | 8       | 0      | 4.34       |
+| clientes/clientes.e2e.spec.ts                     | 10      | 10      | 0      | 29.14      |
+| clientes/clientes.service.spec.ts                 | 1       | 1       | 0      | 25.82      |
+| common/auth/cliente-access.guard.spec.ts          | 13      | 13      | 0      | 3.45       |
+| common/auth/clientes-accesibles.spec.ts           | 4       | 4       | 0      | 0.15       |
+| common/auth/dev-token.spec.ts                     | 11      | 11      | 0      | 4.87       |
+| common/auth/jwt-auth.guard.spec.ts                | 11      | 11      | 0      | 3.35       |
+| common/auth/normalizar-rol.spec.ts                | 10      | 10      | 0      | 0.15       |
+| common/auth/permisos.spec.ts                      | 4       | 4       | 0      | 0.10       |
+| common/auth/roles.guard.spec.ts                   | 9       | 9       | 0      | 1.66       |
+| common/config/validar-entorno.spec.ts             | 8       | 8       | 0      | 0.13       |
+| common/fechas.spec.ts                             | 10      | 10      | 0      | 1.06       |
+| common/seguridad/password-hasher.spec.ts          | 3       | 3       | 0      | 1.94       |
+| common/testing/bd-pruebas.spec.ts                 | 5       | 5       | 0      | 3.86       |
+| documentos/documentos.e2e.spec.ts                 | 9       | 9       | 0      | 9.15       |
+| documentos/storage/local-storage.adapter.spec.ts  | 4       | 4       | 0      | 0.18       |
+| documentos/storage/spaces-storage.adapter.spec.ts | 5       | 5       | 0      | 0.23       |
+| etapas/etapas.e2e.spec.ts                         | 6       | 6       | 0      | 28.88      |
+| etapas/etapas.service.spec.ts                     | 5       | 5       | 0      | 27.26      |
+| etapas/reglas-avance.spec.ts                      | 9       | 9       | 0      | 0.14       |
+| health/health.controller.spec.ts                  | 1       | 1       | 0      | 3.50       |
+| reporte-pruebas.spec.ts                           | 3       | 3       | 0      | 0.48       |
+| reportes/pdf/f0-modelo.spec.ts                    | 12      | 12      | 0      | 0.15       |
+| reportes/pdf/f0-pdf.e2e.spec.ts                   | 2       | 2       | 0      | 13.58      |
+| reportes/pdf/f0-pdf.service.spec.ts               | 6       | 6       | 0      | 43.46      |
+| reportes/pdf/reporte-pdf.service.spec.ts          | 4       | 4       | 0      | 37.60      |
+| reportes/reportes-pdf.e2e.spec.ts                 | 3       | 3       | 0      | 16.72      |
+| reportes/reportes.e2e.spec.ts                     | 2       | 2       | 0      | 5.64       |
+| reportes/reportes.service.spec.ts                 | 10      | 10      | 0      | 8.47       |
+| tramites/reglas-correcciones.spec.ts              | 9       | 9       | 0      | 0.96       |
+| tramites/tramites.e2e.spec.ts                     | 11      | 11      | 0      | 29.19      |
+| usuarios-roles/usuarios-roles.e2e.spec.ts         | 11      | 11      | 0      | 27.71      |
+| usuarios-roles/usuarios-roles.service.spec.ts     | 12      | 12      | 0      | 4.10       |
+| **Total**                                         | **266** | **266** | **0**  | **433.67** |
 
 Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATABASE_URL`) cuentan en "Pruebas" pero no en "Pasan" ni "Fallan".
 
@@ -125,3 +127,7 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 | CP-61b | los motivos se ordenan por frecuencia y se limitan a los 5 más frecuentes                                                       | ✔ Pasa    |
 | CP-62  | el desglose por asesor solo aparece para el supervisor                                                                          | ✔ Pasa    |
 | CP-63  | clientes nuevos y distribución por régimen respetan el periodo y el alcance                                                     | ✔ Pasa    |
+| CP-64  | la ruta responde 200, Content-Type application/pdf y el cuerpo empieza con %PDF-                                                | ✔ Pasa    |
+| CP-65  | el texto del PDF contiene el periodo, los totales y la tasa de rechazo del reporte                                              | ✔ Pasa    |
+| CP-66  | un periodo sin datos genera el PDF sin error, con ceros                                                                         | ✔ Pasa    |
+| CP-67  | el auxiliar recibe 403 y el asesor solo obtiene un PDF con sus clientes                                                         | ✔ Pasa    |
