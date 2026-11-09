@@ -1,100 +1,39 @@
-import { Global, INestApplication, Module, RequestMethod } from '@nestjs/common';
+import { INestApplication, RequestMethod } from '@nestjs/common';
 import { METHOD_METADATA, PATH_METADATA } from '@nestjs/common/constants';
-import { ConfigModule } from '@nestjs/config';
-import { DiscoveryModule, DiscoveryService, Reflector } from '@nestjs/core';
-import { Test } from '@nestjs/testing';
+import { DiscoveryService, ModulesContainer, Reflector } from '@nestjs/core';
 import { writeFileSync } from 'node:fs';
-import { AddressInfo } from 'node:net';
 import { resolve } from 'node:path';
-import { DataSource } from 'typeorm';
-import { configureApp } from './app.setup';
-import { MODULOS_DE_DOMINIO, PROVEEDORES_GLOBALES } from './app.module';
 import { Rol } from './common/auth/authenticated-user';
-import { ControlAccesoModule } from './common/auth/control-acceso.module';
 import { IS_PUBLICO_KEY } from './common/auth/publico.decorator';
 import { ROLES_KEY } from './common/auth/roles.decorator';
+import { describeConBd, iniciarAppConBd } from './common/testing/bd-pruebas';
 import {
-  SECRETO_PRUEBA,
-  tokenConFirmaInvalida,
-  tokenDe,
-  tokenVencido,
-} from './common/testing/tokens';
-import { repositorioVacio } from './common/testing/repositorio-vacio';
-import { Cliente } from './clientes/entities/cliente.entity';
-import { ClienteAuxiliar } from './clientes/entities/cliente-auxiliar.entity';
-import { HealthController } from './health/health.controller';
+  autorizarEnBd,
+  crearUsuarioPrueba,
+  idsDeCatalogo,
+  insertarCliente,
+  limpiarDatosClientes,
+} from './common/testing/datos-clientes';
+import { tokenConFirmaInvalida, tokenDe, tokenVencido } from './common/testing/tokens';
 
 // Matriz de acceso sobre las rutas REALES del router (se descubren con DiscoveryService y los metadatos
-// de @Roles / @Publico; no hay una lista escrita a mano). Se monta la misma aplicación que AppModule
-// (mismos módulos y proveedores globales) con una base de datos simulada. Valores ficticios.
+// de @Roles / @Publico; no hay una lista escrita a mano). Se levanta AppModule completo contra la base de
+// pruebas h3ga_test con datos mínimos ficticios, de modo que los handlers reales responden (200, 400, 404 o
+// 501) y ningún caso puede terminar en 500. Se omite si no hay TEST_DATABASE_URL.
 jest.setTimeout(120_000);
 
 const TODOS: Rol[] = ['asesor', 'auxiliar', 'supervisor'];
-const ASESOR_A = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
-const ASESOR_B = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
-const AUXILIAR_OK = 'a1a1a1a1-a1a1-4a1a-8a1a-a1a1a1a1a1a1';
-const AUXILIAR_INACTIVO = 'a2a2a2a2-a2a2-4a2a-8a2a-a2a2a2a2a2a2';
-const AUXILIAR_SIN_REGISTRO = 'a3a3a3a3-a3a3-4a3a-8a3a-a3a3a3a3a3a3';
-const SUPERVISOR = '55555555-5555-4555-8555-555555555555';
-const CLIENTE_DE_A = 'c1c1c1c1-c1c1-4c1c-8c1c-c1c1c1c1c1c1';
-const CLIENTE_DE_B = 'c2c2c2c2-c2c2-4c2c-8c2c-c2c2c2c2c2c2';
+// Ids de usuarios y clientes: se crean en la base en beforeAll.
+let ASESOR_A: string;
+let ASESOR_B: string;
+let AUXILIAR_OK: string;
+let AUXILIAR_INACTIVO: string;
+let AUXILIAR_SIN_REGISTRO: string;
+let SUPERVISOR: string;
+let CLIENTE_DE_A: string;
+let CLIENTE_DE_B: string;
 const INEXISTENTE = 'c9c9c9c9-c9c9-4c9c-8c9c-c9c9c9c9c9c9';
 const OTRO_ID = '00000000-0000-4000-8000-000000000001';
-
-const coincide = (fila: object, filtro: object) =>
-  Object.entries(filtro).every(([k, v]) => (fila as Record<string, unknown>)[k] === v);
-
-const filasClientes = [
-  { id: CLIENTE_DE_A, asesor_id: ASESOR_A, nombre: 'Cliente A' },
-  { id: CLIENTE_DE_B, asesor_id: ASESOR_B, nombre: 'Cliente B' },
-];
-const filasAuxiliares = [
-  { cliente_id: CLIENTE_DE_A, auxiliar_id: AUXILIAR_OK, activo: true },
-  { cliente_id: CLIENTE_DE_A, auxiliar_id: AUXILIAR_INACTIVO, activo: false },
-];
-const repoClientes = {
-  exists: ({ where }: { where: object }) =>
-    Promise.resolve(filasClientes.some((f) => coincide(f, where))),
-  findOneBy: (where: object) =>
-    Promise.resolve(filasClientes.find((f) => coincide(f, where)) ?? null),
-};
-const repoAuxiliares = {
-  exists: ({ where }: { where: object }) =>
-    Promise.resolve(filasAuxiliares.some((f) => coincide(f, where))),
-};
-
-// Base de datos simulada: solo los repositorios que usan los guards y el servicio de ejemplo.
-const dataSourceFalso = {
-  entityMetadatas: [],
-  options: { type: 'postgres' },
-  getRepository: (entidad: unknown) =>
-    entidad === Cliente
-      ? repoClientes
-      : entidad === ClienteAuxiliar
-        ? repoAuxiliares
-        : repositorioVacio(),
-};
-
-@Global()
-@Module({ providers: [{ provide: DataSource, useValue: dataSourceFalso }], exports: [DataSource] })
-class BaseDeDatosFalsaModule {}
-
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      ignoreEnvFile: true,
-      load: [() => ({ JWT_SECRET: SECRETO_PRUEBA })],
-    }),
-    BaseDeDatosFalsaModule,
-    DiscoveryModule,
-    ControlAccesoModule,
-    ...MODULOS_DE_DOMINIO,
-  ],
-  controllers: [HealthController],
-  providers: PROVEEDORES_GLOBALES,
-})
-class AplicacionDePrueba {}
 
 interface Ruta {
   metodo: string;
@@ -115,22 +54,23 @@ interface Resultado extends Respuesta {
   esperado: string;
 }
 
-describe('Matriz de acceso (rutas reales del router)', () => {
+describeConBd('Matriz de acceso (rutas reales del router, base de pruebas)', () => {
   let app: INestApplication;
+  let limpiar: () => Promise<void>;
   let base: string;
   let rutas: Ruta[] = [];
   const resultados: Resultado[] = [];
 
-  const usuarioConAcceso: Record<Rol, string> = {
+  const usuarioConAcceso = (): Record<Rol, string> => ({
     asesor: ASESOR_A,
     auxiliar: AUXILIAR_OK,
     supervisor: SUPERVISOR,
-  };
+  });
 
   function descubrirRutas(): Ruta[] {
     const reflector = new Reflector();
     const encontradas: Ruta[] = [];
-    for (const { instance } of app.get(DiscoveryService).getControllers()) {
+    for (const { instance } of new DiscoveryService(app.get(ModulesContainer)).getControllers()) {
       if (!instance) continue;
       const clase = instance.constructor;
       const prototipo = Object.getPrototypeOf(instance) as Record<string, () => unknown>;
@@ -202,17 +142,27 @@ describe('Matriz de acceso (rutas reales del router)', () => {
     r.publica ? 'pública' : r.roles?.includes(rol) ? 'supera los guards' : '403';
 
   beforeAll(async () => {
-    const modulo = await Test.createTestingModule({ imports: [AplicacionDePrueba] }).compile();
-    app = modulo.createNestApplication();
-    configureApp(app);
-    await app.listen(0);
-    base = `http://127.0.0.1:${(app.getHttpServer().address() as AddressInfo).port}`;
+    const ctx = await iniciarAppConBd();
+    app = ctx.app;
+    base = ctx.base.replace(/\/api\/v1$/, '');
+    limpiar = () => limpiarDatosClientes(ctx.ds);
+    const catalogo = await idsDeCatalogo(ctx.ds);
+    ASESOR_A = (await crearUsuarioPrueba(ctx.ds, 'asesor')).id;
+    ASESOR_B = (await crearUsuarioPrueba(ctx.ds, 'asesor')).id;
+    AUXILIAR_OK = (await crearUsuarioPrueba(ctx.ds, 'auxiliar')).id;
+    AUXILIAR_INACTIVO = (await crearUsuarioPrueba(ctx.ds, 'auxiliar')).id;
+    AUXILIAR_SIN_REGISTRO = (await crearUsuarioPrueba(ctx.ds, 'auxiliar')).id;
+    SUPERVISOR = (await crearUsuarioPrueba(ctx.ds, 'supervisor')).id;
+    CLIENTE_DE_A = await insertarCliente(ctx.ds, catalogo, ASESOR_A);
+    CLIENTE_DE_B = await insertarCliente(ctx.ds, catalogo, ASESOR_B);
+    await autorizarEnBd(ctx.ds, CLIENTE_DE_A, AUXILIAR_OK, SUPERVISOR, true);
+    await autorizarEnBd(ctx.ds, CLIENTE_DE_A, AUXILIAR_INACTIVO, SUPERVISOR, false);
     rutas = descubrirRutas();
 
     // Cada ruta con cada rol, con un cliente al que ese rol sí tiene acceso.
     for (const ruta of rutas) {
       for (const rol of TODOS) {
-        const respuesta = await pedir(ruta, tokenDe(rol, usuarioConAcceso[rol]));
+        const respuesta = await pedir(ruta, tokenDe(rol, usuarioConAcceso()[rol]));
         resultados.push({ ruta, rol, esperado: esperadoPara(ruta, rol), ...respuesta });
       }
     }
@@ -227,6 +177,8 @@ describe('Matriz de acceso (rutas reales del router)', () => {
   });
 
   afterAll(async () => {
+    if (!app) return;
+    await limpiar();
     await app.close();
   });
 
@@ -271,6 +223,13 @@ describe('Matriz de acceso (rutas reales del router)', () => {
       .filter(({ ruta, rol }) => !ruta.publica && ruta.roles?.includes(rol))
       .filter((resultado) => bloqueada(resultado))
       .map(({ ruta, rol, estado }) => `${ruta.metodo} ${ruta.ruta} como ${rol}: ${estado}`);
+    expect(fallos).toEqual([]);
+  });
+
+  it('CP-68 ninguna combinación ruta-rol responde 500 (el handler no falla)', () => {
+    const fallos = resultados
+      .filter(({ estado }) => estado === 500)
+      .map(({ ruta, rol }) => `${ruta.metodo} ${ruta.ruta} como ${rol}`);
     expect(fallos).toEqual([]);
   });
 

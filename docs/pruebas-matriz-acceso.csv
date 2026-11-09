@@ -1,25 +1,25 @@
 ruta,metodo,rol,codigo_esperado,codigo_obtenido
-/api/v1/agenda,GET,asesor,supera los guards,500
-/api/v1/agenda,GET,auxiliar,supera los guards,500
-/api/v1/agenda,GET,supervisor,supera los guards,500
+/api/v1/agenda,GET,asesor,supera los guards,200
+/api/v1/agenda,GET,auxiliar,supera los guards,200
+/api/v1/agenda,GET,supervisor,supera los guards,200
 /api/v1/agenda,POST,asesor,supera los guards,400
 /api/v1/agenda,POST,auxiliar,403,403
 /api/v1/agenda,POST,supervisor,403,403
-/api/v1/agenda/:eventoId,GET,asesor,supera los guards,500
-/api/v1/agenda/:eventoId,GET,auxiliar,supera los guards,500
-/api/v1/agenda/:eventoId,GET,supervisor,supera los guards,500
-/api/v1/agenda/:eventoId,PATCH,asesor,supera los guards,500
+/api/v1/agenda/:eventoId,GET,asesor,supera los guards,404
+/api/v1/agenda/:eventoId,GET,auxiliar,supera los guards,404
+/api/v1/agenda/:eventoId,GET,supervisor,supera los guards,404
+/api/v1/agenda/:eventoId,PATCH,asesor,supera los guards,404
 /api/v1/agenda/:eventoId,PATCH,auxiliar,403,403
 /api/v1/agenda/:eventoId,PATCH,supervisor,403,403
-/api/v1/avisos,GET,asesor,supera los guards,500
-/api/v1/avisos,GET,auxiliar,supera los guards,500
-/api/v1/avisos,GET,supervisor,supera los guards,500
+/api/v1/avisos,GET,asesor,supera los guards,200
+/api/v1/avisos,GET,auxiliar,supera los guards,200
+/api/v1/avisos,GET,supervisor,supera los guards,200
 /api/v1/avisos/:avisoId,GET,asesor,supera los guards,501
 /api/v1/avisos/:avisoId,GET,auxiliar,supera los guards,501
 /api/v1/avisos/:avisoId,GET,supervisor,supera los guards,501
-/api/v1/avisos/:avisoId/atender,PATCH,asesor,supera los guards,500
-/api/v1/avisos/:avisoId/atender,PATCH,auxiliar,supera los guards,500
-/api/v1/avisos/:avisoId/atender,PATCH,supervisor,supera los guards,500
+/api/v1/avisos/:avisoId/atender,PATCH,asesor,supera los guards,404
+/api/v1/avisos/:avisoId/atender,PATCH,auxiliar,supera los guards,404
+/api/v1/avisos/:avisoId/atender,PATCH,supervisor,supera los guards,404
 /api/v1/catalogos/afores,GET,asesor,supera los guards,501
 /api/v1/catalogos/afores,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/afores,GET,supervisor,supera los guards,501
@@ -71,9 +71,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/catalogos/tipos-inconsistencia,GET,asesor,supera los guards,501
 /api/v1/catalogos/tipos-inconsistencia,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/tipos-inconsistencia,GET,supervisor,supera los guards,501
-/api/v1/clientes,GET,asesor,supera los guards,500
-/api/v1/clientes,GET,auxiliar,supera los guards,500
-/api/v1/clientes,GET,supervisor,supera los guards,500
+/api/v1/clientes,GET,asesor,supera los guards,200
+/api/v1/clientes,GET,auxiliar,supera los guards,200
+/api/v1/clientes,GET,supervisor,supera los guards,200
 /api/v1/clientes,POST,asesor,supera los guards,400
 /api/v1/clientes,POST,auxiliar,403,403
 /api/v1/clientes,POST,supervisor,403,403
@@ -128,9 +128,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/diagnostico,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/diagnostico,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/diagnostico,POST,supervisor,403,403
-/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,asesor,supera los guards,500
-/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,auxiliar,supera los guards,500
-/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,supervisor,supera los guards,500
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,auxiliar,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/diagnostico/escenarios,GET,asesor,supera los guards,501
 /api/v1/clientes/:clienteId/diagnostico/escenarios,GET,auxiliar,403,403
 /api/v1/clientes/:clienteId/diagnostico/escenarios,GET,supervisor,403,403
@@ -182,19 +182,19 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/documentos/:documentoId,GET,asesor,supera los guards,404
 /api/v1/clientes/:clienteId/documentos/:documentoId,GET,auxiliar,supera los guards,404
 /api/v1/clientes/:clienteId/documentos/:documentoId,GET,supervisor,supera los guards,404
-/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,asesor,supera los guards,500
-/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,auxiliar,supera los guards,500
-/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,supervisor,supera los guards,500
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,supervisor,supera los guards,404
 /api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,asesor,supera los guards,404
 /api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,auxiliar,supera los guards,404
 /api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,supervisor,supera los guards,404
-/api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,500
+/api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,200
 /api/v1/clientes/:clienteId/etapas,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,500
+/api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/etapas,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/etapas,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas,POST,supervisor,403,403
-/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,asesor,supera los guards,500
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,asesor,supera los guards,404
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,supervisor,403,403
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,asesor,supera los guards,404

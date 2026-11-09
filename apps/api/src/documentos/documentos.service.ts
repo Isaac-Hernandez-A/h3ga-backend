@@ -126,10 +126,14 @@ export class DocumentosService {
     documentoId: string,
     dto: RevisarDocumentoDto,
   ): Promise<DocumentoCliente> {
-    if (Object.keys(dto).length > 0) {
+    // El DTO validado trae todas sus propiedades (las ausentes, undefined): solo se actualiza lo enviado.
+    const cambios = Object.fromEntries(
+      Object.entries(dto).filter(([, valor]) => valor !== undefined),
+    );
+    if (Object.keys(cambios).length > 0) {
       const { affected } = await this.documentos.update(
         { id: documentoId, cliente_id: clienteId },
-        dto,
+        cambios,
       );
       if (!affected) throw new NotFoundException('Documento no encontrado.');
     }

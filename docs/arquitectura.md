@@ -67,7 +67,7 @@ Transversal en `AppModule`: `ConfigModule` global con `validarEntorno` (en produ
 | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
 | Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                                                                                          |
 | Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 84 rutas (matriz probada)                                                              |
-| Pruebas                                                | 38 suites, 266 pruebas (todas pasan), 0 `it.todo`; casos CP-01 a CP-67 documentados en `pruebas-resultados.md` |
+| Pruebas                                                | 38 suites, 267 pruebas (todas pasan), 0 `it.todo`; casos CP-01 a CP-68 documentados en `pruebas-resultados.md` |
 
 ## Control de acceso
 
