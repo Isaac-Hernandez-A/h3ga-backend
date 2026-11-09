@@ -11,7 +11,10 @@ const TAGS: Array<[string, string]> = [
     'clientes',
     'Clientes, auxiliares asignados, historial laboral y objetivos del diagnóstico inicial (F0).',
   ],
-  ['documentos', 'Documentos del cliente (los archivos viven en DigitalOcean Spaces).'],
+  [
+    'documentos',
+    'Documentos del cliente (el archivo se guarda en disco local o en DigitalOcean Spaces, según STORAGE_DRIVER).',
+  ],
   ['etapas', 'Seguimiento por etapas (0 a 15), estatus e historial de cambios.'],
   ['tramites', 'Trámites F2 a F4 (correcciones y unificación de NSS).'],
   ['diagnosticos', 'Diagnóstico especializado (F1) y sus secciones.'],
@@ -26,8 +29,9 @@ export function setupSwagger(app: INestApplication): void {
   const builder = new DocumentBuilder()
     .setTitle('H3GA API')
     .setDescription(
-      'Contrato REST del sistema H3GA Seguros y Pensiones. Las rutas están esbozadas: ' +
-        'responden 501 hasta implementar la lógica de negocio. El token JWT lo emite el módulo de login. ' +
+      'Contrato REST del sistema H3GA Seguros y Pensiones. Las rutas ya implementadas devuelven datos ' +
+        'reales; las que siguen esbozadas responden 501 (el estado de cada ruta está en docs/endpoints.md). ' +
+        'El token JWT lo emite el módulo de login. ' +
         'Para probar en desarrollo: `pnpm dev:token --rol asesor` y pegar el token en Authorize.',
     )
     .setVersion('0.1.0')

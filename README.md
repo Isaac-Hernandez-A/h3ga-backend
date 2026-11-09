@@ -114,7 +114,7 @@ pnpm format  # aplica Prettier
 
 Comprobación rápida: `GET http://localhost:3001/api/v1/health` responde `{ "status": "ok" }`.
 
-La API necesita la base de datos arriba (`pnpm db:up` y `pnpm db:migrate`). El contrato REST está en Swagger: <http://localhost:3001/api/docs>. Las rutas están esbozadas (responden 501) hasta implementar la lógica de negocio. TypeORM solo mapea tablas (`synchronize: false`); el esquema cambia únicamente con migraciones SQL.
+La API necesita la base de datos arriba (`pnpm db:up` y `pnpm db:migrate`). El contrato REST está en Swagger: <http://localhost:3001/api/docs>. Las rutas implementadas están listadas en `docs/endpoints.md`; las demás siguen esbozadas y responden 501. TypeORM solo mapea tablas (`synchronize: false`); el esquema cambia únicamente con migraciones SQL.
 
 ## Convención de ramas
 
