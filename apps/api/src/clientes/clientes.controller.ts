@@ -140,11 +140,14 @@ export class ClientesController {
 
   @Get('clientes/:clienteId/historial-laboral')
   @Roles(...PERMISOS.clientes.leer)
-  @ApiOperation({ summary: 'Obtener el historial laboral' })
+  @ApiOperation({
+    summary: 'Obtener el historial laboral',
+    description: 'Un cliente sin historial laboral responde 200 con el cuerpo vacío.',
+  })
   @ApiOkResponse({ type: HistorialLaboral })
   obtenerHistorialLaboral(
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
-  ): Promise<HistorialLaboral> {
+  ): Promise<HistorialLaboral | null> {
     return this.service.obtenerHistorialLaboral(clienteId);
   }
 
@@ -161,11 +164,14 @@ export class ClientesController {
 
   @Get('clientes/:clienteId/historial-laboral/issste')
   @Roles(...PERMISOS.clientes.leer)
-  @ApiOperation({ summary: 'Obtener la información ISSSTE' })
+  @ApiOperation({
+    summary: 'Obtener la información ISSSTE',
+    description: 'Sin historial laboral o sin información ISSSTE responde 200 con el cuerpo vacío.',
+  })
   @ApiOkResponse({ type: InformacionIssste })
   obtenerInformacionIssste(
     @Param('clienteId', ParseUUIDPipe) clienteId: string,
-  ): Promise<InformacionIssste> {
+  ): Promise<InformacionIssste | null> {
     return this.service.obtenerInformacionIssste(clienteId);
   }
 

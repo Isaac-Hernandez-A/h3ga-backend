@@ -42,7 +42,9 @@ describe('PERMISOS de las demás áreas', () => {
       catalogos: { leer: TODOS },
       usuarios: { leer: ['supervisor'], escribir: ['supervisor'] },
       documentos: { leer: TODOS, subir: ['asesor', 'auxiliar'], revisar: TODOS },
-      etapas: { leer: ['asesor', 'supervisor'], escribir: ['asesor'] },
+      // D9: el auxiliar lee las etapas (solo de sus clientes autorizados, lo limita ClienteAccessGuard);
+      // escribir sigue solo para el asesor.
+      etapas: { leer: TODOS, escribir: ['asesor'] },
       tramites: { leer: ['asesor'], escribir: ['asesor'] },
       diagnosticos: { leer: ['asesor'], escribir: ['asesor'] },
       agenda: { leer: TODOS, escribir: ['asesor'] },

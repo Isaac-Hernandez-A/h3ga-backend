@@ -12,7 +12,9 @@ const SUPERVISOR: Rol[] = ['supervisor'];
 // Lo que la Tabla 2 no dice y se asumió (confirmar):
 // - clientes.crear: solo asesor (la tabla habla de "gestionar sus clientes", no de quién los registra).
 // - agenda.escribir: solo asesor (la tabla solo menciona consultar).
-// - etapas.leer: el supervisor las consulta (monitorea el avance de clientes y asesores).
+// - etapas.leer: el supervisor las consulta (monitorea el avance de clientes y asesores) y, por el RF-18,
+//   el auxiliar las lee en solo lectura (D9); ClienteAccessGuard lo limita a los clientes que el asesor le
+//   autorizó. Escribir etapas sigue solo para el asesor.
 // - etl.importar: solo supervisor (la tabla no menciona el ETL).
 // - catalogos.leer: todos los roles (la tabla no menciona catálogos).
 // - clientes.consultar: los tres roles pueden listar y ver un cliente, pero el auxiliar solo los que el
@@ -37,7 +39,7 @@ export const PERMISOS = {
     reasignar: SUPERVISOR,
   },
   documentos: { leer: TODOS, subir: ASESOR_AUXILIAR, revisar: TODOS },
-  etapas: { leer: ASESOR_SUPERVISOR, escribir: ASESOR },
+  etapas: { leer: TODOS, escribir: ASESOR },
   tramites: { leer: ASESOR, escribir: ASESOR },
   diagnosticos: { leer: ASESOR, escribir: ASESOR },
   agenda: { leer: TODOS, escribir: ASESOR },

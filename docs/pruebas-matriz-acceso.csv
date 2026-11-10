@@ -23,36 +23,36 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/avisos/:avisoId/atender,PATCH,asesor,supera los guards,404
 /api/v1/avisos/:avisoId/atender,PATCH,auxiliar,supera los guards,404
 /api/v1/avisos/:avisoId/atender,PATCH,supervisor,supera los guards,404
-/api/v1/catalogos/afores,GET,asesor,supera los guards,501
-/api/v1/catalogos/afores,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/afores,GET,supervisor,supera los guards,501
-/api/v1/catalogos/estatus,GET,asesor,supera los guards,501
-/api/v1/catalogos/estatus,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/estatus,GET,supervisor,supera los guards,501
+/api/v1/catalogos/afores,GET,asesor,supera los guards,200
+/api/v1/catalogos/afores,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/afores,GET,supervisor,supera los guards,200
+/api/v1/catalogos/estatus,GET,asesor,supera los guards,200
+/api/v1/catalogos/estatus,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/estatus,GET,supervisor,supera los guards,200
 /api/v1/catalogos/estrategias-recomendadas,GET,asesor,supera los guards,501
 /api/v1/catalogos/estrategias-recomendadas,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/estrategias-recomendadas,GET,supervisor,supera los guards,501
 /api/v1/catalogos/etapas,GET,asesor,supera los guards,501
 /api/v1/catalogos/etapas,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/etapas,GET,supervisor,supera los guards,501
-/api/v1/catalogos/leyes-probables,GET,asesor,supera los guards,501
-/api/v1/catalogos/leyes-probables,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/leyes-probables,GET,supervisor,supera los guards,501
+/api/v1/catalogos/leyes-probables,GET,asesor,supera los guards,200
+/api/v1/catalogos/leyes-probables,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/leyes-probables,GET,supervisor,supera los guards,200
 /api/v1/catalogos/objetivos-diagnostico,GET,asesor,supera los guards,501
 /api/v1/catalogos/objetivos-diagnostico,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/objetivos-diagnostico,GET,supervisor,supera los guards,501
-/api/v1/catalogos/objetivos-especificos,GET,asesor,supera los guards,501
-/api/v1/catalogos/objetivos-especificos,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/objetivos-especificos,GET,supervisor,supera los guards,501
+/api/v1/catalogos/objetivos-especificos,GET,asesor,supera los guards,200
+/api/v1/catalogos/objetivos-especificos,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/objetivos-especificos,GET,supervisor,supera los guards,200
 /api/v1/catalogos/objetivos-modalidad-10,GET,asesor,supera los guards,501
 /api/v1/catalogos/objetivos-modalidad-10,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/objetivos-modalidad-10,GET,supervisor,supera los guards,501
 /api/v1/catalogos/objetivos-modalidad-40,GET,asesor,supera los guards,501
 /api/v1/catalogos/objetivos-modalidad-40,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/objetivos-modalidad-40,GET,supervisor,supera los guards,501
-/api/v1/catalogos/regimenes,GET,asesor,supera los guards,501
-/api/v1/catalogos/regimenes,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/regimenes,GET,supervisor,supera los guards,501
+/api/v1/catalogos/regimenes,GET,asesor,supera los guards,200
+/api/v1/catalogos/regimenes,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/regimenes,GET,supervisor,supera los guards,200
 /api/v1/catalogos/roles,GET,asesor,supera los guards,200
 /api/v1/catalogos/roles,GET,auxiliar,supera los guards,200
 /api/v1/catalogos/roles,GET,supervisor,supera los guards,200
@@ -62,9 +62,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/catalogos/tipos-correccion,GET,asesor,supera los guards,501
 /api/v1/catalogos/tipos-correccion,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/tipos-correccion,GET,supervisor,supera los guards,501
-/api/v1/catalogos/tipos-documento,GET,asesor,supera los guards,501
-/api/v1/catalogos/tipos-documento,GET,auxiliar,supera los guards,501
-/api/v1/catalogos/tipos-documento,GET,supervisor,supera los guards,501
+/api/v1/catalogos/tipos-documento,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-documento,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-documento,GET,supervisor,supera los guards,200
 /api/v1/catalogos/tipos-evidencia-recuperacion,GET,asesor,supera los guards,501
 /api/v1/catalogos/tipos-evidencia-recuperacion,GET,auxiliar,supera los guards,501
 /api/v1/catalogos/tipos-evidencia-recuperacion,GET,supervisor,supera los guards,501
@@ -89,9 +89,9 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/asesor,PATCH,asesor,403,403
 /api/v1/clientes/:clienteId/asesor,PATCH,auxiliar,403,403
 /api/v1/clientes/:clienteId/asesor,PATCH,supervisor,supera los guards,400
-/api/v1/clientes/:clienteId/auxiliares,GET,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/auxiliares,GET,asesor,supera los guards,200
 /api/v1/clientes/:clienteId/auxiliares,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/auxiliares,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/auxiliares,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/auxiliares,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/auxiliares,POST,auxiliar,403,403
 /api/v1/clientes/:clienteId/auxiliares,POST,supervisor,403,403
@@ -192,7 +192,7 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,auxiliar,supera los guards,404
 /api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,supervisor,supera los guards,404
 /api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,200
-/api/v1/clientes/:clienteId/etapas,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/etapas,GET,auxiliar,supera los guards,200
 /api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/etapas,POST,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/etapas,POST,auxiliar,403,403
@@ -201,23 +201,23 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,auxiliar,403,403
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,supervisor,403,403
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,asesor,supera los guards,404
-/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,auxiliar,supera los guards,404
 /api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,supervisor,supera los guards,404
-/api/v1/clientes/:clienteId/historial-laboral,GET,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/historial-laboral,GET,asesor,supera los guards,200
 /api/v1/clientes/:clienteId/historial-laboral,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/historial-laboral,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/historial-laboral,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/historial-laboral,PUT,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/historial-laboral,PUT,auxiliar,403,403
 /api/v1/clientes/:clienteId/historial-laboral,PUT,supervisor,403,403
-/api/v1/clientes/:clienteId/historial-laboral/issste,GET,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/historial-laboral/issste,GET,asesor,supera los guards,200
 /api/v1/clientes/:clienteId/historial-laboral/issste,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/historial-laboral/issste,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/historial-laboral/issste,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/historial-laboral/issste,PUT,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/historial-laboral/issste,PUT,auxiliar,403,403
 /api/v1/clientes/:clienteId/historial-laboral/issste,PUT,supervisor,403,403
-/api/v1/clientes/:clienteId/objetivos-especificos,GET,asesor,supera los guards,501
+/api/v1/clientes/:clienteId/objetivos-especificos,GET,asesor,supera los guards,200
 /api/v1/clientes/:clienteId/objetivos-especificos,GET,auxiliar,403,403
-/api/v1/clientes/:clienteId/objetivos-especificos,GET,supervisor,supera los guards,501
+/api/v1/clientes/:clienteId/objetivos-especificos,GET,supervisor,supera los guards,200
 /api/v1/clientes/:clienteId/objetivos-especificos,PUT,asesor,supera los guards,400
 /api/v1/clientes/:clienteId/objetivos-especificos,PUT,auxiliar,403,403
 /api/v1/clientes/:clienteId/objetivos-especificos,PUT,supervisor,403,403

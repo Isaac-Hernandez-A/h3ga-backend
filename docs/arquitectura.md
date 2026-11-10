@@ -117,7 +117,7 @@ sequenceDiagram
 | Usuarios y roles     |                                           |                                 | ✔ (leer y escribir)    |
 | Clientes             | leer, crear, editar, gestionar auxiliares | listar y ver (solo autorizados) | leer, reasignar asesor |
 | Documentos           | leer, subir, revisar                      | leer, subir, revisar            | leer, revisar          |
-| Etapas               | leer, escribir                            |                                 | leer                   |
+| Etapas               | leer, escribir                            | leer (solo autorizados)         | leer                   |
 | Trámites F2–F4       | leer, escribir                            |                                 |                        |
 | Diagnósticos F0/F1   | leer, escribir                            |                                 |                        |
 | Agenda               | leer, escribir                            | leer                            | leer                   |
@@ -125,4 +125,4 @@ sequenceDiagram
 | Reportes             | ✔                                         |                                 | ✔                      |
 | ETL (importar Excel) |                                           |                                 | ✔                      |
 
-Algunos permisos no están en la Tabla 2 y se asumieron (anotados en `permisos.ts`): `clientes.crear` solo asesor, `agenda.escribir` solo asesor, `etapas.leer` también supervisor, `etl.importar` solo supervisor, catálogos para todos.
+Algunos permisos no están en la Tabla 2 y se asumieron (anotados en `permisos.ts`): `clientes.crear` solo asesor, `agenda.escribir` solo asesor, `etapas.leer` también supervisor y, en solo lectura y solo de sus clientes autorizados, auxiliar (D9, RF-18), `etl.importar` solo supervisor, catálogos para todos.

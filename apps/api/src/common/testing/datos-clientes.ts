@@ -281,6 +281,8 @@ export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   await ds.query(`DELETE FROM etapas_tramite_historial WHERE etapa_tramite_id IN ${etapas}`);
   await ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN ${clientes}`);
   await ds.query(`DELETE FROM cliente_objetivos_especificos WHERE cliente_id IN ${clientes}`);
+  const historiales = `(SELECT id FROM historial_laboral WHERE cliente_id IN ${clientes})`;
+  await ds.query(`DELETE FROM informacion_issste WHERE historial_laboral_id IN ${historiales}`);
   await ds.query(`DELETE FROM historial_laboral WHERE cliente_id IN ${clientes}`);
   await ds.query(
     `DELETE FROM cliente_auxiliares WHERE cliente_id IN ${clientes} OR auxiliar_id IN ${usuarios}`,

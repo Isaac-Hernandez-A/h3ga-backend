@@ -111,8 +111,12 @@ export class ClientesService {
     return this.obtenerCliente(clienteId);
   }
 
-  async listarAuxiliares(clienteId: string): Promise<ClienteAuxiliar[]> {
-    throw new NotImplementedException();
+  // Todas las autorizaciones del cliente, activas o no, de la más antigua a la más reciente.
+  listarAuxiliares(clienteId: string): Promise<ClienteAuxiliar[]> {
+    return this.auxiliares.find({
+      where: { cliente_id: clienteId },
+      order: { fecha_autorizacion: 'ASC', id: 'ASC' },
+    });
   }
 
   // RF-41: guarda quién autorizó (el `sub` del token) y cuándo (hora del servidor). Un solo INSERT ...
@@ -152,8 +156,9 @@ export class ClientesService {
     return this.auxiliares.findOneByOrFail({ id: clienteAuxiliarId });
   }
 
-  async obtenerHistorialLaboral(clienteId: string): Promise<HistorialLaboral> {
-    throw new NotImplementedException();
+  // Un cliente que aún no tiene historial laboral responde vacío (null), no un error.
+  obtenerHistorialLaboral(clienteId: string): Promise<HistorialLaboral | null> {
+    return this.historiales.findOneBy({ cliente_id: clienteId });
   }
 
   // historial_laboral.cliente_id es UNIQUE: PUT es un upsert, dos PUT iguales dejan un solo registro.
@@ -171,8 +176,13 @@ export class ClientesService {
     return this.historiales.findOneByOrFail({ cliente_id: clienteId });
   }
 
-  async obtenerInformacionIssste(clienteId: string): Promise<InformacionIssste> {
-    throw new NotImplementedException();
+  // La información ISSSTE cuelga del historial laboral: sin historial o sin información responde vacío (null).
+  async obtenerInformacionIssste(clienteId: string): Promise<InformacionIssste | null> {
+    const historial = await this.historiales.findOneBy({ cliente_id: clienteId });
+    if (!historial) return null;
+    return this.ds
+      .getRepository(InformacionIssste)
+      .findOneBy({ historial_laboral_id: historial.id });
   }
 
   async guardarInformacionIssste(
@@ -182,8 +192,11 @@ export class ClientesService {
     throw new NotImplementedException();
   }
 
-  async listarObjetivosEspecificos(clienteId: string): Promise<ClienteObjetivoEspecifico[]> {
-    throw new NotImplementedException();
+  listarObjetivosEspecificos(clienteId: string): Promise<ClienteObjetivoEspecifico[]> {
+    return this.ds.getRepository(ClienteObjetivoEspecifico).find({
+      where: { cliente_id: clienteId },
+      order: { objetivo_id: 'ASC' },
+    });
   }
 
   // Borra e inserta en una sola transacción: si algún objetivo no existe, queda el conjunto anterior.
