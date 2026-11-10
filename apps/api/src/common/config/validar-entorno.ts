@@ -1,3 +1,4 @@
+import { origenesPermitidos } from './cors';
 import { VARIABLES_SPACES } from '../../documentos/storage/variables-spaces';
 
 // Marcador que trae .env.example; nunca debe usarse como secreto real.
@@ -14,6 +15,7 @@ export function validarEntorno(config: Record<string, unknown>): Record<string, 
     }
   }
   validarAlmacenamiento(config);
+  validarCors(config);
   return config;
 }
 
@@ -32,4 +34,10 @@ function validarAlmacenamiento(config: Record<string, unknown>): void {
   if (faltan.length > 0) {
     throw new Error(`STORAGE_DRIVER=spaces requiere definir: ${faltan.join(', ')}.`);
   }
+}
+
+// CORS_ORIGINS: sin comodines ni entradas vacías (origenesPermitidos lanza un error que nombra la variable).
+function validarCors(config: Record<string, unknown>): void {
+  const valor = config.CORS_ORIGINS;
+  if (valor !== undefined) origenesPermitidos(typeof valor === 'string' ? valor : '');
 }

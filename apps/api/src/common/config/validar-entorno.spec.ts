@@ -23,6 +23,17 @@ describe('validarEntorno', () => {
     expect(() => validarEntorno({ NODE_ENV: 'production', JWT_SECRET: secreto })).not.toThrow();
   });
 
+  it('rechaza CORS_ORIGINS con comodín o entradas vacías, y acepta una lista válida', () => {
+    expect(() => validarEntorno({ CORS_ORIGINS: '*' })).toThrow(/CORS_ORIGINS/);
+    expect(() =>
+      validarEntorno({ CORS_ORIGINS: 'http://localhost:3000,,http://x.invalid' }),
+    ).toThrow(/CORS_ORIGINS/);
+    expect(() =>
+      validarEntorno({ CORS_ORIGINS: 'http://localhost:3000, http://127.0.0.1:3000' }),
+    ).not.toThrow();
+    expect(() => validarEntorno({})).not.toThrow();
+  });
+
   it('en desarrollo no exige JWT_SECRET', () => {
     expect(() => validarEntorno({ NODE_ENV: 'development' })).not.toThrow();
     expect(() => validarEntorno({})).not.toThrow();
