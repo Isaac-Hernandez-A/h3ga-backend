@@ -182,16 +182,20 @@ describeConBd('Matriz de acceso (rutas reales del router, base de pruebas)', () 
     await app.close();
   });
 
-  it('CP-01 sin token responde 401 en todas las rutas salvo /health', async () => {
-    expect(rutas).toHaveLength(84);
+  it('CP-01 sin token responde 401 en todas las rutas salvo las públicas (/health y /auth/login)', async () => {
+    expect(rutas).toHaveLength(85);
     const fallos: string[] = [];
     for (const ruta of rutas) {
       const { estado } = await pedir(ruta);
-      const esperado = ruta.publica ? 200 : 401;
+      // Las públicas no piden token: /health responde 200 y /auth/login, sin credenciales (cuerpo vacío), 400.
+      const esperado = ruta.publica ? (ruta.ruta === '/api/v1/auth/login' ? 400 : 200) : 401;
       if (estado !== esperado)
         fallos.push(`${ruta.metodo} ${ruta.ruta}: ${estado} (esperado ${esperado})`);
     }
-    expect(rutas.filter((r) => r.publica).map((r) => r.ruta)).toEqual(['/api/v1/health']);
+    expect(rutas.filter((r) => r.publica).map((r) => r.ruta)).toEqual([
+      '/api/v1/auth/login',
+      '/api/v1/health',
+    ]);
     expect(fallos).toEqual([]);
   });
 

@@ -8,3 +8,8 @@ export const ROL_ID: Record<Rol, number> = {
   auxiliar: 2,
   supervisor: 3,
 };
+
+// Sentido inverso (roles.id -> rol del sistema): lo usa el login para decidir el claim "rol" del token.
+export const ROL_POR_ID: Record<number, Rol> = Object.fromEntries(
+  (Object.entries(ROL_ID) as [Rol, number][]).map(([rol, id]) => [id, rol]),
+);

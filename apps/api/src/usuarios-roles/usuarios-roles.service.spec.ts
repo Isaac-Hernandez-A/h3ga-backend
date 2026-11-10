@@ -70,6 +70,7 @@ describe('UsuariosRolesService', () => {
   let usuarios: ReturnType<typeof repositorioDeUsuarios>;
   const hasher: PasswordHasher = {
     hash: jest.fn((plain: string) => Promise.resolve(`hash(${plain})`)),
+    verify: jest.fn((plain: string, hash: string) => Promise.resolve(hash === `hash(${plain})`)),
   };
 
   let correoSecuencia = 0;

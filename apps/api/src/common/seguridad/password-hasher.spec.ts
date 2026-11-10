@@ -22,4 +22,10 @@ describe('BcryptPasswordHasher', () => {
     const hash = await hasher.hash(CONTRASENA);
     expect(await compare('otra-contrasena-456', hash)).toBe(false);
   });
+
+  it('verify acepta la contraseña correcta y rechaza una distinta', async () => {
+    const hash = await hasher.hash(CONTRASENA);
+    expect(await hasher.verify(CONTRASENA, hash)).toBe(true);
+    expect(await hasher.verify('otra-contrasena-456', hash)).toBe(false);
+  });
 });

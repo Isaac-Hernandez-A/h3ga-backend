@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AgendaModule } from './agenda/agenda.module';
+import { AuthModule } from './auth/auth.module';
 import { AvisosModule } from './avisos/avisos.module';
 import { ControlAccesoModule } from './common/auth/control-acceso.module';
 import { JwtAuthGuard } from './common/auth/jwt-auth.guard';
@@ -22,6 +23,7 @@ import { UsuariosRolesModule } from './usuarios-roles/usuarios-roles.module';
 // Módulos de dominio y proveedores globales de la aplicación. Se exportan para que las pruebas de acceso
 // monten exactamente los mismos, sin la conexión a la base de datos.
 export const MODULOS_DE_DOMINIO = [
+  AuthModule,
   UsuariosRolesModule,
   ClientesModule,
   DocumentosModule,
