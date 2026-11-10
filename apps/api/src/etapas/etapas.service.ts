@@ -164,7 +164,8 @@ export class EtapasService {
     throw new NotImplementedException();
   }
 
-  async listarEstatus(): Promise<EstatusTramite[]> {
-    throw new NotImplementedException();
+  // Catálogo: la lista completa de la tabla, ordenada por id.
+  listarEstatus(): Promise<EstatusTramite[]> {
+    return this.estatus.find({ order: { id: 'ASC' } });
   }
 }

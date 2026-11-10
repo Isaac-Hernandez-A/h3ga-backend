@@ -157,7 +157,8 @@ export class DocumentosService {
     }
   }
 
-  async listarTiposDocumento(): Promise<TipoDocumento[]> {
-    throw new NotImplementedException();
+  // Catálogo: la lista completa de la tabla, ordenada por id.
+  listarTiposDocumento(): Promise<TipoDocumento[]> {
+    return this.ds.getRepository(TipoDocumento).find({ order: { id: 'ASC' } });
   }
 }

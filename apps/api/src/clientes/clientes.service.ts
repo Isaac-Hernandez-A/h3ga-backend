@@ -210,20 +210,21 @@ export class ClientesService {
     });
   }
 
-  async listarRegimenes(): Promise<RegimenPrincipal[]> {
-    throw new NotImplementedException();
+  // Catálogos: la lista completa de la tabla, ordenada por id.
+  listarRegimenes(): Promise<RegimenPrincipal[]> {
+    return this.ds.getRepository(RegimenPrincipal).find({ order: { id: 'ASC' } });
   }
 
-  async listarLeyesProbables(): Promise<LeyProbable[]> {
-    throw new NotImplementedException();
+  listarLeyesProbables(): Promise<LeyProbable[]> {
+    return this.ds.getRepository(LeyProbable).find({ order: { id: 'ASC' } });
   }
 
-  async listarAfores(): Promise<Afore[]> {
-    throw new NotImplementedException();
+  listarAfores(): Promise<Afore[]> {
+    return this.ds.getRepository(Afore).find({ order: { id: 'ASC' } });
   }
 
-  async listarObjetivosEspecificosInicial(): Promise<ObjetivoEspecificoInicial[]> {
-    throw new NotImplementedException();
+  listarObjetivosEspecificosInicial(): Promise<ObjetivoEspecificoInicial[]> {
+    return this.ds.getRepository(ObjetivoEspecificoInicial).find({ order: { id: 'ASC' } });
   }
 
   private async exigirUsuarioConRol(usuarioId: string, rol: 'asesor' | 'auxiliar'): Promise<void> {
