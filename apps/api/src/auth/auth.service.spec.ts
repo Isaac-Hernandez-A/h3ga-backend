@@ -1,10 +1,17 @@
-import { UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ROL_ID } from '../common/auth/roles-sistema';
 import { PasswordHasher } from '../common/seguridad/password-hasher';
 import { SECRETO_PRUEBA } from '../common/testing/tokens';
 import { Usuario } from '../usuarios-roles/entities/usuario.entity';
-import { AuthService, MENSAJE_CREDENCIALES, VIGENCIA_TOKEN_S } from './auth.service';
+import {
+  AuthService,
+  MENSAJE_CONTRASENA_ACTUAL,
+  MENSAJE_CONTRASENA_IGUAL,
+  MENSAJE_CREDENCIALES,
+  MENSAJE_SESION_INVALIDA,
+  VIGENCIA_TOKEN_S,
+} from './auth.service';
 
 // Pruebas del servicio con repositorio y hasher simulados. Datos ficticios.
 const ID = '11111111-1111-4111-8111-111111111111';
@@ -29,14 +36,18 @@ function crearServicio(encontrado: Usuario | null, coincide = true) {
     orderBy: jest.fn().mockReturnThis(),
     getOne: jest.fn(() => Promise.resolve(encontrado)),
   };
-  const repo = { createQueryBuilder: jest.fn(() => consulta) };
+  const repo = {
+    createQueryBuilder: jest.fn(() => consulta),
+    findOneBy: jest.fn(() => Promise.resolve(encontrado)),
+    update: jest.fn(() => Promise.resolve({ affected: 1 })),
+  };
   const hasher = {
-    hash: jest.fn(),
+    hash: jest.fn((plain: string) => Promise.resolve(`hash(${plain})`)),
     verify: jest.fn(() => Promise.resolve(coincide)),
   } as unknown as jest.Mocked<PasswordHasher>;
   const jwt = new JwtService({ secret: SECRETO_PRUEBA });
   const servicio = new AuthService(repo as never, jwt, hasher);
-  return { servicio, hasher, jwt, consulta };
+  return { servicio, hasher, jwt, consulta, repo };
 }
 
 describe('AuthService.iniciarSesion', () => {
@@ -89,5 +100,41 @@ describe('AuthService.iniciarSesion', () => {
     await expect(servicio.iniciarSesion('ana@ejemplo.invalid', 'x')).rejects.toThrow(
       new UnauthorizedException(MENSAJE_CREDENCIALES),
     );
+  });
+});
+
+describe('AuthService.cambiarContrasena', () => {
+  it('CP-86 con la actual correcta guarda el hash de la nueva en contrasena_hash', async () => {
+    const { servicio, hasher, repo } = crearServicio(usuario(), true);
+    await servicio.cambiarContrasena(ID, 'actual-ficticia-1', 'nueva-ficticia-123');
+    expect(hasher.verify).toHaveBeenCalledWith('actual-ficticia-1', 'hash-ficticio');
+    expect(repo.update).toHaveBeenCalledWith(ID, { contrasena_hash: 'hash(nueva-ficticia-123)' });
+  });
+
+  it('CP-87 la actual incorrecta responde 400 con su mensaje y no guarda nada', async () => {
+    const { servicio, repo } = crearServicio(usuario(), false);
+    await expect(
+      servicio.cambiarContrasena(ID, 'mala-ficticia', 'nueva-ficticia-123'),
+    ).rejects.toThrow(new BadRequestException(MENSAJE_CONTRASENA_ACTUAL));
+    expect(MENSAJE_CONTRASENA_ACTUAL).toBe('La contraseña actual es incorrecta.');
+    expect(repo.update).not.toHaveBeenCalled();
+  });
+
+  it('CP-88 la nueva igual a la actual responde 400 y no guarda nada', async () => {
+    const { servicio, repo } = crearServicio(usuario(), true);
+    await expect(
+      servicio.cambiarContrasena(ID, 'misma-ficticia-1', 'misma-ficticia-1'),
+    ).rejects.toThrow(new BadRequestException(MENSAJE_CONTRASENA_IGUAL));
+    expect(repo.update).not.toHaveBeenCalled();
+  });
+
+  it('CP-91 usuario inactivo o inexistente responde 401 y no guarda nada', async () => {
+    for (const encontrado of [usuario({ activo: false }), null]) {
+      const { servicio, repo } = crearServicio(encontrado, true);
+      await expect(
+        servicio.cambiarContrasena(ID, 'actual-ficticia-1', 'nueva-ficticia-123'),
+      ).rejects.toThrow(new UnauthorizedException(MENSAJE_SESION_INVALIDA));
+      expect(repo.update).not.toHaveBeenCalled();
+    }
   });
 });

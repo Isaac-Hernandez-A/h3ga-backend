@@ -2,16 +2,17 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 84 rutas.** Implementadas: 37 (`GET /health`, las 6 de `usuarios-roles` y 10 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral, objetivos específicos y PDF del F0, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar) y el reporte operativo semanal y mensual en JSON y en PDF (`GET /reportes` y `GET /reportes/pdf`). Las otras 47 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
+- **Total: 87 rutas.** Implementadas: 40 (`GET /health`, las 3 de `auth` (inicio de sesión y cambio de contraseña propia), las 7 de `usuarios-roles` (incluye restablecer la contraseña de otro usuario) y 10 de `clientes`: listado, alta, edición, reasignación, autorizaciones del auxiliar, historial laboral, objetivos específicos y PDF del F0, más la consulta por id), 3 de etapas (lista de las 16 etapas con avance global, cambio de estatus e historial), 4 de trámites y diagnósticos (alta de corrección F2, unificación de NSS F3 con sus secundarios y dictamen de recuperación de semanas F4), 4 de agenda, 2 de avisos (bandeja generada al consultar y atender) y 5 de documentos (subir, listar, obtener, descargar y revisar) y el reporte operativo semanal y mensual en JSON y en PDF (`GET /reportes` y `GET /reportes/pdf`). Las otras 47 están esbozadas (contrato, DTO y roles definidos) y responden **501 Not Implemented**.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
-- **Aplicación real de los guards (las 84 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` es pública). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
+- **Aplicación real de los guards (las 87 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` y `/auth/login` son públicas). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
 
 ## Resumen por módulo
 
 | Módulo         | Rutas  | Implementadas | Esbozo (501) |
 | -------------- | ------ | ------------- | ------------ |
-| usuarios-roles | 6      | 6             | 0            |
+| auth           | 2      | 2             | 0            |
+| usuarios-roles | 7      | 7             | 0            |
 | clientes       | 19     | 10            | 9            |
 | documentos     | 6      | 5             | 1            |
 | etapas         | 6      | 3             | 3            |
@@ -22,18 +23,28 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 | reportes       | 2      | 2             | 0            |
 | etl            | 1      | 0             | 1            |
 | health         | 1      | 1             | 0            |
-| **Total**      | **84** | **37**        | **47**       |
+| **Total**      | **87** | **40**        | **47**       |
+
+## auth
+
+| Método | Ruta                      | Descripción                  | Roles                        | Estado       |
+| ------ | ------------------------- | ---------------------------- | ---------------------------- | ------------ |
+| POST   | `/api/v1/auth/login`      | Iniciar sesión               | pública                      | Implementada |
+| PATCH  | `/api/v1/auth/contrasena` | Cambiar la contraseña propia | asesor, auxiliar, supervisor | Implementada |
+
+`PATCH /auth/contrasena`: cuerpo `{ contrasena_actual, contrasena_nueva }` (la nueva de 8 a 72 caracteres). Responde **204** sin cuerpo; **400** si el cuerpo es inválido, si la actual es incorrecta (`La contraseña actual es incorrecta.`; no es 401 para no cerrar la sesión del frontend) o si la nueva es igual a la actual; **401** sin token o si el usuario está inactivo o ya no existe.
 
 ## usuarios-roles
 
-| Método | Ruta                             | Descripción                                   | Roles                        | Estado       |
-| ------ | -------------------------------- | --------------------------------------------- | ---------------------------- | ------------ |
-| GET    | `/api/v1/usuarios`               | Listar usuarios                               | supervisor                   | Implementada |
-| GET    | `/api/v1/usuarios/:usuarioId`    | Obtener un usuario                            | supervisor                   | Implementada |
-| POST   | `/api/v1/usuarios`               | Crear un usuario                              | supervisor                   | Implementada |
-| PATCH  | `/api/v1/usuarios/:usuarioId`    | Actualizar o desactivar un usuario            | supervisor                   | Implementada |
-| GET    | `/api/v1/catalogos/roles`        | Listar roles                                  | asesor, auxiliar, supervisor | Implementada |
-| GET    | `/api/v1/catalogos/tipos-asesor` | Listar tipos de asesor (tabla de otro módulo) | asesor, auxiliar, supervisor | Implementada |
+| Método | Ruta                                     | Descripción                                   | Roles                        | Estado       |
+| ------ | ---------------------------------------- | --------------------------------------------- | ---------------------------- | ------------ |
+| GET    | `/api/v1/usuarios`                       | Listar usuarios                               | supervisor                   | Implementada |
+| GET    | `/api/v1/usuarios/:usuarioId`            | Obtener un usuario                            | supervisor                   | Implementada |
+| POST   | `/api/v1/usuarios`                       | Crear un usuario                              | supervisor                   | Implementada |
+| PATCH  | `/api/v1/usuarios/:usuarioId`            | Actualizar o desactivar un usuario            | supervisor                   | Implementada |
+| PATCH  | `/api/v1/usuarios/:usuarioId/contrasena` | Restablecer la contraseña de un usuario       | supervisor                   | Implementada |
+| GET    | `/api/v1/catalogos/roles`                | Listar roles                                  | asesor, auxiliar, supervisor | Implementada |
+| GET    | `/api/v1/catalogos/tipos-asesor`         | Listar tipos de asesor (tabla de otro módulo) | asesor, auxiliar, supervisor | Implementada |
 
 ## clientes
 

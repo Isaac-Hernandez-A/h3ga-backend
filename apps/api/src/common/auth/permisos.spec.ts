@@ -40,7 +40,11 @@ describe('PERMISOS de las demás áreas', () => {
       etl: PERMISOS.etl,
     }).toEqual({
       catalogos: { leer: TODOS },
-      usuarios: { leer: ['supervisor'], escribir: ['supervisor'] },
+      usuarios: {
+        leer: ['supervisor'],
+        escribir: ['supervisor'],
+        restablecerContrasena: ['supervisor'],
+      },
       documentos: { leer: TODOS, subir: ['asesor', 'auxiliar'], revisar: TODOS },
       // D9: el auxiliar lee las etapas (solo de sus clientes autorizados, lo limita ClienteAccessGuard);
       // escribir sigue solo para el asesor.

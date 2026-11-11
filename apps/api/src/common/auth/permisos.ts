@@ -15,6 +15,10 @@ const SUPERVISOR: Rol[] = ['supervisor'];
 // - etapas.leer: el supervisor las consulta (monitorea el avance de clientes y asesores) y, por el RF-18,
 //   el auxiliar las lee en solo lectura (D9); ClienteAccessGuard lo limita a los clientes que el asesor le
 //   autorizó. Escribir etapas sigue solo para el asesor.
+// - usuarios.restablecerContrasena: solo supervisor; fija la contraseña de otro usuario sin pedir la
+//   actual (también de usuarios inactivos).
+// - auth.cambiarContrasena: cualquier rol autenticado, pero solo sobre su propio usuario (sub del token).
+//   El login es público (@Publico) y no aparece aquí.
 // - etl.importar: solo supervisor (la tabla no menciona el ETL).
 // - catalogos.leer: todos los roles (la tabla no menciona catálogos).
 // - clientes.consultar: los tres roles pueden listar y ver un cliente, pero el auxiliar solo los que el
@@ -29,7 +33,8 @@ export const PERMISOS_PROVISIONALES = false;
 
 export const PERMISOS = {
   catalogos: { leer: TODOS },
-  usuarios: { leer: SUPERVISOR, escribir: SUPERVISOR },
+  usuarios: { leer: SUPERVISOR, escribir: SUPERVISOR, restablecerContrasena: SUPERVISOR },
+  auth: { cambiarContrasena: TODOS },
   clientes: {
     consultar: TODOS,
     leer: ASESOR_SUPERVISOR,

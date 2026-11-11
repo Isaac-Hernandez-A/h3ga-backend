@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,6 +12,12 @@ import { SesionRespuesta } from './dto/login.dto';
 export const VIGENCIA_TOKEN_S = 28800;
 // Mismo mensaje para correo inexistente, contraseña incorrecta y usuario inactivo (D8).
 export const MENSAJE_CREDENCIALES = 'Correo o contraseña incorrectos.';
+
+// Cambio de contraseña propia. La actual incorrecta es 400 y no 401: el token es válido y el frontend
+// cierra la sesión ante cualquier 401 con token.
+export const MENSAJE_CONTRASENA_ACTUAL = 'La contraseña actual es incorrecta.';
+export const MENSAJE_CONTRASENA_IGUAL = 'La contraseña nueva debe ser distinta de la actual.';
+export const MENSAJE_SESION_INVALIDA = 'La sesión ya no es válida.';
 
 // Hash bcrypt (costo 10) de una contraseña que nadie usa: cuando el correo no existe se compara contra
 // él para que el tiempo de respuesta no delate si el correo está registrado.
@@ -50,5 +56,17 @@ export class AuthService {
       expires_in: VIGENCIA_TOKEN_S,
       usuario: { id: usuario.id, nombre: `${usuario.nombre} ${usuario.apellido_paterno}`, rol },
     };
+  }
+
+  // Cambia la contraseña del usuario del token. Un usuario inexistente o inactivo no puede (mismo criterio
+  // que el login: no hay sesión válida) y recibe 401.
+  async cambiarContrasena(usuarioId: string, actual: string, nueva: string): Promise<void> {
+    const usuario = await this.usuarios.findOneBy({ id: usuarioId });
+    if (!usuario || !usuario.activo) throw new UnauthorizedException(MENSAJE_SESION_INVALIDA);
+    if (!(await this.hasher.verify(actual, usuario.contrasena_hash))) {
+      throw new BadRequestException(MENSAJE_CONTRASENA_ACTUAL);
+    }
+    if (nueva === actual) throw new BadRequestException(MENSAJE_CONTRASENA_IGUAL);
+    await this.usuarios.update(usuario.id, { contrasena_hash: await this.hasher.hash(nueva) });
   }
 }

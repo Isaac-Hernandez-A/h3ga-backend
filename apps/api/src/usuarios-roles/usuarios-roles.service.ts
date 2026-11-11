@@ -90,6 +90,12 @@ export class UsuariosRolesService {
     return aRespuesta(await this.guardar(Object.assign(usuario, cambios)));
   }
 
+  // Fija la contraseña de cualquier usuario (también inactivo) sin pedir la actual. No devuelve nada.
+  async restablecerContrasena(usuarioId: string, contrasena: string): Promise<void> {
+    const usuario = await this.buscar(usuarioId);
+    await this.usuarios.update(usuario.id, { contrasena_hash: await this.hasher.hash(contrasena) });
+  }
+
   listarRoles(): Promise<Rol[]> {
     return this.roles.find({ order: { id: 'ASC' } });
   }
