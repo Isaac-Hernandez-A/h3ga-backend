@@ -41,7 +41,7 @@ export class Reloj {
   }
 }
 
-export type PeriodoReporte = 'semanal' | 'mensual';
+export type PeriodoReporte = 'semanal' | 'mensual' | 'trimestral';
 
 // Convierte AAAA-MM-DD en milisegundos UTC; lanza si no es una fecha real del calendario.
 function aUtc(fecha: string): number {
@@ -61,7 +61,8 @@ export function sumarDias(fecha: string, dias: number): string {
   return aTexto(aUtc(fecha) + dias * DIA_MS);
 }
 
-// Periodo que contiene a `fecha` (AAAA-MM-DD de Cancún): semana de lunes a domingo o mes calendario.
+// Periodo que contiene a `fecha` (AAAA-MM-DD de Cancún): semana de lunes a domingo, mes calendario o
+// trimestre de calendario (ene-mar, abr-jun, jul-sep, oct-dic).
 export function rangoDePeriodo(
   periodo: PeriodoReporte,
   fecha: string,
@@ -72,6 +73,13 @@ export function rangoDePeriodo(
     return { desde: aTexto(desdeSemana), hasta: aTexto(desdeSemana + 6 * DIA_MS) };
   }
   const f = new Date(dia);
+  if (periodo === 'trimestral') {
+    const primerMes = Math.floor(f.getUTCMonth() / 3) * 3;
+    return {
+      desde: aTexto(Date.UTC(f.getUTCFullYear(), primerMes, 1)),
+      hasta: aTexto(Date.UTC(f.getUTCFullYear(), primerMes + 3, 0)),
+    };
+  }
   return {
     desde: aTexto(Date.UTC(f.getUTCFullYear(), f.getUTCMonth(), 1)),
     hasta: aTexto(Date.UTC(f.getUTCFullYear(), f.getUTCMonth() + 1, 0)),

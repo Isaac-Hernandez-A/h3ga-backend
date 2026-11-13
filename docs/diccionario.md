@@ -223,6 +223,12 @@ Recibos de Nómina / Constancias Laborales (Nuevo por F1)
 
 Semanas ISSSTE / Constancia de Portabilidad (Nuevo por F1)
 
+Certificación de regularización y/o corrección de datos personales del asegurado (IMSS) (Nuevo por Correcciones F3, id 15)
+
+Constancia de Aclaración de Semanas Cotizadas (IMSS) (Nuevo por Correcciones F4, id 16)
+
+Solicitud de Reintegro de Recursos (AFORE) (Nuevo por Correcciones F4, id 17)
+
 ### Tabla: roles
 
 | Campo       | Tipo de Dato                  | Descripción                                                                  |
@@ -338,6 +344,27 @@ Valores del catálogo F2 (opciones completas): 1. Corrección de CURP · 2. Corr
 | observaciones  | TEXT, NULLABLE                          | Observaciones o notas sobre este NSS secundario.             |
 
 ## Etapa 1 — Diagnóstico Especializado
+
+### Actualización 2026-11-13: tipos de documento del módulo Correcciones (migración 202611131000)
+
+`tipo_documento` suma tres tipos al final del catálogo (ids 15, 16 y 17, en este orden): «Certificación de regularización y/o corrección de datos personales del asegurado (IMSS)» (documento de la F3 Unificación de NSS), «Constancia de Aclaración de Semanas Cotizadas (IMSS)» y «Solicitud de Reintegro de Recursos (AFORE)» (documentos de la F4 Recuperación de semanas). Se suben con `POST /clientes/:id/documentos` como los demás. La migración no inserta un nombre que ya exista.
+
+### Actualización 2026-11-11: guardado por pasos del F1 (migración 202611111000)
+
+El asistente del F1 guarda sección por sección, así que el diagnóstico es un borrador hasta descargar el PDF. Cambios
+(solo se relaja NOT NULL; no se elimina ninguna columna ni dato):
+
+- `diagnostico_especializado`: pasan a NULLABLE `cotizo_antes_julio_1997`, `tipo_pension_probable`, `edad_objetivo_pension`,
+  `tiene_conservacion_derechos`, `dentro_de_conservacion`, `conviene_pensionar_ahora`, `semanas_efectivas_pension`,
+  `trabaja_cuenta_propia`, `conclusion_modalidad_10`, `dado_de_baja_regimen_obligatorio`, `conclusion_modalidad_40` y
+  `justificacion_estrategia`. Se conservan NOT NULL `id`, `cliente_id`, `asesor_id` y `fecha_analisis`, y las columnas que ya
+  tienen valor por omisión. Que el formato esté completo se valida al descargar el PDF (409 con la lista de faltantes).
+- `situacion_patrimonial`: todas las columnas, salvo `id` y `diagnostico_f1_id`, pasan a NULLABLE.
+- `escenario_pension`: `semanas_proyectadas`, `salario_promedio_proyectado`, `pension_mensual_estimada` e `incremento_mensual`
+  pasan a NULLABLE; nueva columna `meses_modalidad_10`; índice único `(diagnostico_f1_id, orden)` y CHECK `orden` de 1 a 3.
+- `analisis_modalidad40_retroactivo`: `dentro_de_plazo_reingreso` y `conclusion_retroactivo` pasan a NULLABLE.
+- `situacion_patrimonial_hijos`: una fila por hijo; `numero_hijos` queda sin uso (el número de hijos es el número de filas).
+- Nuevas: `tipo_documento_diagnostico` y `diagnostico_documentos` (abajo).
 
 ### Tabla: diagnostico_especializado
 
@@ -614,6 +641,7 @@ Fuente: Sección 11 y 12 del F1 ("Escenarios y retorno de inversión"). Registra
 | beneficio_a_10_anios         | NUMERIC(12,2), NULLABLE                   | Total acumulado a cobrar a los 10 años de pensión.                                                                                |
 | beneficio_a_15_anios         | NUMERIC(12,2), NULLABLE                   | Total acumulado a cobrar a los 15 años de pensión.                                                                                |
 | salario_modalidad_40         | NUMERIC(10,2), NULLABLE                   | Salario propuesto en Modalidad 40 para este escenario específico.                                                                 |
+| meses_modalidad_10           | SMALLINT, NULLABLE                        | Meses de cotización como persona trabajadora independiente (Modalidad 10) para este escenario.                                    |
 | meses_modalidad_40           | SMALLINT, NULLABLE                        | Meses de cotización en Modalidad 40 para este escenario.                                                                          |
 | costo_mensual_estimado       | NUMERIC(12,2), NULLABLE                   | Costo mensual (distinto de inversion_total_estimada, que es el total).                                                            |
 
@@ -731,13 +759,39 @@ Restricción: CHECK ((etapa_tramite_id IS NOT NULL) <> (evento_id IS NOT NULL)) 
 
 ### Tabla: situacion_patrimonial_hijos
 
-| Campo                    | Tipo de Dato                         | Descripción                            |
-| ------------------------ | ------------------------------------ | -------------------------------------- |
-| id                       | UUID (PK, default gen_random_uuid()) | Clave primaria.                        |
-| situacion_patrimonial_id | UUID (FK → situacion_patrimonial.id) | Registro patrimonial al que pertenece. |
-| numero_hijos             | SMALLINT, DEFAULT 0                  | Número total de hijos.                 |
-| tiene_discapacidad       | BOOLEAN, DEFAULT false               | Indica si el hijo tiene discapacidad.  |
-| edad                     | SMALLINT                             | Edad del hijo.                         |
+| Campo                    | Tipo de Dato                         | Descripción                                                                   |
+| ------------------------ | ------------------------------------ | ----------------------------------------------------------------------------- |
+| id                       | UUID (PK, default gen_random_uuid()) | Clave primaria.                                                               |
+| situacion_patrimonial_id | UUID (FK → situacion_patrimonial.id) | Registro patrimonial al que pertenece.                                        |
+| numero_hijos             | SMALLINT, DEFAULT 0                  | Sin uso: cada fila es un hijo y el número de hijos se calcula contando filas. |
+| tiene_discapacidad       | BOOLEAN, DEFAULT false               | Indica si el hijo tiene discapacidad.                                         |
+| edad                     | SMALLINT                             | Edad del hijo.                                                                |
+
+### Tabla: tipo_documento_diagnostico
+
+Fuente: Sección 2 del F1 ("Documentos requeridos para el análisis"). Catálogo de los 9 documentos del formato oficial.
+
+| Campo  | Tipo de Dato                                    | Descripción           |
+| ------ | ----------------------------------------------- | --------------------- |
+| id     | SMALLINT (PK, GENERATED BY DEFAULT AS IDENTITY) | Clave primaria.       |
+| nombre | TEXT, UNIQUE                                    | Nombre del documento. |
+
+Semilla: Constancia de semanas cotizadas IMSS - Reporte de semanas cotizadas - Historial laboral IMSS - Estado de cuenta AFORE -
+Comprobantes de pagos Modalidad 10 - Resoluciones, negativas o trámites previos - Recibos de nómina / pruebas laborales -
+Semanas ISSSTE o portabilidad - Comprobantes de pagos Modalidad 40 / 40 retroactivo.
+
+### Tabla: diagnostico_documentos
+
+Fuente: Sección 2 del F1. Registra si cada documento requerido fue recibido y sus observaciones.
+
+| Campo             | Tipo de Dato                                   | Descripción                                 |
+| ----------------- | ---------------------------------------------- | ------------------------------------------- |
+| diagnostico_id    | UUID (FK -> diagnostico_especializado.id)      | Diagnóstico al que pertenece.               |
+| tipo_documento_id | SMALLINT (FK -> tipo_documento_diagnostico.id) | Documento requerido.                        |
+| recibido          | BOOLEAN, NULLABLE                              | Sí (true) / No (false); null sin responder. |
+| observaciones     | TEXT, NULLABLE                                 | Observaciones sobre el documento.           |
+
+Restricción: PRIMARY KEY (diagnostico_id, tipo_documento_id)
 
 ### Tabla: cliente_auxiliares
 

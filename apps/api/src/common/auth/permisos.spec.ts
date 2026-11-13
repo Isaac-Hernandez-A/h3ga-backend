@@ -36,6 +36,7 @@ describe('PERMISOS de las demás áreas', () => {
       diagnosticos: PERMISOS.diagnosticos,
       agenda: PERMISOS.agenda,
       avisos: PERMISOS.avisos,
+      dashboard: PERMISOS.dashboard,
       reportes: PERMISOS.reportes,
       etl: PERMISOS.etl,
     }).toEqual({
@@ -44,6 +45,7 @@ describe('PERMISOS de las demás áreas', () => {
         leer: ['supervisor'],
         escribir: ['supervisor'],
         restablecerContrasena: ['supervisor'],
+        listarAuxiliares: ['asesor', 'supervisor'],
       },
       documentos: { leer: TODOS, subir: ['asesor', 'auxiliar'], revisar: TODOS },
       // D9: el auxiliar lee las etapas (solo de sus clientes autorizados, lo limita ClienteAccessGuard);
@@ -53,6 +55,7 @@ describe('PERMISOS de las demás áreas', () => {
       diagnosticos: { leer: ['asesor'], escribir: ['asesor'] },
       agenda: { leer: TODOS, escribir: ['asesor'] },
       avisos: { leer: TODOS, atender: TODOS },
+      dashboard: { leer: TODOS },
       reportes: { leer: ['asesor', 'supervisor'] },
       etl: { importar: ['supervisor'] },
     });

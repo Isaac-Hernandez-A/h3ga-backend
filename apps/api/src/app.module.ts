@@ -11,6 +11,7 @@ import { RolesGuard } from './common/auth/roles.guard';
 import { validarEntorno } from './common/config/validar-entorno';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ClientesModule } from './clientes/clientes.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { DiagnosticosModule } from './diagnosticos/diagnosticos.module';
 import { DocumentosModule } from './documentos/documentos.module';
 import { EtapasModule } from './etapas/etapas.module';
@@ -32,6 +33,7 @@ export const MODULOS_DE_DOMINIO = [
   DiagnosticosModule,
   AgendaModule,
   AvisosModule,
+  DashboardModule,
   ReportesModule,
   EtlModule,
 ];

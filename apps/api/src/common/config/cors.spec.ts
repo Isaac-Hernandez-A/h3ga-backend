@@ -92,11 +92,32 @@ describe('CORS de la aplicación', () => {
     expect(simple.headers.get('access-control-allow-origin')).toBeNull();
   });
 
+  it('CP-74 la verificación previa de un DELETE (cabeceras de la pantalla de Correcciones) concede DELETE', async () => {
+    ({ app, base } = await iniciar(PERMITIDO));
+    const r = await fetch(`${base}/api/v1/clientes/x/correcciones/y`, {
+      method: 'OPTIONS',
+      headers: {
+        Origin: PERMITIDO,
+        'Access-Control-Request-Method': 'DELETE',
+        'Access-Control-Request-Headers': 'authorization',
+      },
+    });
+    expect(r.headers.get('access-control-allow-origin')).toBe(PERMITIDO);
+    expect(r.headers.get('access-control-allow-methods') ?? '').toContain('DELETE');
+  });
+
   it('CP-74 solo concede lo acordado: métodos, cabeceras, Content-Disposition expuesta y sin credenciales', async () => {
     ({ app, base } = await iniciar(PERMITIDO));
     const r = await preflight(PERMITIDO);
     const metodos = (r.headers.get('access-control-allow-methods') ?? '').split(',');
-    expect(metodos.map((m) => m.trim()).sort()).toEqual(['GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']);
+    expect(metodos.map((m) => m.trim()).sort()).toEqual([
+      'DELETE',
+      'GET',
+      'OPTIONS',
+      'PATCH',
+      'POST',
+      'PUT',
+    ]);
     const cabeceras = (r.headers.get('access-control-allow-headers') ?? '').toLowerCase();
     expect(cabeceras).toContain('authorization');
     expect(cabeceras).toContain('content-type');

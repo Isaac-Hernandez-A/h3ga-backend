@@ -183,7 +183,7 @@ describeConBd('Matriz de acceso (rutas reales del router, base de pruebas)', () 
   });
 
   it('CP-01 sin token responde 401 en todas las rutas salvo las públicas (/health y /auth/login)', async () => {
-    expect(rutas).toHaveLength(87);
+    expect(rutas).toHaveLength(119);
     const fallos: string[] = [];
     for (const ruta of rutas) {
       const { estado } = await pedir(ruta);

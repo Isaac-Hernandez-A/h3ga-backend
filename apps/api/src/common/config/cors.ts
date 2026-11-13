@@ -22,7 +22,7 @@ export function origenesPermitidos(valor: string | undefined): string[] {
 export function opcionesCors(valor: string | undefined): CorsOptions {
   return {
     origin: origenesPermitidos(valor),
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Authorization', 'Content-Type'],
     exposedHeaders: ['Content-Disposition'],
     credentials: false,

@@ -261,13 +261,46 @@ export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   await ds.query(`DELETE FROM documentos_clientes WHERE cliente_id IN ${clientes}`);
   const eventos = `(SELECT id FROM eventos_agenda WHERE cliente_id IN ${clientes})`;
   const etapasDeAvisos = `(SELECT id FROM etapas_tramite WHERE cliente_id IN ${clientes})`;
-  await ds.query(
-    `DELETE FROM avisos WHERE evento_id IN ${eventos} OR etapa_tramite_id IN ${etapasDeAvisos}`,
-  );
+  // La bandeja del supervisor (otra suite en paralelo) genera avisos para TODOS los clientes: se borran
+  // justo antes de cada tabla de la que dependen para que no queden entre medias.
+  const borrarAvisos = () =>
+    ds.query(
+      `DELETE FROM avisos WHERE evento_id IN ${eventos} OR etapa_tramite_id IN ${etapasDeAvisos}`,
+    );
+  await borrarAvisos();
   await ds.query(`DELETE FROM eventos_agenda WHERE cliente_id IN ${clientes}`);
   const diagnosticos = `(SELECT id FROM diagnostico_especializado WHERE cliente_id IN ${clientes})`;
   const correcciones = `(SELECT id FROM correcciones_cliente WHERE cliente_id IN ${clientes})`;
   const unificaciones = `(SELECT id FROM unificacion_nss_detalle WHERE correccion_id IN ${correcciones})`;
+  // F1: primero lo que cuelga del diagnóstico y de sus análisis, después el diagnóstico.
+  const recuperaciones = `(SELECT id FROM analisis_recuperacion_semanas WHERE diagnostico_id IN ${diagnosticos})`;
+  const retroactivos = `(SELECT id FROM analisis_modalidad40_retroactivo WHERE diagnostico_id IN ${diagnosticos})`;
+  const patrimoniales = `(SELECT id FROM situacion_patrimonial WHERE diagnostico_f1_id IN ${diagnosticos})`;
+  await ds.query(`DELETE FROM recuperacion_gestiones WHERE analisis_id IN ${recuperaciones}`);
+  await ds.query(`DELETE FROM recuperacion_evidencias WHERE analisis_id IN ${recuperaciones}`);
+  await ds.query(
+    `DELETE FROM retroactivo_evaluacion_conveniencia WHERE retroactivo_id IN ${retroactivos}`,
+  );
+  await ds.query(`DELETE FROM analisis_modalidad40_retroactivo WHERE id IN ${retroactivos}`);
+  await ds.query(
+    `DELETE FROM situacion_patrimonial_hijos WHERE situacion_patrimonial_id IN ${patrimoniales}`,
+  );
+  await ds.query(`DELETE FROM situacion_patrimonial WHERE id IN ${patrimoniales}`);
+  await ds.query(`DELETE FROM escenario_pension WHERE diagnostico_f1_id IN ${diagnosticos}`);
+  for (const tabla of [
+    'plan_accion',
+    'diagnostico_documentos',
+    'diagnostico_objetivos',
+    'diagnostico_objetivos_m10',
+    'diagnostico_objetivos_m40',
+    'diagnostico_estrategias_recomendadas',
+    'diagnostico_inconsistencias_generales',
+    'modalidad10_criterios',
+    'modalidad40_criterios',
+  ]) {
+    await ds.query(`DELETE FROM ${tabla} WHERE diagnostico_id IN ${diagnosticos}`);
+  }
+  await ds.query(`DELETE FROM periodos_inconsistencias WHERE cliente_id IN ${clientes}`);
   await ds.query(
     `DELETE FROM analisis_recuperacion_semanas WHERE diagnostico_id IN ${diagnosticos}`,
   );
@@ -279,6 +312,7 @@ export async function limpiarDatosClientes(ds: DataSource): Promise<void> {
   await ds.query(`DELETE FROM correcciones_cliente WHERE cliente_id IN ${clientes}`);
   const etapas = `(SELECT id FROM etapas_tramite WHERE cliente_id IN ${clientes})`;
   await ds.query(`DELETE FROM etapas_tramite_historial WHERE etapa_tramite_id IN ${etapas}`);
+  await borrarAvisos();
   await ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN ${clientes}`);
   await ds.query(`DELETE FROM cliente_objetivos_especificos WHERE cliente_id IN ${clientes}`);
   const historiales = `(SELECT id FROM historial_laboral WHERE cliente_id IN ${clientes})`;

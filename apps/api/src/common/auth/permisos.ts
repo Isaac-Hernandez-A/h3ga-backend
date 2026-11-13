@@ -33,7 +33,13 @@ export const PERMISOS_PROVISIONALES = false;
 
 export const PERMISOS = {
   catalogos: { leer: TODOS },
-  usuarios: { leer: SUPERVISOR, escribir: SUPERVISOR, restablecerContrasena: SUPERVISOR },
+  usuarios: {
+    leer: SUPERVISOR,
+    escribir: SUPERVISOR,
+    restablecerContrasena: SUPERVISOR,
+    // Selector "Autorizar a un auxiliar" y nombres de los autorizados: el asesor no puede leer /usuarios.
+    listarAuxiliares: ASESOR_SUPERVISOR,
+  },
   auth: { cambiarContrasena: TODOS },
   clientes: {
     consultar: TODOS,
@@ -49,6 +55,8 @@ export const PERMISOS = {
   diagnosticos: { leer: ASESOR, escribir: ASESOR },
   agenda: { leer: TODOS, escribir: ASESOR },
   avisos: { leer: TODOS, atender: TODOS },
+  // Resumen del Dashboard de Inicio: los tres roles, cada uno con su alcance de clientes (lo aplica el servicio).
+  dashboard: { leer: TODOS },
   reportes: { leer: ASESOR_SUPERVISOR },
   etl: { importar: SUPERVISOR },
 };

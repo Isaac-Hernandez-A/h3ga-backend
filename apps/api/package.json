@@ -20,6 +20,7 @@
       "^.+\\.ts$": "ts-jest"
     },
     "testEnvironment": "node",
+    "maxWorkers": 4,
     "setupFiles": [
       "<rootDir>/common/testing/cargar-env.ts"
     ]
