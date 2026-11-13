@@ -97,7 +97,7 @@ describeConBd('Avisos (aplicación real y base de pruebas)', () => {
     return { clienteId, etapaId };
   }
 
-  it('CP-38 se generan avisos para etapas y eventos a 2 días o menos; no para Finalizado, Cancelado ni No aplica', async () => {
+  it('CP-38 se generan avisos para etapas y eventos a 2 días o menos; no para Finalizado, Cancelado ni No aplica; las citas pendientes y reagendadas sí, las cumplidas y canceladas no', async () => {
     fijarHora('2026-11-10T09:00:00');
     const e = {
       porIniciar: await etapaCon(ID_ESTATUS['Por iniciar'], D),
@@ -126,10 +126,12 @@ describeConBd('Avisos (aplicación real y base de pruebas)', () => {
         e.bloqueada.etapaId,
         e.vencida.etapaId,
         ev.pendiente,
+        ev.reagendado, // una cita reagendada sigue siendo un compromiso por cumplir
       ].sort(),
     );
     const deEtapa = avisos.find((a) => a.etapa_tramite_id === e.porIniciar.etapaId)!;
     const deCita = avisos.find((a) => a.evento_id === ev.pendiente)!;
+    expect(avisos.find((a) => a.evento_id === ev.reagendado)!.tipo).toBe('cita');
     expect(deEtapa.tipo).toBe('tramite');
     expect(deCita.tipo).toBe('cita');
     // La alerta cae a las 00:00 de Cancún de D-2 (05:00 UTC).

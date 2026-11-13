@@ -9,6 +9,6 @@ import { Aviso } from './entities/aviso.entity';
   imports: [TypeOrmModule.forFeature([Aviso])],
   controllers: [AvisosController],
   providers: [AvisosService, Reloj],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, Reloj],
 })
 export class AvisosModule {}

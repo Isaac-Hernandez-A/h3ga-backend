@@ -22,6 +22,7 @@ import {
 } from '@nestjs/swagger';
 import { PERMISOS } from '../common/auth/permisos';
 import { Roles } from '../common/auth/roles.decorator';
+import { AuxiliarRespuesta } from './dto/auxiliar-respuesta.dto';
 import { ActualizarUsuarioDto } from './dto/actualizar-usuario.dto';
 import { CrearUsuarioDto } from './dto/crear-usuario.dto';
 import { RestablecerContrasenaDto } from './dto/restablecer-contrasena.dto';
@@ -42,6 +43,21 @@ export class UsuariosRolesController {
   @ApiOkResponse({ type: UsuarioRespuesta, isArray: true })
   listarUsuarios(@Query() consulta: ListarUsuariosQueryDto): Promise<UsuarioRespuesta[]> {
     return this.service.listar({ activo: consulta.activo });
+  }
+
+  @Get('auxiliares')
+  @Roles(...PERMISOS.usuarios.listarAuxiliares)
+  @ApiOperation({
+    summary: 'Listar los usuarios con rol auxiliar',
+    description:
+      'Para el selector "Autorizar a un auxiliar" y para mostrar el nombre de cada auxiliar autorizado. ' +
+      'Incluye activos e inactivos, ordenados por nombre; nunca devuelve la contraseña ni datos de acceso.',
+  })
+  @ApiOkResponse({ type: AuxiliarRespuesta, isArray: true })
+  @ApiUnauthorizedResponse({ description: 'Falta el token o no es válido.' })
+  @ApiForbiddenResponse({ description: 'El rol no puede consultar los auxiliares (auxiliar).' })
+  listarAuxiliares(): Promise<AuxiliarRespuesta[]> {
+    return this.service.listarAuxiliares();
   }
 
   @Get('usuarios/:usuarioId')

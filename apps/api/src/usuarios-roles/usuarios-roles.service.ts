@@ -10,6 +10,7 @@ import { ROL_ID } from '../common/auth/roles-sistema';
 import { codigoPostgres } from '../common/database/errores-postgres';
 import { PasswordHasher } from '../common/seguridad/password-hasher';
 import { ActualizarUsuarioDto } from './dto/actualizar-usuario.dto';
+import { AuxiliarRespuesta } from './dto/auxiliar-respuesta.dto';
 import { CrearUsuarioDto } from './dto/crear-usuario.dto';
 import { UsuarioRespuesta } from './dto/usuario-respuesta.dto';
 import { Rol } from './entities/rol.entity';
@@ -68,6 +69,30 @@ export class UsuariosRolesService {
       order: { correo_electronico: 'ASC' },
     });
     return usuarios.map(aRespuesta);
+  }
+
+  // Solo usuarios con rol auxiliar (activos o no) y solo los campos que necesita quien los autoriza.
+  async listarAuxiliares(): Promise<AuxiliarRespuesta[]> {
+    const auxiliares = await this.usuarios.find({
+      select: {
+        id: true,
+        nombre: true,
+        apellido_paterno: true,
+        apellido_materno: true,
+        correo_electronico: true,
+        activo: true,
+      },
+      where: { rol_id: ROL_ID.auxiliar },
+      order: { nombre: 'ASC', apellido_paterno: 'ASC', apellido_materno: 'ASC', id: 'ASC' },
+    });
+    return auxiliares.map((u) => ({
+      id: u.id,
+      nombre: u.nombre,
+      apellido_paterno: u.apellido_paterno,
+      apellido_materno: u.apellido_materno,
+      correo_electronico: u.correo_electronico,
+      activo: u.activo,
+    }));
   }
 
   async obtener(usuarioId: string): Promise<UsuarioRespuesta> {

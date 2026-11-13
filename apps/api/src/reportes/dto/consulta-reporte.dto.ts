@@ -1,10 +1,14 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsOptional, Matches } from 'class-validator';
 import { PeriodoReporte } from '../../common/fechas';
 
-// GET /reportes: periodo semanal (lunes a domingo) o mensual (mes calendario) que contiene a `fecha`
-// (por defecto, hoy en Cancún). Que la fecha exista en el calendario se valida en el servicio.
+// GET /reportes: periodo semanal (lunes a domingo), mensual (mes calendario) o trimestral (trimestre de
+// calendario) que contiene a `fecha` (por defecto, hoy en Cancún). Que la fecha exista en el calendario se valida en el servicio.
 export class ConsultaReporteDto {
-  @IsIn(['semanal', 'mensual'])
+  @ApiProperty({ enum: ['semanal', 'mensual', 'trimestral'], example: 'trimestral' })
+  @IsIn(['semanal', 'mensual', 'trimestral'], {
+    message: 'periodo debe ser semanal, mensual o trimestral.',
+  })
   periodo: PeriodoReporte;
 
   @IsOptional()

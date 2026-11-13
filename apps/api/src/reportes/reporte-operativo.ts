@@ -68,6 +68,26 @@ export class ClientesNuevos {
   por_regimen: ClientesPorRegimen[];
 }
 
+export class CambioDeEstatus {
+  cliente: string;
+  numero_paso: number;
+  etapa: string;
+  // null en el primer registro de la etapa.
+  estatus_anterior: string | null;
+  estatus_nuevo: string;
+  // AAAA-MM-DD en America/Cancun.
+  fecha: string;
+  // Nombre y apellido paterno del asesor responsable del cliente.
+  asesor: string;
+}
+
+export class Trazabilidad {
+  // Todos los cambios de estatus de etapas 0 a 4 en el periodo (aunque la lista traiga solo 20).
+  total: number;
+  // Los 20 más recientes primero.
+  lista: CambioDeEstatus[];
+}
+
 export class AvanceDeAsesor {
   asesor_id: string;
   asesor: string;
@@ -88,6 +108,7 @@ export class ReporteOperativo {
   vencimientos: Vencimientos;
   rechazo: Rechazo;
   clientes_nuevos: ClientesNuevos;
+  trazabilidad: Trazabilidad;
   // Solo para el supervisor.
   por_asesor?: AvanceDeAsesor[];
 }

@@ -20,6 +20,7 @@ import { EtapaTramiteHistorial } from '../etapas/entities/etapa-tramite-historia
 import { Usuario } from '../usuarios-roles/entities/usuario.entity';
 import {
   AvanceDeAsesor,
+  CambioDeEstatus,
   ClientesNuevos,
   EtapaFinalizada,
   EtapaPorVencer,
@@ -27,6 +28,7 @@ import {
   FilaCartera,
   Rechazo,
   ReporteOperativo,
+  Trazabilidad,
   Vencimientos,
 } from './reporte-operativo';
 
@@ -34,6 +36,7 @@ import {
 const ULTIMA_ETAPA = 4;
 const LIMITE_LISTA = 10;
 const LIMITE_MOTIVOS = 5;
+const LIMITE_TRAZABILIDAD = 20;
 // Una etapa en estos estatus no está pendiente: no cuenta como vencida ni por vencer.
 const ESTATUS_SIN_PENDIENTE = ['Finalizado', 'Cancelado', 'No aplica'];
 
@@ -55,7 +58,7 @@ export class ReportesService {
     private readonly reloj: Reloj,
   ) {}
 
-  // Reporte operativo del periodo (semanal o mensual) que contiene a `fecha` (por defecto, hoy en Cancún).
+  // Reporte operativo del periodo (semanal, mensual o trimestral) que contiene a `fecha` (por defecto, hoy en Cancún).
   // Todo se calcula con el alcance del usuario: el asesor ve sus clientes; el supervisor, todos y además el
   // desglose por asesor. El auxiliar no tiene acceso (RolesGuard ya lo niega; aquí se repite por defensa).
   async generar(
@@ -71,13 +74,14 @@ export class ReportesService {
       throw new BadRequestException('fecha no es una fecha válida (AAAA-MM-DD).');
     }
 
-    const [cartera, finalizados, vencimientos, rechazo, clientesNuevos, porAsesor] =
+    const [cartera, finalizados, vencimientos, rechazo, clientesNuevos, trazabilidad, porAsesor] =
       await Promise.all([
         this.cartera(usuario),
         this.finalizados(usuario, rango),
         this.vencimientos(usuario, hoy),
         this.rechazo(usuario, rango),
         this.clientesNuevos(usuario, rango),
+        this.trazabilidad(usuario, rango),
         usuario.rol === 'supervisor' ? this.porAsesor(usuario) : Promise.resolve(undefined),
       ]);
 
@@ -92,6 +96,7 @@ export class ReportesService {
       vencimientos,
       rechazo,
       clientes_nuevos: clientesNuevos,
+      trazabilidad,
     };
     if (porAsesor) reporte.por_asesor = porAsesor;
     return reporte;
@@ -260,6 +265,54 @@ export class ReportesService {
       .getRawMany<{ regimen: string; total: string }>();
     const por_regimen = filas.map((f) => ({ regimen: f.regimen, total: entero(f.total) }));
     return { total: por_regimen.reduce((suma, f) => suma + f.total, 0), por_regimen };
+  }
+
+  // Cambios de estatus de etapas 0 a 4 dentro del rango (historial de etapas), del más reciente al más
+  // antiguo. Una sola consulta: el total sale de COUNT(*) OVER () antes del LIMIT, sin consultas por etapa.
+  private async trazabilidad(
+    usuario: AuthenticatedUser,
+    rango: { desde: string; hasta: string },
+  ): Promise<Trazabilidad> {
+    const qb = this.ds
+      .createQueryBuilder()
+      .from(EtapaTramiteHistorial, 'h')
+      .innerJoin(EtapaTramite, 'et', 'et.id = h.etapa_tramite_id')
+      .innerJoin(EtapaProceso, 'ep', 'ep.id = et.etapa_id')
+      .innerJoin(EstatusTramite, 'en', 'en.id = h.estatus_nuevo_id')
+      .leftJoin(EstatusTramite, 'ea', 'ea.id = h.estatus_anterior_id')
+      .innerJoin(Cliente, 'c', 'c.id = et.cliente_id')
+      .innerJoin(Usuario, 'u', 'u.id = c.asesor_id')
+      .where('ep.numero_paso <= :ultimaEtapa', { ultimaEtapa: ULTIMA_ETAPA })
+      .andWhere(`h.fecha_cambio >= ${INICIO_PERIODO} AND h.fecha_cambio < ${FIN_PERIODO}`, rango);
+    const filas = await aplicarAlcanceClientes(
+      qb as SelectQueryBuilder<EtapaTramiteHistorial>,
+      usuario,
+      'c',
+    )
+      .select(NOMBRE_CLIENTE, 'cliente')
+      .addSelect('ep.numero_paso', 'numero_paso')
+      .addSelect('ep.nombre', 'etapa')
+      .addSelect('ea.nombre', 'estatus_anterior')
+      .addSelect('en.nombre', 'estatus_nuevo')
+      .addSelect(`to_char(h.fecha_cambio AT TIME ZONE '${ZONA}', 'YYYY-MM-DD')`, 'fecha')
+      .addSelect("u.nombre || ' ' || u.apellido_paterno", 'asesor')
+      .addSelect('COUNT(*) OVER ()', 'total')
+      .orderBy('h.fecha_cambio', 'DESC')
+      .addOrderBy('h.id', 'DESC')
+      .limit(LIMITE_TRAZABILIDAD)
+      .getRawMany<CambioDeEstatus & { total: string }>();
+    return {
+      total: entero(filas[0]?.total),
+      lista: filas.map((f) => ({
+        cliente: f.cliente,
+        numero_paso: Number(f.numero_paso),
+        etapa: f.etapa,
+        estatus_anterior: f.estatus_anterior,
+        estatus_nuevo: f.estatus_nuevo,
+        fecha: f.fecha,
+        asesor: f.asesor,
+      })),
+    };
   }
 
   // Solo supervisor: clientes y avance promedio (etapas 0 a 4, sin "No aplica") de cada asesor.

@@ -64,7 +64,13 @@ export class AgendaController {
 
   @Patch('agenda/:eventoId')
   @Roles(...PERMISOS.agenda.escribir)
-  @ApiOperation({ summary: 'Reagendar, cumplir o cancelar un evento' })
+  @ApiOperation({
+    summary: 'Reagendar, cumplir o cancelar un evento',
+    description:
+      'Cambiar la fecha o la hora es reagendar: si el aviso de la fecha resultante ya existía y estaba ' +
+      'atendido, vuelve a quedar pendiente (en la misma transacción); los avisos de otras fechas no se ' +
+      'tocan. Una cita pendiente o reagendada genera aviso; cumplida y cancelada no.',
+  })
   @ApiOkResponse({ type: EventoAgenda })
   actualizarEvento(
     @CurrentUser() usuario: AuthenticatedUser,

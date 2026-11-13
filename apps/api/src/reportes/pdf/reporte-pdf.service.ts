@@ -22,6 +22,12 @@ const ESTATUS_CORTO: Record<string, string> = {
   'En proceso Instituto': 'En proc. Instituto',
 };
 
+const DESCRIPCION_PERIODO: Record<ReporteOperativo['periodo'], string> = {
+  semanal: 'Semanal (lunes a domingo)',
+  mensual: 'Mensual (mes calendario)',
+  trimestral: 'Trimestral (trimestre de calendario)',
+};
+
 const ANCHO_TOTAL = 9972; // twips: el ancho útil de la página
 const porcentaje = (fraccion: number): string => `${(fraccion * 100).toFixed(1)} %`;
 const encabezados = (...textos: [string, number][]): Celda[] =>
@@ -47,14 +53,13 @@ export class ReportePdfService {
         y = tabla(doc, y + 30, filas, nuevaPagina) + 26;
       };
 
-      const semanal = reporte.periodo === 'semanal';
-      bloque(`Reporte operativo ${semanal ? 'semanal' : 'mensual'}`, [
+      bloque(`Reporte operativo ${reporte.periodo}`, [
         encabezados(['Dato', 2262], ['Información', 7710]),
         [
           { ancho: 2262, texto: 'Tipo de reporte' },
           {
             ancho: 7710,
-            texto: semanal ? 'Semanal (lunes a domingo)' : 'Mensual (mes calendario)',
+            texto: DESCRIPCION_PERIODO[reporte.periodo],
           },
         ],
         [
@@ -219,9 +224,42 @@ export class ReportePdfService {
             ])),
       ]);
 
-      // ---------- 7. Avance por asesor (solo supervisor) ----------
+      // ---------- 7. Trazabilidad de etapas ----------
+      const z = reporte.trazabilidad;
+      bloque(`7. Trazabilidad de etapas (${z.total})`, [
+        encabezados(
+          ['Cliente', 2200],
+          ['Etapa', 2000],
+          ['Estatus anterior', 1400],
+          ['Estatus nuevo', 1400],
+          ['Fecha', 1000],
+          ['Asesor', 1972],
+        ),
+        ...(z.lista.length === 0
+          ? [sinRegistros()]
+          : z.lista.map((x): Celda[] => [
+              { ancho: 2200, texto: x.cliente },
+              { ancho: 2000, texto: `${x.numero_paso}. ${x.etapa}` },
+              { ancho: 1400, texto: x.estatus_anterior ?? '—' },
+              { ancho: 1400, texto: x.estatus_nuevo },
+              { ancho: 1000, texto: formatoFecha(x.fecha) },
+              { ancho: 1972, texto: x.asesor },
+            ])),
+        ...(z.total > z.lista.length
+          ? [
+              [
+                {
+                  ancho: ANCHO_TOTAL,
+                  texto: `Se muestran los ${z.lista.length} cambios más recientes de ${z.total}.`,
+                },
+              ],
+            ]
+          : []),
+      ]);
+
+      // ---------- 8. Avance por asesor (solo supervisor) ----------
       if (reporte.por_asesor) {
-        bloque('7. Avance promedio por asesor', [
+        bloque('8. Avance promedio por asesor', [
           encabezados(['Asesor', 5500], ['Clientes', 2000], ['Avance promedio', 2472]),
           ...(reporte.por_asesor.length === 0
             ? [sinRegistros()]

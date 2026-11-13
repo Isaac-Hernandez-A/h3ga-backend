@@ -52,7 +52,12 @@ export class EtapasController {
 
   @Patch('clientes/:clienteId/etapas/:etapaTramiteId')
   @Roles(...PERMISOS.etapas.escribir)
-  @ApiOperation({ summary: 'Actualizar estatus, avance o acción de una etapa' })
+  @ApiOperation({
+    summary: 'Actualizar estatus, avance o acción de una etapa',
+    description:
+      'Si cambia fecha_compromiso y el aviso de la fecha resultante ya existía y estaba atendido, vuelve ' +
+      'a quedar pendiente (en la misma transacción); los avisos de otras fechas no se tocan.',
+  })
   @ApiOkResponse({ type: EtapaTramite })
   actualizarEtapa(
     @CurrentUser() usuario: AuthenticatedUser,

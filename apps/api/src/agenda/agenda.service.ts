@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { aplicarAlcanceClientes } from '../common/auth/clientes-accesibles';
+import { reabrirAvisoAtendido } from '../avisos/alerta';
 import { traducirErrorBd } from '../common/database/errores-postgres';
 import { Cliente } from '../clientes/entities/cliente.entity';
 import { CreateEventoAgendaDto } from './dto/create-evento-agenda.dto';
@@ -17,7 +18,10 @@ const ERRORES_EVENTO = {
 
 @Injectable()
 export class AgendaService {
-  constructor(@InjectRepository(EventoAgenda) private readonly eventos: Repository<EventoAgenda>) {}
+  constructor(
+    @InjectRepository(EventoAgenda) private readonly eventos: Repository<EventoAgenda>,
+    private readonly ds: DataSource,
+  ) {}
 
   // Eventos de los clientes dentro del alcance del usuario (asesor: sus clientes; auxiliar: los
   // autorizados activos; supervisor: todos). Opcionalmente filtra por fecha y estatus.
@@ -59,10 +63,19 @@ export class AgendaService {
     eventoId: string,
     dto: UpdateEventoAgendaDto,
   ): Promise<EventoAgenda> {
-    await this.obtenerEvento(usuario, eventoId);
+    const actual = await this.obtenerEvento(usuario, eventoId);
     if (Object.keys(dto).length > 0) {
+      // Reagendar = cambiar la fecha o la hora. Si el aviso de la fecha resultante ya existía y estaba
+      // atendido, vuelve a quedar pendiente; el cambio y la reapertura van en la misma transacción.
+      const reagenda =
+        (dto.fecha !== undefined && dto.fecha !== actual.fecha) ||
+        (dto.hora !== undefined && normalizarHora(dto.hora) !== normalizarHora(actual.hora));
       try {
-        await this.eventos.update({ id: eventoId }, dto);
+        await this.ds.transaction(async (manager) => {
+          await manager.update(EventoAgenda, { id: eventoId }, dto);
+          if (reagenda)
+            await reabrirAvisoAtendido(manager, { eventoId }, dto.fecha ?? actual.fecha);
+        });
       } catch (error) {
         traducirErrorBd(error, ERRORES_EVENTO);
       }
@@ -74,4 +87,9 @@ export class AgendaService {
     const qb = this.eventos.createQueryBuilder('e').innerJoin(Cliente, 'c', 'c.id = e.cliente_id');
     return aplicarAlcanceClientes(qb, usuario, 'c');
   }
+}
+
+// '10:00' y '10:00:00' son la misma hora: se comparan con segundos.
+function normalizarHora(hora: string): string {
+  return /^\d{2}:\d{2}$/.test(hora) ? `${hora}:00` : hora;
 }

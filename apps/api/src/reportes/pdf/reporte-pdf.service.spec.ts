@@ -97,6 +97,20 @@ const reporteConDatos = (): ReporteOperativo => ({
       { regimen: 'ISSSTE', total: 2 },
     ],
   },
+  trazabilidad: {
+    total: 1,
+    lista: [
+      {
+        cliente: 'Cliente Alfa Ficticio',
+        numero_paso: 2,
+        etapa: 'Corrección de datos personales',
+        estatus_anterior: null,
+        estatus_nuevo: 'Por iniciar',
+        fecha: '2026-11-10',
+        asesor: 'Elena Rivas',
+      },
+    ],
+  },
 });
 
 const reporteVacio = (): ReporteOperativo => ({
@@ -110,6 +124,7 @@ const reporteVacio = (): ReporteOperativo => ({
   vencimientos: { vencidos: 0, por_vencer: 0, lista: [] },
   rechazo: { tasa: 0, bloqueos: 0, etapas_con_cambios: 0, motivos: [] },
   clientes_nuevos: { total: 0, por_regimen: [] },
+  trazabilidad: { total: 0, lista: [] },
 });
 
 const normalizado = (paginas: string[]) => paginas.join('\n').replace(/\s+/g, ' ');

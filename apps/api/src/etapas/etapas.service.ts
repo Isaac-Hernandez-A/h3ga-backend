@@ -1,3 +1,4 @@
+import { reabrirAvisoAtendido } from '../avisos/alerta';
 import {
   BadRequestException,
   Injectable,
@@ -110,6 +111,10 @@ export class EtapasService {
       }
 
       await manager.update(EtapaTramite, { id: etapa.id }, cambios);
+      // Un compromiso movido a un día cuya alerta ya existía y estaba atendida la deja pendiente otra vez.
+      if (dto.fecha_compromiso && dto.fecha_compromiso !== etapa.fecha_compromiso) {
+        await reabrirAvisoAtendido(manager, { etapaTramiteId: etapa.id }, dto.fecha_compromiso);
+      }
       if (cambiaEstatus) {
         await manager.insert(EtapaTramiteHistorial, {
           etapa_tramite_id: etapa.id,

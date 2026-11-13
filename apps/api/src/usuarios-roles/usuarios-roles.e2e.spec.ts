@@ -51,7 +51,9 @@ describeConBd('Usuarios y roles (aplicación real y base de pruebas)', () => {
 
   afterAll(async () => {
     if (!ctx) return;
-    await ctx.ds.query("DELETE FROM usuarios WHERE correo_electronico LIKE '%@ejemplo.invalid'");
+    await ctx.ds.query(
+      "DELETE FROM usuarios WHERE correo_electronico LIKE 'prueba-%@ejemplo.invalid'",
+    );
     await ctx.app.close();
   });
 

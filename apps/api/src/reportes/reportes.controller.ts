@@ -20,11 +20,12 @@ export class ReportesController {
   @Get('reportes')
   @Roles(...PERMISOS.reportes.leer)
   @ApiOperation({
-    summary: 'Reporte operativo semanal o mensual (etapas 0 a 4)',
+    summary: 'Reporte operativo semanal, mensual o trimestral (etapas 0 a 4)',
     description:
       'Cartera por etapa y estatus, trámites finalizados, vencidos y por vencer, tasa de rechazo, clientes ' +
-      'nuevos por régimen y, solo para el supervisor, el avance por asesor. El asesor ve sus clientes; el ' +
-      'supervisor, todos.',
+      'nuevos por régimen, la trazabilidad de etapas (cambios de estatus del periodo: total y los 20 más ' +
+      'recientes) y, solo para el supervisor, el avance por asesor. `periodo` puede ser semanal, mensual o ' +
+      'trimestral (trimestre de calendario). El asesor ve sus clientes; el supervisor, todos.',
   })
   @ApiOkResponse({ type: ReporteOperativo })
   generar(
@@ -37,7 +38,7 @@ export class ReportesController {
   @Get('reportes/pdf')
   @Roles(...PERMISOS.reportes.leer)
   @ApiOperation({
-    summary: 'Reporte operativo semanal o mensual en PDF',
+    summary: 'Reporte operativo semanal, mensual o trimestral en PDF',
     description:
       'Mismos parámetros, alcance y números que GET /reportes, con el diseño corporativo del formato F0.',
   })
