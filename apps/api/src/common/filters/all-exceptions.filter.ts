@@ -17,6 +17,22 @@ const nombreEstado = (statusCode: number): string =>
       (_, sep: string, letra: string) => `${sep ? ' ' : ''}${letra.toUpperCase()}`,
     );
 
+// Errores 4xx que lanza el parser del cuerpo (http-errors, p. ej. 413 por un cuerpo de más de 100 KB): no son
+// HttpException de Nest, pero son errores del cliente y no deben responder 500. Solo se toman los que traen un
+// estado de cliente (400 a 499) y se marcan como exponibles.
+function estadoDeClienteDelParser(excepcion: unknown): number | null {
+  if (typeof excepcion !== 'object' || excepcion === null) return null;
+  const { status, statusCode, expose } = excepcion as Record<string, unknown>;
+  const estado = typeof statusCode === 'number' ? statusCode : status;
+  return typeof estado === 'number' && estado >= 400 && estado < 500 && expose === true
+    ? estado
+    : null;
+}
+
+const MENSAJES_DEL_PARSER: Record<number, string> = {
+  413: 'El cuerpo de la petición es demasiado grande.',
+};
+
 // Respuesta de error uniforme: { statusCode, error, message, path, timestamp }.
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -28,12 +44,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
     const esHttp = exception instanceof HttpException;
-    const statusCode = esHttp ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+    const estadoParser = esHttp ? null : estadoDeClienteDelParser(exception);
+    const statusCode = esHttp
+      ? exception.getStatus()
+      : (estadoParser ?? HttpStatus.INTERNAL_SERVER_ERROR);
     const cuerpo = esHttp ? exception.getResponse() : null;
     const detalle =
       typeof cuerpo === 'object' && cuerpo !== null ? (cuerpo as Record<string, unknown>) : {};
 
-    if (!esHttp) {
+    if (!esHttp && estadoParser === null) {
       this.logger.error(exception instanceof Error ? exception.stack : String(exception));
     }
 
@@ -46,7 +65,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
           ? typeof cuerpo === 'string'
             ? cuerpo
             : (detalle.message ?? exception.message)
-          : 'Error interno del servidor',
+          : estadoParser !== null
+            ? (MENSAJES_DEL_PARSER[estadoParser] ?? (exception as Error).message)
+            : 'Error interno del servidor',
+        ...(Array.isArray(detalle.faltantes) ? { faltantes: detalle.faltantes } : {}),
         path: httpAdapter.getRequestUrl(ctx.getRequest()) as string,
         timestamp: new Date().toISOString(),
       },

@@ -58,11 +58,16 @@ export class AnalisisModalidad40Retroactivo {
   @Column({ type: 'boolean', nullable: true })
   baja_por_mora_previa: boolean | null;
 
-  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado' })
-  dentro_de_plazo_reingreso: ValidacionEstado;
+  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado', nullable: true })
+  dentro_de_plazo_reingreso: ValidacionEstado | null;
 
-  @Column({ type: 'enum', enum: EvaluacionRetroactivo, enumName: 'evaluacion_retroactivo' })
-  conclusion_retroactivo: EvaluacionRetroactivo;
+  @Column({
+    type: 'enum',
+    enum: EvaluacionRetroactivo,
+    enumName: 'evaluacion_retroactivo',
+    nullable: true,
+  })
+  conclusion_retroactivo: EvaluacionRetroactivo | null;
 
   @Column({ type: 'text', nullable: true })
   comentarios: string | null;

@@ -10,41 +10,71 @@ export class SituacionPatrimonial {
   @Column({ type: 'uuid' })
   diagnostico_f1_id: string;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  saldo_cuenta_individual: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  saldo_cuenta_individual: number | null;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  aportaciones_voluntarias: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  aportaciones_voluntarias: number | null;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  ahorros_inversiones_adicionales: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  ahorros_inversiones_adicionales: number | null;
 
-  @Column({ type: 'text' })
-  bienes_patrimoniales: string;
+  @Column({ type: 'text', nullable: true })
+  bienes_patrimoniales: string | null;
 
-  @Column({ type: 'text' })
-  creditos_deudas_vigentes: string;
+  @Column({ type: 'text', nullable: true })
+  creditos_deudas_vigentes: string | null;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  ingreso_mensual: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  ingreso_mensual: number | null;
 
-  @Column({ type: 'text' })
-  otras_fuentes_ingreso: string;
+  @Column({ type: 'text', nullable: true })
+  otras_fuentes_ingreso: string | null;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  ingreso_conyuge: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  ingreso_conyuge: number | null;
 
-  @Column({ type: 'text' })
-  seguros: string;
+  @Column({ type: 'text', nullable: true })
+  seguros: string | null;
 
-  @Column({ type: 'enum', enum: EstadoSalud, enumName: 'estado_salud' })
-  estado_salud: EstadoSalud;
+  @Column({ type: 'enum', enum: EstadoSalud, enumName: 'estado_salud', nullable: true })
+  estado_salud: EstadoSalud | null;
 
-  @Column({ type: 'text' })
-  padecimientos: string;
+  @Column({ type: 'text', nullable: true })
+  padecimientos: string | null;
 
-  @Column({ type: 'enum', enum: EstadoCivil, enumName: 'estado_civil' })
-  estado_civil: EstadoCivil;
+  @Column({ type: 'enum', enum: EstadoCivil, enumName: 'estado_civil', nullable: true })
+  estado_civil: EstadoCivil | null;
 
   @Column({ type: 'smallint', nullable: true })
   edad_conyuge: number | null;

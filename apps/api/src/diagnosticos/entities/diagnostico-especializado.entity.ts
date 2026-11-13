@@ -25,14 +25,14 @@ export class DiagnosticoEspecializado {
   @Column({ type: 'date', nullable: true })
   fecha_primera_cotizacion: string | null;
 
-  @Column({ type: 'boolean' })
-  cotizo_antes_julio_1997: boolean;
+  @Column({ type: 'boolean', nullable: true })
+  cotizo_antes_julio_1997: boolean | null;
 
-  @Column({ type: 'enum', enum: TipoPension, enumName: 'tipo_pension' })
-  tipo_pension_probable: TipoPension;
+  @Column({ type: 'enum', enum: TipoPension, enumName: 'tipo_pension', nullable: true })
+  tipo_pension_probable: TipoPension | null;
 
-  @Column({ type: 'smallint' })
-  edad_objetivo_pension: number;
+  @Column({ type: 'smallint', nullable: true })
+  edad_objetivo_pension: number | null;
 
   @Column({ type: 'text', nullable: true })
   comentarios_cliente: string | null;
@@ -55,20 +55,25 @@ export class DiagnosticoEspecializado {
   @Column({ type: 'date', nullable: true })
   fecha_vencimiento_conservacion: string | null;
 
-  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado' })
-  tiene_conservacion_derechos: ValidacionEstado;
+  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado', nullable: true })
+  tiene_conservacion_derechos: ValidacionEstado | null;
 
   @Column({ type: 'integer', nullable: true })
   tiempo_estimado_conservacion_meses: number | null;
 
-  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado' })
-  dentro_de_conservacion: ValidacionEstado;
+  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado', nullable: true })
+  dentro_de_conservacion: ValidacionEstado | null;
 
   @Column({ type: 'boolean' })
   requiere_reactivacion: boolean;
 
-  @Column({ type: 'enum', enum: ConvenienciaPension, enumName: 'conveniencia_pension' })
-  conviene_pensionar_ahora: ConvenienciaPension;
+  @Column({
+    type: 'enum',
+    enum: ConvenienciaPension,
+    enumName: 'conveniencia_pension',
+    nullable: true,
+  })
+  conviene_pensionar_ahora: ConvenienciaPension | null;
 
   @Column({ type: 'text', nullable: true })
   comentarios_conservacion: string | null;
@@ -82,14 +87,14 @@ export class DiagnosticoEspecializado {
   @Column({ type: 'integer' })
   semanas_reintegradas: number;
 
-  @Column({ type: 'integer' })
-  semanas_efectivas_pension: number;
+  @Column({ type: 'integer', nullable: true })
+  semanas_efectivas_pension: number | null;
 
   @Column({ type: 'integer', nullable: true })
   semanas_requeridas_pension: number | null;
 
-  @Column({ type: 'enum', enum: SiNoParcial, enumName: 'si_no_parcial' })
-  trabaja_cuenta_propia: SiNoParcial;
+  @Column({ type: 'enum', enum: SiNoParcial, enumName: 'si_no_parcial', nullable: true })
+  trabaja_cuenta_propia: SiNoParcial | null;
 
   @Column({ type: 'text', nullable: true })
   actividad_economica: string | null;
@@ -103,17 +108,27 @@ export class DiagnosticoEspecializado {
   })
   ingreso_mensual_aproximado: number | null;
 
-  @Column({ type: 'enum', enum: EvaluacionModalidad, enumName: 'evaluacion_modalidad' })
-  conclusion_modalidad_10: EvaluacionModalidad;
+  @Column({
+    type: 'enum',
+    enum: EvaluacionModalidad,
+    enumName: 'evaluacion_modalidad',
+    nullable: true,
+  })
+  conclusion_modalidad_10: EvaluacionModalidad | null;
 
   @Column({ type: 'text', nullable: true })
   comentarios_modalidad_10: string | null;
 
-  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado' })
-  dado_de_baja_regimen_obligatorio: ValidacionEstado;
+  @Column({ type: 'enum', enum: ValidacionEstado, enumName: 'validacion_estado', nullable: true })
+  dado_de_baja_regimen_obligatorio: ValidacionEstado | null;
 
-  @Column({ type: 'enum', enum: EvaluacionModalidad, enumName: 'evaluacion_modalidad' })
-  conclusion_modalidad_40: EvaluacionModalidad;
+  @Column({
+    type: 'enum',
+    enum: EvaluacionModalidad,
+    enumName: 'evaluacion_modalidad',
+    nullable: true,
+  })
+  conclusion_modalidad_40: EvaluacionModalidad | null;
 
   @Column({
     type: 'numeric',
@@ -133,8 +148,8 @@ export class DiagnosticoEspecializado {
   @Column({ type: 'text', nullable: true })
   comentarios_modalidad_40: string | null;
 
-  @Column({ type: 'text' })
-  justificacion_estrategia: string;
+  @Column({ type: 'text', nullable: true })
+  justificacion_estrategia: string | null;
 
   @Column({ type: 'text', nullable: true })
   siguiente_paso_sugerido: string | null;

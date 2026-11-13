@@ -42,11 +42,13 @@ export class CreateAnalisisModalidad40RetroactivoDto {
   @IsBoolean()
   baja_por_mora_previa?: boolean;
 
+  @IsOptional()
   @IsEnum(ValidacionEstado)
-  dentro_de_plazo_reingreso: ValidacionEstado;
+  dentro_de_plazo_reingreso?: ValidacionEstado | null;
 
+  @IsOptional()
   @IsEnum(EvaluacionRetroactivo)
-  conclusion_retroactivo: EvaluacionRetroactivo;
+  conclusion_retroactivo?: EvaluacionRetroactivo | null;
 
   @IsOptional()
   @IsString()

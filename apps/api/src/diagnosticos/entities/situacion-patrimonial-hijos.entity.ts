@@ -8,9 +8,6 @@ export class SituacionPatrimonialHijos {
   @Column({ type: 'uuid' })
   situacion_patrimonial_id: string;
 
-  @Column({ type: 'smallint' })
-  numero_hijos: number;
-
   @Column({ type: 'boolean' })
   tiene_discapacidad: boolean;
 

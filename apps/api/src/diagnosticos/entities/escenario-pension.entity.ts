@@ -15,20 +15,38 @@ export class EscenarioPension {
   @Column({ type: 'smallint' })
   orden: number;
 
-  @Column({ type: 'integer' })
-  semanas_proyectadas: number;
+  @Column({ type: 'integer', nullable: true })
+  semanas_proyectadas: number | null;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2, transformer: numericTransformer })
-  salario_promedio_proyectado: number;
+  @Column({
+    type: 'numeric',
+    precision: 10,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  salario_promedio_proyectado: number | null;
 
   @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
   inversion_total_estimada: number;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  pension_mensual_estimada: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  pension_mensual_estimada: number | null;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, transformer: numericTransformer })
-  incremento_mensual: number;
+  @Column({
+    type: 'numeric',
+    precision: 12,
+    scale: 2,
+    transformer: numericTransformer,
+    nullable: true,
+  })
+  incremento_mensual: number | null;
 
   @Column({
     type: 'numeric',
@@ -74,6 +92,9 @@ export class EscenarioPension {
     nullable: true,
   })
   salario_modalidad_40: number | null;
+
+  @Column({ type: 'smallint', nullable: true })
+  meses_modalidad_10: number | null;
 
   @Column({ type: 'smallint', nullable: true })
   meses_modalidad_40: number | null;

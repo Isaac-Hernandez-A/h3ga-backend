@@ -4,8 +4,10 @@ import { QueryFailedError } from 'typeorm';
 // Códigos de error de PostgreSQL que los servicios traducen a respuestas HTTP.
 export const PG_VIOLACION_UNICA = '23505';
 export const PG_VIOLACION_LLAVE_FORANEA = '23503';
-// Valores que PostgreSQL rechaza aunque pasen la validación de formato: fuera de rango, fecha imposible.
-const PG_DATO_INVALIDO = ['22003', '22007', '22008', '22P02'];
+// Valores que PostgreSQL rechaza aunque pasen la validación de formato: fuera de rango, fecha imposible,
+// texto con un carácter NUL (22021, secuencia de bytes inválida), un null donde la columna es NOT NULL (23502)
+// o una restricción CHECK incumplida (23514).
+const PG_DATO_INVALIDO = ['22003', '22007', '22008', '22021', '22P02', '23502', '23514'];
 
 export function codigoPostgres(error: unknown): string | undefined {
   if (!(error instanceof QueryFailedError)) return undefined;

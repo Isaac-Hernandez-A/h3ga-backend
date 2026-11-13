@@ -1,14 +1,13 @@
-import { IsBoolean, IsInt, IsOptional } from 'class-validator';
+import { IsBoolean, IsInt, IsOptional, Max, Min } from 'class-validator';
 
+// Un hijo (una fila por hijo): el número de hijos es el número de filas.
 export class CreateSituacionPatrimonialHijosDto {
-  @IsOptional()
   @IsInt()
-  numero_hijos?: number;
+  @Min(0)
+  @Max(120)
+  edad: number;
 
   @IsOptional()
   @IsBoolean()
   tiene_discapacidad?: boolean;
-
-  @IsInt()
-  edad: number;
 }

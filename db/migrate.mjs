@@ -4,7 +4,8 @@
 // - Aplica en orden los archivos pendientes; cada uno en su propia transacción.
 // - Registra lo aplicado en la tabla schema_migrations (versión, nombre, checksum, fecha).
 // - --dry-run: lista lo pendiente sin tocar la base (ni siquiera crea schema_migrations).
-// - Rechaza migraciones con DROP o TRUNCATE (regla 1 de CLAUDE.md).
+// - Rechaza migraciones con DROP o TRUNCATE (regla 1 de CLAUDE.md); solo admite DROP NOT NULL (relaja una
+//   restricción sin borrar nada).
 // - Por defecto solo corre contra una base local; para otra hay que pasar --permitir-remota.
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
@@ -27,6 +28,9 @@ function fallar(mensaje) {
 }
 
 const sinComentarios = (sql) => sql.replace(/\/\*[\s\S]*?\*\//g, '').replace(/--.*$/gm, '');
+// ALTER COLUMN ... DROP NOT NULL solo relaja una restricción (no borra columnas, tablas ni datos): es la única
+// forma de DROP que se admite; DROP TABLE, DROP COLUMN, etc. siguen prohibidos.
+const sinRelajaciones = (sql) => sql.replace(/\bDROP\s+NOT\s+NULL\b/gi, '');
 // Se normalizan los saltos de línea para que el checksum no dependa de CRLF/LF (autocrlf en Windows).
 const checksum = (sql) => createHash('sha256').update(sql.replace(/\r\n/g, '\n')).digest('hex');
 
@@ -40,7 +44,7 @@ async function leerMigraciones() {
         `el nombre "${nombre}" no cumple AAAAMMDDHHMM_descripcion.sql (minúsculas y guion bajo).`,
       );
     const sql = await readFile(join(MIGRATIONS_DIR, nombre), 'utf8');
-    if (PROHIBIDO.test(sinComentarios(sql)))
+    if (PROHIBIDO.test(sinRelajaciones(sinComentarios(sql))))
       fallar(`"${nombre}" contiene DROP o TRUNCATE, prohibidos por CLAUDE.md.`);
     migraciones.push({ version: m[1], nombre, sql, checksum: checksum(sql) });
   }
