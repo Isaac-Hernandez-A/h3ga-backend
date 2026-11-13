@@ -66,4 +66,29 @@ describeConBd('Catálogos (aplicación real y base de pruebas)', () => {
       expect((await pedir(ruta, tokenDe('rol-inventado'))).estado).toBe(401);
     }
   });
+
+  it('CP-183 el catálogo de tipos de documento incluye los 3 tipos de Correcciones, en orden y con ids consecutivos a los existentes', async () => {
+    const nuevos = [
+      'Certificación de regularización y/o corrección de datos personales del asegurado (IMSS)',
+      'Constancia de Aclaración de Semanas Cotizadas (IMSS)',
+      'Solicitud de Reintegro de Recursos (AFORE)',
+    ];
+    for (const rol of ROLES) {
+      const { estado, json } = await pedir('/catalogos/tipos-documento', tokenDe(rol));
+      expect(estado).toBe(200);
+      const lista = json as { id: number; nombre: string }[];
+      const filas = nuevos.map((n) => lista.find((f) => f.nombre === n));
+      expect(filas.every((f) => f !== undefined)).toBe(true);
+      const ids = filas.map((f) => f!.id);
+      expect(ids).toEqual([ids[0], ids[0] + 1, ids[0] + 2]);
+      // Van a continuación de los 14 tipos originales (que conservan su id y su orden).
+      expect(lista.slice(0, 14).map((f) => f.id)).toEqual(
+        Array.from({ length: 14 }, (_, k) => k + 1),
+      );
+      expect(lista.find((f) => f.id === 14)!.nombre).toBe(
+        'Semanas ISSSTE / Constancia de Portabilidad',
+      );
+      expect(ids[0]).toBe(15);
+    }
+  });
 });

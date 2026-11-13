@@ -154,6 +154,20 @@ describeConBd('Documentos (aplicación real, base de pruebas y almacenamiento lo
     expect(await archivosEnDisco(clienteId)).toHaveLength(1);
   });
 
+  it('CP-184 los 3 tipos de documento de Correcciones se pueden subir como los demás', async () => {
+    const clienteId = await insertarCliente(ctx.ds, catalogo, asesor.id);
+    for (const nombre of [
+      'Certificación de regularización y/o corrección de datos personales del asegurado (IMSS)',
+      'Constancia de Aclaración de Semanas Cotizadas (IMSS)',
+      'Solicitud de Reintegro de Recursos (AFORE)',
+    ]) {
+      expect(tipo[nombre]).toEqual(expect.any(Number));
+      const r = await subir(clienteId, asesor, nombre, PDF, 'application/pdf');
+      expect({ nombre, estado: r.estado }).toEqual({ nombre, estado: 201 });
+      expect((await filas(clienteId, nombre)).length).toBeGreaterThan(0);
+    }
+  });
+
   it('CP-45 tipo distinto de PDF, JPG o PNG, o más de 10 MB, responde 400', async () => {
     const clienteId = await insertarCliente(ctx.ds, catalogo, asesor.id);
     const texto = Buffer.from('texto plano');

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { numericTransformer } from '../../common/database/numeric.transformer';
 
@@ -15,6 +16,8 @@ export class InformacionIssste {
   @Column({ type: 'text' })
   regimen_pensionario: string;
 
+  // NUMERIC(5,2): PostgreSQL lo devuelve como texto y numericTransformer lo expone como número.
+  @ApiProperty({ type: Number, nullable: true, example: 18.5 })
   @Column({
     type: 'numeric',
     precision: 5,

@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
 import {
   autorizarEnBd,
@@ -123,13 +122,12 @@ describeConBd('Lecturas del expediente del cliente (aplicación real y base de p
     expect(sinIssste.estado).toBe(200);
     expect(esVacio(sinIssste)).toBe(true);
 
-    // El alta de la información ISSSTE (PUT) aún no está implementada: se inserta directo en la base.
-    await ctx.ds.query(
-      `INSERT INTO informacion_issste (id, historial_laboral_id, nss_issste, regimen_pensionario, anios_laborados, activo)
-       SELECT $1, id, '12345678901', 'Décimo transitorio', 18.5, true
-         FROM historial_laboral WHERE cliente_id = $2`,
-      [randomUUID(), clienteId],
-    );
+    const guardada = await pedir('PUT', ruta, t(asesor), {
+      nss_issste: '12345678901',
+      regimen_pensionario: 'Décimo transitorio',
+      anios_laborados: 18.5,
+    });
+    expect(guardada.estado).toBe(200);
     await accesos(ruta, (r: { json: Record<string, unknown> }) =>
       expect(r.json).toMatchObject({
         nss_issste: '12345678901',

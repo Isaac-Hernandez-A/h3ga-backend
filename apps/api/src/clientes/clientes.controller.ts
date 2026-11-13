@@ -11,6 +11,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -177,7 +179,17 @@ export class ClientesController {
 
   @Put('clientes/:clienteId/historial-laboral/issste')
   @Roles(...PERMISOS.clientes.editar)
-  @ApiOperation({ summary: 'Crear o reemplazar la información ISSSTE' })
+  @ApiOperation({
+    summary: 'Crear o reemplazar la información ISSSTE',
+    description:
+      'Upsert por historial laboral: dos PUT dejan una sola fila y conservan su id. Si el cliente no tiene ' +
+      'historial laboral responde 409 ("Primero registra el historial laboral del cliente."). Solo el ' +
+      'asesor dueño; supervisor y auxiliar reciben 403.',
+  })
+  @ApiConflictResponse({
+    description: 'El cliente no tiene historial laboral, o el id ya es de otra fila.',
+  })
+  @ApiBadRequestResponse({ description: 'Cuerpo inválido (nss, régimen o años fuera de rango).' })
   @ApiOkResponse({ type: InformacionIssste })
   guardarInformacionIssste(
     @Param('clienteId', ParseUUIDPipe) clienteId: string,

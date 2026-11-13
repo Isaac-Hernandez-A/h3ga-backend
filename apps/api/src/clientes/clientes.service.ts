@@ -1,10 +1,12 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
   NotImplementedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { randomUUID } from 'node:crypto';
 import { DataSource, Repository } from 'typeorm';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { aplicarAlcanceClientes } from '../common/auth/clientes-accesibles';
@@ -185,11 +187,38 @@ export class ClientesService {
       .findOneBy({ historial_laboral_id: historial.id });
   }
 
+  // La información ISSSTE cuelga del historial laboral (historial_laboral_id es UNIQUE): PUT es un upsert
+  // en un solo INSERT ... ON CONFLICT. Si la fila ya existe se conserva su id (el id del cuerpo solo se usa al
+  // crear) y los campos no enviados se limpian; así dos PUT, aun simultáneos, dejan una sola fila.
   async guardarInformacionIssste(
     clienteId: string,
     dto: CreateInformacionIsssteDto,
   ): Promise<InformacionIssste> {
-    throw new NotImplementedException();
+    const historial = await this.historiales.findOneBy({ cliente_id: clienteId });
+    if (!historial)
+      throw new ConflictException('Primero registra el historial laboral del cliente.');
+    const repo = this.ds.getRepository(InformacionIssste);
+    try {
+      await repo
+        .createQueryBuilder()
+        .insert()
+        .values({
+          id: dto.id ?? randomUUID(),
+          historial_laboral_id: historial.id,
+          nss_issste: dto.nss_issste,
+          regimen_pensionario: dto.regimen_pensionario,
+          anios_laborados: dto.anios_laborados ?? null,
+          activo: dto.activo ?? true,
+        })
+        .orUpdate(
+          ['nss_issste', 'regimen_pensionario', 'anios_laborados', 'activo'],
+          ['historial_laboral_id'],
+        )
+        .execute();
+    } catch (error) {
+      traducirErrorBd(error, { unica: 'El id enviado ya pertenece a otra información ISSSTE.' });
+    }
+    return repo.findOneByOrFail({ historial_laboral_id: historial.id });
   }
 
   listarObjetivosEspecificos(clienteId: string): Promise<ClienteObjetivoEspecifico[]> {
