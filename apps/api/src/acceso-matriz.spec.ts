@@ -1,7 +1,7 @@
 import { INestApplication, RequestMethod } from '@nestjs/common';
 import { METHOD_METADATA, PATH_METADATA } from '@nestjs/common/constants';
 import { DiscoveryService, ModulesContainer, Reflector } from '@nestjs/core';
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Rol } from './common/auth/authenticated-user';
 import { IS_PUBLICO_KEY } from './common/auth/publico.decorator';
@@ -235,6 +235,50 @@ describeConBd('Matriz de acceso (rutas reales del router, base de pruebas)', () 
       .filter(({ estado }) => estado === 500)
       .map(({ ruta, rol }) => `${ruta.metodo} ${ruta.ruta} como ${rol}`);
     expect(fallos).toEqual([]);
+  });
+
+  it('CP-79 la matriz cubre todas las rutas del router (3 roles cada una), ninguna combinación responde 500 y el CSV y endpoints.md coinciden con ella', () => {
+    // Cada ruta real se probó con los 3 roles.
+    expect(resultados).toHaveLength(rutas.length * 3);
+    expect(resultados.filter(({ estado }) => estado === 500)).toEqual([]);
+
+    // docs/pruebas-matriz-acceso.csv: una fila por ruta y rol, con lo que respondió la aplicación.
+    const csv = readFileSync(resolve(__dirname, '../../../docs/pruebas-matriz-acceso.csv'), 'utf-8')
+      .trim()
+      .split(/\r?\n/);
+    expect(csv[0]).toBe('ruta,metodo,rol,codigo_esperado,codigo_obtenido');
+    expect(csv).toHaveLength(1 + rutas.length * 3);
+
+    // docs/endpoints.md: el total sale de las rutas reales; las implementadas son el total menos las filas
+    // marcadas 501. Una ruta que respondió 501 en la matriz debe estar marcada 501 en la tabla (un POST con
+    // cuerpo vacío puede fallar la validación con 400 antes de llegar al handler, así que lo inverso no se
+    // puede deducir de la matriz y se verifica solo por conteo).
+    const endpoints = readFileSync(resolve(__dirname, '../../../docs/endpoints.md'), 'utf-8');
+    const declarado = /Total: (\d+) rutas\.\*\* Implementadas: (\d+)\./.exec(endpoints);
+    expect(declarado).not.toBeNull();
+    const filas501 = endpoints
+      .split(/\r?\n/)
+      .filter((l) => /^\| [A-Z]+ +\| `\/api\/v1\S*` .*\| 501 +\|$/.test(l));
+    expect([Number(declarado![1]), Number(declarado![2]) + filas501.length]).toEqual([
+      rutas.length,
+      rutas.length,
+    ]);
+    const marcadas501 = new Set(
+      filas501.map((l) => /^\| ([A-Z]+) +\| `([^`]+)`/.exec(l)!.slice(1, 3).join(' ')),
+    );
+    const respondieron501 = [
+      ...new Set(
+        resultados
+          .filter(({ estado }) => estado === 501)
+          .map(({ ruta }) => `${ruta.metodo} ${ruta.ruta}`),
+      ),
+    ];
+    expect(respondieron501.filter((r) => !marcadas501.has(r))).toEqual([]);
+    // Cada ruta real aparece en la tabla de su módulo.
+    const sinDocumentar = rutas
+      .filter((r) => !endpoints.includes(`| ${r.metodo.padEnd(6)} | \`${r.ruta}\``))
+      .map((r) => `${r.metodo} ${r.ruta}`);
+    expect(sinDocumentar).toEqual([]);
   });
 
   it('CP-05 asesor B sobre un cliente de asesor A recibe 404 en toda ruta :clienteId', async () => {

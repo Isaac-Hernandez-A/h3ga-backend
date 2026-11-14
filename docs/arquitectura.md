@@ -10,7 +10,7 @@ Monorepo pnpm: `apps/api` (NestJS), `apps/web` (Nuxt 3, aún sin funcionalidad),
 - Archivos de clientes: `StorageService` intercambiable (`STORAGE_DRIVER=local|spaces`): disco local en desarrollo y DigitalOcean Spaces en producción (variables `SPACES_*`). El formato F0 se genera en PDF con pdfkit.
 - Autenticación: `AuthModule` emite el JWT (HS256, secreto `JWT_SECRET`) en `POST /auth/login` y permite a cualquier usuario autenticado cambiar su propia contraseña en `PATCH /auth/contrasena` (la actual incorrecta es 400, no 401). El Supervisor restablece la de otro usuario en `PATCH /usuarios/:usuarioId/contrasena` (204, también para usuarios inactivos). En ambos casos el cifrado pasa por `PasswordHasher` y solo se escribe `usuarios.contrasena_hash`.
 - Auxiliares disponibles: `GET /auxiliares` (asesor y supervisor; el auxiliar 403) lista los usuarios con rol auxiliar —`id`, nombre, apellidos, `correo_electronico` y `activo`, ordenados por nombre, sin `contrasena_hash`— para el selector «Autorizar a un auxiliar» y para mostrar el nombre de cada auxiliar autorizado.
-- Contrato: prefijo `/api/v1`; Swagger en `/api/docs`.
+- Contrato: prefijo `/api/v1`; Swagger UI en `/api/docs` y el JSON del contrato en `/api/docs-json` (lista las 119 rutas, con módulo y respuestas; lo comprueba `swagger.e2e.spec.ts`).
 
 ```mermaid
 flowchart LR
@@ -70,7 +70,7 @@ Transversal en `AppModule`: `ConfigModule` global con `validarEntorno` (en produ
 | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
 | Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                                                                                           |
 | Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 119 rutas (matriz probada)                                                              |
-| Pruebas                                                | 60 suites, 451 pruebas (todas pasan), 0 `it.todo`; casos CP-01 a CP-197 documentados en `pruebas-resultados.md` |
+| Pruebas                                                | 61 suites, 455 pruebas (todas pasan), 0 `it.todo`; casos CP-01 a CP-197 documentados en `pruebas-resultados.md` |
 
 ## Dashboard de Inicio
 
