@@ -1,0 +1,358 @@
+ruta,metodo,rol,codigo_esperado,codigo_obtenido
+/api/v1/agenda,GET,asesor,supera los guards,200
+/api/v1/agenda,GET,auxiliar,supera los guards,200
+/api/v1/agenda,GET,supervisor,supera los guards,200
+/api/v1/agenda,POST,asesor,supera los guards,400
+/api/v1/agenda,POST,auxiliar,403,403
+/api/v1/agenda,POST,supervisor,403,403
+/api/v1/agenda/:eventoId,GET,asesor,supera los guards,404
+/api/v1/agenda/:eventoId,GET,auxiliar,supera los guards,404
+/api/v1/agenda/:eventoId,GET,supervisor,supera los guards,404
+/api/v1/agenda/:eventoId,PATCH,asesor,supera los guards,404
+/api/v1/agenda/:eventoId,PATCH,auxiliar,403,403
+/api/v1/agenda/:eventoId,PATCH,supervisor,403,403
+/api/v1/auth/contrasena,PATCH,asesor,supera los guards,400
+/api/v1/auth/contrasena,PATCH,auxiliar,supera los guards,400
+/api/v1/auth/contrasena,PATCH,supervisor,supera los guards,400
+/api/v1/auth/login,POST,asesor,pública,400
+/api/v1/auth/login,POST,auxiliar,pública,400
+/api/v1/auth/login,POST,supervisor,pública,400
+/api/v1/auxiliares,GET,asesor,supera los guards,200
+/api/v1/auxiliares,GET,auxiliar,403,403
+/api/v1/auxiliares,GET,supervisor,supera los guards,200
+/api/v1/avisos,GET,asesor,supera los guards,200
+/api/v1/avisos,GET,auxiliar,supera los guards,200
+/api/v1/avisos,GET,supervisor,supera los guards,200
+/api/v1/avisos/:avisoId,GET,asesor,supera los guards,404
+/api/v1/avisos/:avisoId,GET,auxiliar,supera los guards,404
+/api/v1/avisos/:avisoId,GET,supervisor,supera los guards,404
+/api/v1/avisos/:avisoId/atender,PATCH,asesor,supera los guards,404
+/api/v1/avisos/:avisoId/atender,PATCH,auxiliar,supera los guards,404
+/api/v1/avisos/:avisoId/atender,PATCH,supervisor,supera los guards,404
+/api/v1/catalogos/afores,GET,asesor,supera los guards,200
+/api/v1/catalogos/afores,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/afores,GET,supervisor,supera los guards,200
+/api/v1/catalogos/documentos-diagnostico,GET,asesor,supera los guards,200
+/api/v1/catalogos/documentos-diagnostico,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/documentos-diagnostico,GET,supervisor,supera los guards,200
+/api/v1/catalogos/estatus,GET,asesor,supera los guards,200
+/api/v1/catalogos/estatus,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/estatus,GET,supervisor,supera los guards,200
+/api/v1/catalogos/estrategias-recomendadas,GET,asesor,supera los guards,200
+/api/v1/catalogos/estrategias-recomendadas,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/estrategias-recomendadas,GET,supervisor,supera los guards,200
+/api/v1/catalogos/etapas,GET,asesor,supera los guards,501
+/api/v1/catalogos/etapas,GET,auxiliar,supera los guards,501
+/api/v1/catalogos/etapas,GET,supervisor,supera los guards,501
+/api/v1/catalogos/leyes-probables,GET,asesor,supera los guards,200
+/api/v1/catalogos/leyes-probables,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/leyes-probables,GET,supervisor,supera los guards,200
+/api/v1/catalogos/objetivos-diagnostico,GET,asesor,supera los guards,200
+/api/v1/catalogos/objetivos-diagnostico,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/objetivos-diagnostico,GET,supervisor,supera los guards,200
+/api/v1/catalogos/objetivos-especificos,GET,asesor,supera los guards,200
+/api/v1/catalogos/objetivos-especificos,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/objetivos-especificos,GET,supervisor,supera los guards,200
+/api/v1/catalogos/objetivos-modalidad-10,GET,asesor,supera los guards,200
+/api/v1/catalogos/objetivos-modalidad-10,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/objetivos-modalidad-10,GET,supervisor,supera los guards,200
+/api/v1/catalogos/objetivos-modalidad-40,GET,asesor,supera los guards,200
+/api/v1/catalogos/objetivos-modalidad-40,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/objetivos-modalidad-40,GET,supervisor,supera los guards,200
+/api/v1/catalogos/regimenes,GET,asesor,supera los guards,200
+/api/v1/catalogos/regimenes,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/regimenes,GET,supervisor,supera los guards,200
+/api/v1/catalogos/roles,GET,asesor,supera los guards,200
+/api/v1/catalogos/roles,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/roles,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-asesor,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-asesor,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-asesor,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-correccion,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-correccion,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-correccion,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-documento,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-documento,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-documento,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-evidencia-recuperacion,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-evidencia-recuperacion,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-evidencia-recuperacion,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-gestion-recuperacion,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-gestion-recuperacion,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-gestion-recuperacion,GET,supervisor,supera los guards,200
+/api/v1/catalogos/tipos-inconsistencia,GET,asesor,supera los guards,200
+/api/v1/catalogos/tipos-inconsistencia,GET,auxiliar,supera los guards,200
+/api/v1/catalogos/tipos-inconsistencia,GET,supervisor,supera los guards,200
+/api/v1/clientes,GET,asesor,supera los guards,200
+/api/v1/clientes,GET,auxiliar,supera los guards,200
+/api/v1/clientes,GET,supervisor,supera los guards,200
+/api/v1/clientes,POST,asesor,supera los guards,400
+/api/v1/clientes,POST,auxiliar,403,403
+/api/v1/clientes,POST,supervisor,403,403
+/api/v1/clientes/:clienteId,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId,GET,auxiliar,supera los guards,200
+/api/v1/clientes/:clienteId,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId,PATCH,asesor,supera los guards,200
+/api/v1/clientes/:clienteId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/asesor,PATCH,asesor,403,403
+/api/v1/clientes/:clienteId/asesor,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/asesor,PATCH,supervisor,supera los guards,400
+/api/v1/clientes/:clienteId/auxiliares,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/auxiliares,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/auxiliares,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/auxiliares,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/auxiliares,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/auxiliares,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/auxiliares/:clienteAuxiliarId,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/correcciones,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/correcciones,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId,DELETE,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/correcciones/:correccionId,DELETE,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId,DELETE,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/correcciones/:correccionId,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/correcciones/:correccionId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/diagnostico,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico,POST,asesor,supera los guards,201
+/api/v1/clientes/:clienteId/diagnostico,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,auxiliar,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico-inicial/pdf,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/conveniencia-retroactivo,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/conveniencia-retroactivo,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/conveniencia-retroactivo,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/conveniencia-retroactivo,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/conveniencia-retroactivo,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/conveniencia-retroactivo,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-10,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-10,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-10,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-10,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-10,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-10,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-40,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-40,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-40,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-40,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-40,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/criterios-modalidad-40,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/documentos,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/documentos,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/documentos,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/documentos,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/documentos,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/documentos,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/escenarios,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/escenarios,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId,DELETE,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId,DELETE,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId,DELETE,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/escenarios/:escenarioId,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/estrategias-recomendadas,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/estrategias-recomendadas,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/estrategias-recomendadas,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/estrategias-recomendadas,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/estrategias-recomendadas,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/estrategias-recomendadas,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/inconsistencias-generales,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/inconsistencias-generales,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/inconsistencias-generales,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/inconsistencias-generales,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/inconsistencias-generales,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/inconsistencias-generales,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,PUT,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/objetivos,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/objetivos,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-10,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-10,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-10,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-10,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-10,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-10,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-40,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-40,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-40,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-40,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-40,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/objetivos-modalidad-40,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/pdf,GET,asesor,supera los guards,409
+/api/v1/clientes/:clienteId/diagnostico/pdf,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/pdf,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/plan-accion,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/plan-accion,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,DELETE,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,DELETE,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,DELETE,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-evidencias,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-evidencias,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-evidencias,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-evidencias,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-evidencias,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-evidencias,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-gestiones,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-gestiones,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-gestiones,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-gestiones,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-gestiones,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-gestiones,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/recuperacion-semanas,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial,PUT,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/documentos,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/documentos,GET,auxiliar,supera los guards,200
+/api/v1/clientes/:clienteId/documentos,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/documentos,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/documentos,POST,auxiliar,supera los guards,400
+/api/v1/clientes/:clienteId/documentos,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/documentos/:documentoId,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,GET,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,GET,supervisor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId,PATCH,supervisor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/documentos/:documentoId/descargar,GET,supervisor,supera los guards,404
+/api/v1/clientes/:clienteId/etapas,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/etapas,GET,auxiliar,supera los guards,200
+/api/v1/clientes/:clienteId/etapas,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/etapas,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/etapas,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/etapas,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId,PATCH,supervisor,403,403
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,auxiliar,supera los guards,404
+/api/v1/clientes/:clienteId/etapas/:etapaTramiteId/historial,GET,supervisor,supera los guards,404
+/api/v1/clientes/:clienteId/historial-laboral,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/historial-laboral,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/historial-laboral,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/historial-laboral,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/historial-laboral,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/historial-laboral,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/historial-laboral/issste,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/historial-laboral/issste,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/historial-laboral/issste,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/historial-laboral/issste,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/historial-laboral/issste,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/historial-laboral/issste,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/objetivos-especificos,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/objetivos-especificos,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/objetivos-especificos,GET,supervisor,supera los guards,200
+/api/v1/clientes/:clienteId/objetivos-especificos,PUT,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/objetivos-especificos,PUT,auxiliar,403,403
+/api/v1/clientes/:clienteId/objetivos-especificos,PUT,supervisor,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias,GET,asesor,supera los guards,200
+/api/v1/clientes/:clienteId/periodos-inconsistencias,GET,auxiliar,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias,GET,supervisor,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias,POST,asesor,supera los guards,400
+/api/v1/clientes/:clienteId/periodos-inconsistencias,POST,auxiliar,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias,POST,supervisor,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId,DELETE,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId,DELETE,auxiliar,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId,DELETE,supervisor,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId,PATCH,asesor,supera los guards,404
+/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId,PATCH,auxiliar,403,403
+/api/v1/clientes/:clienteId/periodos-inconsistencias/:periodoId,PATCH,supervisor,403,403
+/api/v1/correcciones,GET,asesor,supera los guards,200
+/api/v1/correcciones,GET,auxiliar,403,403
+/api/v1/correcciones,GET,supervisor,403,403
+/api/v1/dashboard,GET,asesor,supera los guards,200
+/api/v1/dashboard,GET,auxiliar,supera los guards,200
+/api/v1/dashboard,GET,supervisor,supera los guards,200
+/api/v1/etl/importaciones,POST,asesor,403,403
+/api/v1/etl/importaciones,POST,auxiliar,403,403
+/api/v1/etl/importaciones,POST,supervisor,supera los guards,501
+/api/v1/health,GET,asesor,pública,200
+/api/v1/health,GET,auxiliar,pública,200
+/api/v1/health,GET,supervisor,pública,200
+/api/v1/reportes,GET,asesor,supera los guards,400
+/api/v1/reportes,GET,auxiliar,403,403
+/api/v1/reportes,GET,supervisor,supera los guards,400
+/api/v1/reportes/pdf,GET,asesor,supera los guards,400
+/api/v1/reportes/pdf,GET,auxiliar,403,403
+/api/v1/reportes/pdf,GET,supervisor,supera los guards,400
+/api/v1/usuarios,GET,asesor,403,403
+/api/v1/usuarios,GET,auxiliar,403,403
+/api/v1/usuarios,GET,supervisor,supera los guards,200
+/api/v1/usuarios,POST,asesor,403,403
+/api/v1/usuarios,POST,auxiliar,403,403
+/api/v1/usuarios,POST,supervisor,supera los guards,400
+/api/v1/usuarios/:usuarioId,GET,asesor,403,403
+/api/v1/usuarios/:usuarioId,GET,auxiliar,403,403
+/api/v1/usuarios/:usuarioId,GET,supervisor,supera los guards,404
+/api/v1/usuarios/:usuarioId,PATCH,asesor,403,403
+/api/v1/usuarios/:usuarioId,PATCH,auxiliar,403,403
+/api/v1/usuarios/:usuarioId,PATCH,supervisor,supera los guards,404
+/api/v1/usuarios/:usuarioId/contrasena,PATCH,asesor,403,403
+/api/v1/usuarios/:usuarioId/contrasena,PATCH,auxiliar,403,403
+/api/v1/usuarios/:usuarioId/contrasena,PATCH,supervisor,supera los guards,400

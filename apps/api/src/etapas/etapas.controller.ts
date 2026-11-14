@@ -1,0 +1,97 @@
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthenticatedUser } from '../common/auth/authenticated-user';
+import { ClienteAccessGuard } from '../common/auth/cliente-access.guard';
+import { CurrentUser } from '../common/auth/current-user.decorator';
+import { PERMISOS } from '../common/auth/permisos';
+import { Roles } from '../common/auth/roles.decorator';
+import { CreateEtapaTramiteDto } from './dto/create-etapa-tramite.dto';
+import { CambiarEstatusDto } from './dto/cambiar-estatus.dto';
+import { EtapasClienteRespuesta } from './dto/etapas-cliente-respuesta.dto';
+import { EstatusTramite } from './entities/estatus-tramite.entity';
+import { EtapaProceso } from './entities/etapa-proceso.entity';
+import { EtapaTramite } from './entities/etapa-tramite.entity';
+import { EtapaTramiteHistorial } from './entities/etapa-tramite-historial.entity';
+import { EtapasService } from './etapas.service';
+
+@ApiTags('etapas')
+@UseGuards(ClienteAccessGuard)
+@Controller()
+export class EtapasController {
+  constructor(private readonly service: EtapasService) {}
+
+  @Get('clientes/:clienteId/etapas')
+  @Roles(...PERMISOS.etapas.leer)
+  @ApiOperation({ summary: 'Listar las etapas del cliente' })
+  @ApiOkResponse({ type: EtapasClienteRespuesta })
+  listarEtapas(
+    @Param('clienteId', ParseUUIDPipe) clienteId: string,
+  ): Promise<EtapasClienteRespuesta> {
+    return this.service.listarEtapas(clienteId);
+  }
+
+  @Post('clientes/:clienteId/etapas')
+  @Roles(...PERMISOS.etapas.escribir)
+  @ApiOperation({ summary: 'Registrar una etapa del cliente' })
+  @ApiCreatedResponse({ type: EtapaTramite })
+  crearEtapa(
+    @Param('clienteId', ParseUUIDPipe) clienteId: string,
+    @Body() dto: CreateEtapaTramiteDto,
+  ): Promise<EtapaTramite> {
+    return this.service.crearEtapa(clienteId, dto);
+  }
+
+  @Patch('clientes/:clienteId/etapas/:etapaTramiteId')
+  @Roles(...PERMISOS.etapas.escribir)
+  @ApiOperation({
+    summary: 'Actualizar estatus, avance o acción de una etapa',
+    description:
+      'Si cambia fecha_compromiso y el aviso de la fecha resultante ya existía y estaba atendido, vuelve ' +
+      'a quedar pendiente (en la misma transacción); los avisos de otras fechas no se tocan.',
+  })
+  @ApiOkResponse({ type: EtapaTramite })
+  actualizarEtapa(
+    @CurrentUser() usuario: AuthenticatedUser,
+    @Param('clienteId', ParseUUIDPipe) clienteId: string,
+    @Param('etapaTramiteId', ParseUUIDPipe) etapaTramiteId: string,
+    @Body() dto: CambiarEstatusDto,
+  ): Promise<EtapaTramite> {
+    return this.service.cambiarEstatus(usuario, clienteId, etapaTramiteId, dto);
+  }
+
+  @Get('clientes/:clienteId/etapas/:etapaTramiteId/historial')
+  @Roles(...PERMISOS.etapas.leer)
+  @ApiOperation({ summary: 'Listar el historial de cambios de estatus de una etapa' })
+  @ApiOkResponse({ type: EtapaTramiteHistorial, isArray: true })
+  listarHistorialEtapa(
+    @Param('clienteId', ParseUUIDPipe) clienteId: string,
+    @Param('etapaTramiteId', ParseUUIDPipe) etapaTramiteId: string,
+  ): Promise<EtapaTramiteHistorial[]> {
+    return this.service.listarHistorial(clienteId, etapaTramiteId);
+  }
+
+  @Get('catalogos/etapas')
+  @Roles(...PERMISOS.catalogos.leer)
+  @ApiOperation({ summary: 'Listar las etapas del proceso (0 a 15)' })
+  @ApiOkResponse({ type: EtapaProceso, isArray: true })
+  listarCatalogoEtapas(): Promise<EtapaProceso[]> {
+    return this.service.listarCatalogoEtapas();
+  }
+
+  @Get('catalogos/estatus')
+  @Roles(...PERMISOS.catalogos.leer)
+  @ApiOperation({ summary: 'Listar los estatus de trámite' })
+  @ApiOkResponse({ type: EstatusTramite, isArray: true })
+  listarEstatus(): Promise<EstatusTramite[]> {
+    return this.service.listarEstatus();
+  }
+}
