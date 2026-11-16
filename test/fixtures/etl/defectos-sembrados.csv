@@ -1,0 +1,37 @@
+﻿ID,Fila en Excel,Columna,Etapa,Valor limpio,Valor sembrado en el Excel,Defecto,Clase propuesta
+3,8,B,,Rubén Jiménez Euán,RUBÉN JIMÉNEZ EUÁN,Nombre en MAYÚSCULAS,saneable
+3,8,D,,9876628360,(987) 662-8360,Teléfono con paréntesis y guion,saneable
+7,12,B,,Esteban Torres Aguilar,  esteban  torres aguilar ,"Nombre en minúsculas, con espacios dobles y de más",saneable
+7,12,F,,2025-03-20,20/03/2025,Fecha de ingreso como texto dd/mm/aaaa,saneable
+10,15,G,,MMAR610609HDFRNF68,mmar610609hdfrnf68,CURP en minúsculas,saneable
+10,15,M,,manuel.diaz.90@ejemplo.test, MANUEL.DIAZ.90@EJEMPLO.TEST ,Correo en mayúsculas y con espacios,saneable
+13,18,B,,Mónica Jiménez Gutiérrez,Monica Jimenez Gutierrez,Nombre sin acentos,saneable
+13,18,N,,IMSS,imss,Régimen en minúsculas,saneable
+16,21,G,,QFQD760716MOCPJXE8,QFQD 760716 MOCPJXE8,CURP con espacios internos,saneable
+16,21,O,,99033042845,99-03-30-4284-5,NSS con guiones,saneable
+19,24,D,,9986079113,+52 998 607 9113,Teléfono con lada +52 y espacios,saneable
+19,24,O,,99346352136,99 34 63 5213 6,NSS con espacios,saneable
+22,27,D,,9841994569,9841994569,Teléfono guardado como número,saneable
+22,27,F,,2025-08-16,2025-08-16,Fecha de ingreso como texto aaaa-mm-dd,saneable
+25,30,H,,1968-05-03,03/05/1968,Fecha de nacimiento como texto dd/mm/aaaa,saneable
+25,30,T,,XXI Banorte,xxi banorte,AFORE en minúsculas,saneable
+28,33,E,,Lic. Marco Hernández,Marco Hernandez,Asesor sin 'Lic.' y sin acento,saneable
+28,33,O,,99446026195,99446026195,NSS guardado como número,saneable
+31,36,D,,9988290920,998 829 0920,Teléfono con espacios,saneable
+31,36,F,,2025-11-19,19-nov-2025,Fecha de ingreso como texto dd-mmm-aaaa,saneable
+33,38,B,,Patricia Sánchez Flores,Sergio Ruiz Vázquez,"Mismo nombre y fecha de nacimiento que el ID 9, con otro CURP",posible duplicado
+33,38,H,,1966-04-08,1975-03-20,"Mismo nombre y fecha de nacimiento que el ID 9, con otro CURP",posible duplicado
+34,39,R,,0,N/D,Semanas a recuperar con texto en vez de número,advertencia
+38,43,AB/AE,Etapa 1,Finalizado / 100,En proceso asesor / 10,Estatus En proceso con avance 10 (fuera de 20 a 90),advertencia
+40,45,P,,Ley 97,Ley 71,Ley probable fuera del catálogo,advertencia
+42,47,BP/BS,Etapa 11,Por iniciar / 10,En proceso cliente / 55,Avance 55 fuera del catálogo (0 a 100 de 10 en 10),advertencia
+44,49,G,,GKSC730208MPLJVFT9,GKSC730208MPLJVFT,CURP de 17 caracteres,rechazo
+45,50,G,,CUQH750412MQRBZC31,CUQH751312MQRBZC31,CURP con mes 13,rechazo
+46,51,H,,1976-12-26,31/02/1968,Fecha de nacimiento inexistente,rechazo
+47,52,O,,99104172614,991041726,NSS de 9 dígitos,rechazo
+48,53,B,,Lucía Pech Cauich,(vacío),Nombre vacío,rechazo
+49,54,E,,Lic. Marco Hernández,Lic. Pedro Gómez,Asesor que no existe en el catálogo,rechazo
+50,55,AB/AE,Etapa 1,En proceso Instituto / 50,En trámite / 30,Estatus que no existe en el catálogo,rechazo
+52,57,Q,,1094,-35,Semanas IMSS reconocidas negativas,rechazo
+53,58,G,,LOJQ660904MPLTWDC1,RZFY710224MVZVVQG9,CURP igual al del ID 12,duplicado
+54,59,O,,99657612652,99695389650,NSS igual al del ID 20,duplicado
