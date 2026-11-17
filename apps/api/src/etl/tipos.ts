@@ -1,6 +1,69 @@
-// Tipos compartidos de la ETL de clientes (Actividad 5). Aquí vive el resultado de la Tarea 1: la forma
-// de un cliente ya saneado y validado, lista para cargarse. Los demás tipos (Saneado, RenglonCrudo,
-// RenglonValidado, ReporteEtl) los agrega la Tarea 2. Mapa columna a campo: docs/etl-mapa-columnas.md.
+// Tipos compartidos de la ETL de clientes (Actividad 5). DatosCliente (Tarea 1) es la forma de un cliente
+// ya saneado y validado, lista para cargarse; los tipos de renglón y de reporte (Tarea 2) son los que
+// comparten las tareas siguientes. Mapa columna a campo: docs/etl-mapa-columnas.md.
+
+// Resultado de sanear un campo: el valor limpio (null si no hay), los ajustes que se le hicieron, las
+// advertencias (se carga con el campo vacío o corregido) y el rechazo (el renglón no se carga).
+export interface Saneado<T> {
+  valor: T | null;
+  ajustes: string[];
+  advertencias: string[];
+  rechazo: string | null;
+}
+
+// Un renglón de datos tal como sale de la hoja: la fila de Excel y sus celdas por encabezado (con trim).
+export interface RenglonCrudo {
+  fila: number;
+  celdas: Record<string, unknown>;
+}
+
+export type Clase = 'cargado' | 'rechazado';
+
+export interface RenglonValidado {
+  fila: number;
+  idExcel: number | null;
+  datos: DatosCliente | null;
+  ajustes: string[];
+  advertencias: string[];
+  rechazos: string[];
+}
+
+// Reporte de una importación (sección 10 de la especificación). CURP y NSS siempre enmascarados.
+export interface ReporteEtl {
+  cabecera: {
+    archivo: string;
+    huellaSha256: string;
+    modo: 'api' | 'comando';
+    ejecutor: string;
+    simulacro: boolean;
+    inicio: string;
+    fin: string;
+  };
+  totales: {
+    leidos: number;
+    cargados: number;
+    rechazados: number;
+    duplicadosEnArchivo: number;
+    yaExistian: number;
+    conAdvertencias: number;
+    conAjustes: number;
+    lotes: number;
+    lotesDegradados: number;
+    pendientesDeCaptura: number;
+    objetivoAsumido: number;
+  };
+  conciliacion: { ok: boolean; detalle: string };
+  renglones: {
+    fila: number;
+    idExcel: number | null;
+    clase: Clase;
+    ajustes: string[];
+    advertencias: string[];
+    rechazos: string[];
+  }[];
+  nombresDivididos: string[];
+  columnasNoMigradas: { columna: string; motivo: string }[];
+}
 
 // Los 9 estatus de una etapa (tabla estatus_tramite).
 export const ESTATUS_ETAPA = [
