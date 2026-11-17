@@ -23,7 +23,7 @@ function aTexto(raw: unknown): string {
 
 // Texto general: NFC, sin invisibles, espacios raros como espacio normal, sin espacios de más.
 // Devuelve el texto limpio y los ajustes aplicados.
-function limpiarTexto(raw: string): { texto: string; ajustes: string[] } {
+export function limpiarTexto(raw: string): { texto: string; ajustes: string[] } {
   const ajustes: string[] = [];
   let texto = raw;
   if (texto !== texto.normalize('NFC')) {
