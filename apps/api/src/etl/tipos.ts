@@ -53,10 +53,15 @@ export interface ReporteEtl {
     objetivoAsumido: number;
   };
   conciliacion: { ok: boolean; detalle: string };
+  // Cuántos renglones cargados llevan cada código de ajuste o advertencia (incluye los rutinarios).
+  resumenPorCodigo: Record<string, number>;
   renglones: {
     fila: number;
     idExcel: number | null;
     clase: Clase;
+    // Enmascarados (últimos 4 caracteres); null si el renglón no trae el dato.
+    curp: string | null;
+    nss: string | null;
     ajustes: string[];
     advertencias: string[];
     rechazos: string[];
