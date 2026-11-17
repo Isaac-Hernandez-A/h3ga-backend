@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ReporteEtl } from './tipos';
@@ -61,4 +62,16 @@ export async function escribirReporte(
     'utf8',
   );
   return { json, csv };
+}
+
+// Nombre de la subcarpeta de una corrida: fecha UTC, hora, huella del archivo e identificador propio.
+// Lo genera el servidor; nada del nombre del archivo subido entra en la ruta.
+export function subcarpetaDeCorrida(huellaSha256: string): string {
+  const iso = new Date().toISOString();
+  return [
+    iso.slice(0, 10).replace(/-/g, ''),
+    iso.slice(11, 19).replace(/:/g, ''),
+    huellaSha256.slice(0, 8),
+    randomBytes(2).toString('hex'),
+  ].join('-');
 }

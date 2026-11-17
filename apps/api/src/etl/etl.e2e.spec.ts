@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import * as ExcelJS from 'exceljs';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
+import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 import {
   crearUsuarioPrueba,
   limpiarDatosClientes,
@@ -14,7 +15,7 @@ import { ReporteEtl } from './tipos';
 
 // POST /etl/importaciones con la aplicación REAL (guards, pipes, filtro de errores) y la base de pruebas.
 // Solo datos ficticios; los clientes del fixture se borran al terminar cada prueba.
-jest.setTimeout(120_000);
+jest.setTimeout(300_000);
 
 const RUTA = '/etl/importaciones';
 const FIXTURE = resolve(
@@ -35,6 +36,8 @@ interface Error400 {
 
 describeConBd('POST /etl/importaciones (aplicación real y base de pruebas)', () => {
   let ctx: AppConBd;
+  // Candado que serializa las suites que cargan el mismo fixture (ver bloqueo-etl.ts).
+  let liberarBloqueo: (() => Promise<void>) | undefined;
   let marco: UsuarioPrueba;
   let ana: UsuarioPrueba;
   let supervisor: UsuarioPrueba;
@@ -111,6 +114,7 @@ describeConBd('POST /etl/importaciones (aplicación real y base de pruebas)', ()
 
   beforeAll(async () => {
     ctx = await iniciarAppConBd();
+    liberarBloqueo = await tomarBloqueoEtl(ctx.ds);
     marco = await crearUsuarioPrueba(ctx.ds, 'asesor');
     ana = await crearUsuarioPrueba(ctx.ds, 'asesor');
     asesorSinEquivalencia = await crearUsuarioPrueba(ctx.ds, 'asesor');
@@ -157,6 +161,7 @@ describeConBd('POST /etl/importaciones (aplicación real y base de pruebas)', ()
     if (carpeta) rmSync(carpeta, { recursive: true, force: true });
     if (!ctx) return;
     await limpiarDatosClientes(ctx.ds);
+    await liberarBloqueo?.();
     await ctx.app.close();
   });
 

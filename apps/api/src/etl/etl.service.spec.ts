@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { ClientesService } from '../clientes/clientes.service';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
+import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 import {
   crearUsuarioPrueba,
   limpiarDatosClientes,
@@ -17,7 +18,7 @@ import { ReporteEtl } from './tipos';
 
 // Servicio de importación y reporte (Actividad 5, Tarea 10): integración con la base de pruebas (*_test)
 // y el Excel ficticio. Los clientes del fixture se borran al terminar cada prueba (por asesor y por CURP).
-jest.setTimeout(120_000);
+jest.setTimeout(300_000);
 
 const FIXTURE = resolve(
   __dirname,
@@ -28,6 +29,8 @@ const IDS_RECHAZADOS = [44, 45, 46, 47, 48, 49, 50, 52, 53, 54];
 
 describeConBd('EtlService.importar (integración con la base de pruebas)', () => {
   let ctx: AppConBd;
+  // Candado que serializa las suites que cargan el mismo fixture (ver bloqueo-etl.ts).
+  let liberarBloqueo: (() => Promise<void>) | undefined;
   let marco: UsuarioPrueba;
   let ana: UsuarioPrueba;
   let ejecutor: UsuarioPrueba;
@@ -69,6 +72,7 @@ describeConBd('EtlService.importar (integración con la base de pruebas)', () =>
 
   beforeAll(async () => {
     ctx = await iniciarAppConBd();
+    liberarBloqueo = await tomarBloqueoEtl(ctx.ds);
     marco = await crearUsuarioPrueba(ctx.ds, 'asesor');
     ana = await crearUsuarioPrueba(ctx.ds, 'asesor');
     ejecutor = await crearUsuarioPrueba(ctx.ds, 'supervisor');
@@ -104,6 +108,7 @@ describeConBd('EtlService.importar (integración con la base de pruebas)', () =>
   afterAll(async () => {
     if (!ctx) return;
     await limpiarDatosClientes(ctx.ds);
+    await liberarBloqueo?.();
     await ctx.app.close();
   });
 

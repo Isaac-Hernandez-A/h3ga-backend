@@ -4,7 +4,7 @@ import {
   Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { DataSource } from 'typeorm';
@@ -15,7 +15,7 @@ import { CargadorClientes } from './cargador';
 import { marcarDuplicados } from './duplicados';
 import { ArchivoInvalidoError, COLUMNAS_OBLIGATORIAS, leerHojaClientes } from './lector-excel';
 import { MapaAsesores, UsuariosLookup } from './mapa-asesores';
-import { codigoDe, enmascarar, escribirReporte, esRutinario } from './reporte';
+import { codigoDe, enmascarar, escribirReporte, esRutinario, subcarpetaDeCorrida } from './reporte';
 import { RenglonValidado, ReporteEtl } from './tipos';
 import { validarRenglon } from './validador-renglon';
 
@@ -255,13 +255,7 @@ export class EtlService {
   // el servidor: fecha UTC, huella del archivo e identificador propio. Nada del nombre del archivo subido
   // entra en la ruta. Si no se puede escribir, la importación no falla: el reporte ya va en la respuesta.
   private async guardarReporte(reporte: ReporteEtl): Promise<void> {
-    const iso = new Date().toISOString();
-    const subcarpeta = [
-      iso.slice(0, 10).replace(/-/g, ''),
-      iso.slice(11, 19).replace(/:/g, ''),
-      reporte.cabecera.huellaSha256.slice(0, 8),
-      randomBytes(2).toString('hex'),
-    ].join('-');
+    const subcarpeta = subcarpetaDeCorrida(reporte.cabecera.huellaSha256);
     try {
       await escribirReporte(resolve(process.env.ETL_SALIDA || 'etl-salida', subcarpeta), reporte);
     } catch (error) {
