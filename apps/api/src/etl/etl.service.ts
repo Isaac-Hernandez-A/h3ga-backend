@@ -1,13 +1,21 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
-import { createHash } from 'node:crypto';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  ServiceUnavailableException,
+} from '@nestjs/common';
+import { createHash, randomBytes } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { DataSource } from 'typeorm';
 import { ROL_POR_ID } from '../common/auth/roles-sistema';
+import { ArchivoSubido } from '../documentos/documentos.service';
+import { limpiarNombre, TAMANO_MAXIMO } from '../documentos/reglas-archivo';
 import { CargadorClientes } from './cargador';
-import { ImportarExcelDto } from './dto/importar-excel.dto';
 import { marcarDuplicados } from './duplicados';
-import { COLUMNAS_OBLIGATORIAS, leerHojaClientes } from './lector-excel';
+import { ArchivoInvalidoError, COLUMNAS_OBLIGATORIAS, leerHojaClientes } from './lector-excel';
 import { MapaAsesores, UsuariosLookup } from './mapa-asesores';
-import { codigoDe, enmascarar, esRutinario } from './reporte';
+import { codigoDe, enmascarar, escribirReporte, esRutinario } from './reporte';
 import { RenglonValidado, ReporteEtl } from './tipos';
 import { validarRenglon } from './validador-renglon';
 
@@ -50,6 +58,8 @@ const REGEX_YA_EXISTE = /ya existe/i;
 
 @Injectable()
 export class EtlService {
+  private readonly logger = new Logger(EtlService.name);
+
   constructor(
     private readonly ds: DataSource,
     private readonly cargador: CargadorClientes,
@@ -163,9 +173,100 @@ export class EtlService {
     };
   }
 
-  // Esbozo anterior del endpoint; la Tarea 11 lo reemplaza.
-  async importarExcel(dto: ImportarExcelDto): Promise<unknown> {
-    throw new NotImplementedException();
+  // Importación desde HTTP: valida el archivo subido (400), lee la configuración (503), importa y escribe
+  // el reporte en una subcarpeta propia de ETL_SALIDA. Los mensajes de error citan nombres de columnas,
+  // nunca valores de los renglones ni contenido del archivo.
+  async importarSubido(
+    archivo: ArchivoSubido | undefined,
+    opciones: { ejecutorId: string; simulacro: boolean },
+  ): Promise<ReporteEtl> {
+    const { buffer, nombre } = this.validarArchivo(archivo);
+    const equivalencias = await this.leerEquivalencias();
+    let reporte: ReporteEtl;
+    try {
+      reporte = await this.importar(buffer, {
+        nombreArchivo: nombre,
+        ejecutorId: opciones.ejecutorId,
+        modo: 'api',
+        equivalencias,
+        simulacro: opciones.simulacro,
+      });
+    } catch (error) {
+      if (error instanceof ArchivoInvalidoError) throw new BadRequestException(error.message);
+      throw error;
+    }
+    await this.guardarReporte(reporte);
+    return reporte;
+  }
+
+  private validarArchivo(archivo: ArchivoSubido | undefined): { buffer: Buffer; nombre: string } {
+    if (!archivo) {
+      throw new BadRequestException(
+        'Falta el archivo: envíelo en el campo "archivo" (multipart/form-data).',
+      );
+    }
+    // Solo se conserva el nombre base, sin rutas ni caracteres de control.
+    const nombre = limpiarNombre(archivo.originalname, 'xlsx');
+    if (!/\.xlsx$/i.test(nombre)) {
+      throw new BadRequestException('El archivo debe ser un libro de Excel con extensión .xlsx.');
+    }
+    const { buffer } = archivo;
+    if (buffer.length === 0) throw new BadRequestException('El archivo está vacío.');
+    if (buffer.length > TAMANO_MAXIMO) {
+      throw new BadRequestException('El archivo supera el máximo de 10 MB.');
+    }
+    // Un .xlsx es un ZIP: un .xls antiguo (u otro formato) renombrado no lo es.
+    if (buffer.subarray(0, 4).toString('latin1') !== 'PK') {
+      throw new BadRequestException(
+        'El archivo no es un libro de Excel (.xlsx) válido; un .xls antiguo renombrado no se acepta.',
+      );
+    }
+    return { buffer, nombre };
+  }
+
+  // Equivalencias nombre del Excel a correo, del JSON que indica ETL_EQUIVALENCIAS. Se lee en cada
+  // importación. Si falta o no se puede leer es un problema de configuración del servidor: 503.
+  private async leerEquivalencias(): Promise<Record<string, string>> {
+    const ruta = process.env.ETL_EQUIVALENCIAS?.trim();
+    if (!ruta) {
+      throw new ServiceUnavailableException(
+        'Falta configurar las equivalencias de asesores: defina ETL_EQUIVALENCIAS con la ruta del JSON.',
+      );
+    }
+    try {
+      const datos: unknown = JSON.parse(await readFile(ruta, 'utf8'));
+      if (
+        typeof datos === 'object' &&
+        datos !== null &&
+        !Array.isArray(datos) &&
+        Object.values(datos).every((v) => typeof v === 'string')
+      ) {
+        return datos as Record<string, string>;
+      }
+    } catch {
+      // Se informa abajo, sin el texto del error (puede citar rutas o contenido).
+    }
+    throw new ServiceUnavailableException(
+      'Las equivalencias de asesores (ETL_EQUIVALENCIAS) no se pueden leer o no tienen el formato esperado: nombre del Excel a correo.',
+    );
+  }
+
+  // reporte.json y rechazados.csv en ETL_SALIDA (por defecto ./etl-salida), en una subcarpeta que genera
+  // el servidor: fecha UTC, huella del archivo e identificador propio. Nada del nombre del archivo subido
+  // entra en la ruta. Si no se puede escribir, la importación no falla: el reporte ya va en la respuesta.
+  private async guardarReporte(reporte: ReporteEtl): Promise<void> {
+    const iso = new Date().toISOString();
+    const subcarpeta = [
+      iso.slice(0, 10).replace(/-/g, ''),
+      iso.slice(11, 19).replace(/:/g, ''),
+      reporte.cabecera.huellaSha256.slice(0, 8),
+      randomBytes(2).toString('hex'),
+    ].join('-');
+    try {
+      await escribirReporte(resolve(process.env.ETL_SALIDA || 'etl-salida', subcarpeta), reporte);
+    } catch (error) {
+      this.logger.warn(`No se pudo escribir el reporte en disco (${(error as Error).name}).`);
+    }
   }
 
   private usuariosPorCorreo(): UsuariosLookup {
