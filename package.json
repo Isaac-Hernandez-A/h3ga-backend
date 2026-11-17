@@ -5,7 +5,7 @@
   "description": "Sistema web H3GA Seguros y Pensiones",
   "packageManager": "pnpm@10.34.9",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.9"
   },
   "scripts": {
     "dev": "pnpm -r --parallel --filter \"./apps/*\" dev",
