@@ -4,13 +4,12 @@ import { limpiarTexto } from './texto';
 // Saneador de CURP (Actividad 5, Tarea 5). Solo formato y coherencia de fecha: no se valida el dígito
 // verificador. Los mensajes nunca incluyen la CURP (es un dato personal).
 //
-// Formato de 18 posiciones: 4 letras, fecha aammdd, sexo H o M, estado de 2 letras, 3 consonantes
-// internas, homoclave (letra o dígito) y dígito. El formato oficial pide una vocal en la segunda
-// posición, pero las CURP ficticias del fixture no la traen, así que aquí basta con una letra.
+// Formato oficial de 18 posiciones: una letra, una vocal o X, dos letras, fecha aammdd, sexo H o M,
+// estado de 2 letras, 3 consonantes internas, homoclave (letra o dígito) y dígito.
 const ESTADOS =
   'AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE';
 const CURP = new RegExp(
-  `^[A-Z]{4}(\\d{2})(\\d{2})(\\d{2})([HM])(?:${ESTADOS})[B-DF-HJ-NP-TV-Z]{3}[A-Z0-9]\\d$`,
+  `^[A-Z][AEIOUX][A-Z]{2}(\\d{2})(\\d{2})(\\d{2})([HM])(?:${ESTADOS})[B-DF-HJ-NP-TV-Z]{3}[A-Z0-9]\\d$`,
 );
 
 // La fecha existe en el calendario. El siglo sale de la homoclave: dígito es siglo XX y letra, XXI.
@@ -31,7 +30,7 @@ export function sanearCurp(raw: unknown, nacimiento: Date | null): Saneado<strin
   }
   const partes = CURP.exec(curp);
   if (!partes) {
-    r.rechazo = 'La CURP no tiene el formato de 18 caracteres.';
+    r.rechazo = 'La CURP no tiene el formato oficial de 18 caracteres.';
     return r;
   }
   const [, aa, mm, dd] = partes;

@@ -21,79 +21,102 @@ const mensajes = (r: { ajustes: string[]; advertencias: string[]; rechazo: strin
 
 describe('sanearCurp', () => {
   it('CP-223 curp_minusculas: pasa a mayúsculas con ajuste', () => {
-    const r = sanearCurp('mmar610609hdfrnf68', utc(1961, 6, 9));
-    expect(r.valor).toBe('MMAR610609HDFRNF68');
+    const r = sanearCurp('miar610609hdfrnf68', utc(1961, 6, 9));
+    expect(r.valor).toBe('MIAR610609HDFRNF68');
     expect(r.ajustes.length).toBeGreaterThan(0);
     expect(r.rechazo).toBeNull();
   });
 
   it('CP-223 una CURP ya limpia no lleva ajustes ni advertencias', () => {
-    const r = sanearCurp('MMAR610609HDFRNF68', utc(1961, 6, 9));
-    expect(r.valor).toBe('MMAR610609HDFRNF68');
+    const r = sanearCurp('MIAR610609HDFRNF68', utc(1961, 6, 9));
+    expect(r.valor).toBe('MIAR610609HDFRNF68');
     expect(r.ajustes).toEqual([]);
     expect(r.advertencias).toEqual([]);
   });
 
-  it('CP-224 curp_con_espacios: "QFQD 760716 MOCPJXE8" da 18 caracteres sin espacios', () => {
-    const r = sanearCurp('QFQD 760716 MOCPJXE8', utc(1976, 7, 16));
-    expect(r.valor).toBe('QFQD760716MOCPJXE8');
+  it('CP-224 curp_con_espacios: "QAQD 760716 MOCPJXE8" da 18 caracteres sin espacios', () => {
+    const r = sanearCurp('QAQD 760716 MOCPJXE8', utc(1976, 7, 16));
+    expect(r.valor).toBe('QAQD760716MOCPJXE8');
     expect(r.valor).toHaveLength(18);
     expect(r.ajustes.length).toBeGreaterThan(0);
   });
 
   it('CP-224 también quita guiones, espacios de no separación y caracteres invisibles', () => {
-    expect(sanearCurp('MMAR-610609-HDFRNF68', null).valor).toBe('MMAR610609HDFRNF68');
-    expect(sanearCurp(' MMAR610609HDFRNF68​', null).valor).toBe('MMAR610609HDFRNF68');
+    expect(sanearCurp('MIAR-610609-HDFRNF68', null).valor).toBe('MIAR610609HDFRNF68');
+    expect(sanearCurp(' MIAR610609HDFRNF68​', null).valor).toBe('MIAR610609HDFRNF68');
   });
 
   it('CP-225 curp_17_caracteres_rechaza', () => {
-    const r = sanearCurp('GKSC730208MPLJVFT', utc(1973, 2, 8));
+    const r = sanearCurp('GASC730208MPLJVFT', utc(1973, 2, 8));
     expect(r.valor).toBeNull();
     expect(r.rechazo).not.toBeNull();
-    expect(sanearCurp('GKSC730208MPLJVFT9X', null).rechazo).not.toBeNull(); // 19 caracteres
+    expect(sanearCurp('GASC730208MPLJVFT9X', null).rechazo).not.toBeNull(); // 19 caracteres
   });
 
-  it('CP-226 curp_mes_13_rechaza: CUQH751312MQRBZC31 rechaza', () => {
-    const r = sanearCurp('CUQH751312MQRBZC31', null);
+  it('CP-226 curp_mes_13_rechaza: CAQH751312MQRBZC31 rechaza', () => {
+    const r = sanearCurp('CAQH751312MQRBZC31', null);
     expect(r.valor).toBeNull();
     expect(r.rechazo).not.toBeNull();
   });
 
   it('CP-226 rechaza también día inexistente, sexo inválido, estado inválido y números donde van letras', () => {
-    expect(sanearCurp('CUQH750230MQRBZC31', null).rechazo).not.toBeNull(); // 30 de febrero
-    expect(sanearCurp('CUQH750412XQRBZC31', null).rechazo).not.toBeNull(); // sexo X
-    expect(sanearCurp('CUQH750412MXXBZC31', null).rechazo).not.toBeNull(); // estado XX
-    expect(sanearCurp('CUQH75O412MQRBZC31', null).rechazo).not.toBeNull(); // letra O en la fecha
-    expect(sanearCurp('CUQH750412MQRBZC3A', null).rechazo).not.toBeNull(); // el último va dígito
+    expect(sanearCurp('CAQH750230MQRBZC31', null).rechazo).not.toBeNull(); // 30 de febrero
+    expect(sanearCurp('CAQH750412XQRBZC31', null).rechazo).not.toBeNull(); // sexo X
+    expect(sanearCurp('CAQH750412MXXBZC31', null).rechazo).not.toBeNull(); // estado XX
+    expect(sanearCurp('CAQH75O412MQRBZC31', null).rechazo).not.toBeNull(); // letra O en la fecha
+    expect(sanearCurp('CAQH750412MQRBZC3A', null).rechazo).not.toBeNull(); // el último va dígito
   });
 
-  it('CP-226 acepta las CURP ficticias del fixture cuya segunda letra no es vocal', () => {
-    // El formato oficial pide vocal en la segunda posición, pero las CURP ficticias del fixture no la
-    // traen (QFQD, MMAR, HDUW): el saneador solo exige una letra.
-    for (const curp of ['QFQD760716MOCPJXE8', 'MMAR610609HDFRNF68', 'HDUW700909MNLTWL04']) {
-      expect(sanearCurp(curp, null).valor).toBe(curp);
+  it('CP-226 la segunda posición debe ser vocal: una CURP válida con vocal pasa', () => {
+    // Regla oficial: la segunda letra es A, E, I, O, U o X.
+    for (const curp of [
+      'QAQD760716MOCPJXE8',
+      'MIAR610609HDFRNF68',
+      'HOUW700909MNLTWL04',
+      'NEOA610823HYNBSX91',
+      'NUOA610823HYNBSX91',
+    ]) {
+      const r = sanearCurp(curp, null);
+      expect(r.valor).toBe(curp);
+      expect(r.rechazo).toBeNull();
     }
   });
 
+  it('CP-226 una consonante en la segunda posición rechaza por formato inválido', () => {
+    // Las CURP del fixture anterior (QFQD, MMAR, HDUW) tenían consonante en la segunda letra.
+    for (const curp of ['QFQD760716MOCPJXE8', 'MMAR610609HDFRNF68', 'HDUW700909MNLTWL04']) {
+      const r = sanearCurp(curp, null);
+      expect(r.valor).toBeNull();
+      expect(r.rechazo).toMatch(/formato/);
+      expect(r.rechazo).not.toContain(curp);
+    }
+  });
+
+  it('CP-226 la segunda letra X pasa (es la que se usa cuando el apellido no tiene vocal)', () => {
+    const r = sanearCurp('MXAR610609HDFRNF68', null);
+    expect(r.valor).toBe('MXAR610609HDFRNF68');
+    expect(r.rechazo).toBeNull();
+  });
+
   it('CP-226 el 29 de febrero solo existe en año bisiesto (el siglo sale del carácter 17)', () => {
-    expect(sanearCurp('CUQH720229MQRBZC31', null).valor).toBe('CUQH720229MQRBZC31'); // 1972
-    expect(sanearCurp('CUQH710229MQRBZC31', null).rechazo).not.toBeNull(); // 1971
-    expect(sanearCurp('CUQH000229MQRBZCA1', null).valor).toBe('CUQH000229MQRBZCA1'); // 2000, letra: siglo XXI
+    expect(sanearCurp('CAQH720229MQRBZC31', null).valor).toBe('CAQH720229MQRBZC31'); // 1972
+    expect(sanearCurp('CAQH710229MQRBZC31', null).rechazo).not.toBeNull(); // 1971
+    expect(sanearCurp('CAQH000229MQRBZCA1', null).valor).toBe('CAQH000229MQRBZCA1'); // 2000, letra: siglo XXI
   });
 
   it('CP-227 curp_no_coincide_con_nacimiento_advierte: carga con advertencia', () => {
-    const r = sanearCurp('MMAR610609HDFRNF68', utc(1962, 6, 9));
-    expect(r.valor).toBe('MMAR610609HDFRNF68');
+    const r = sanearCurp('MIAR610609HDFRNF68', utc(1962, 6, 9));
+    expect(r.valor).toBe('MIAR610609HDFRNF68');
     expect(r.advertencias).toHaveLength(1);
     expect(r.rechazo).toBeNull();
     // Difiere el mes o el día: también advierte.
-    expect(sanearCurp('MMAR610609HDFRNF68', utc(1961, 7, 9)).advertencias).toHaveLength(1);
-    expect(sanearCurp('MMAR610609HDFRNF68', utc(1961, 6, 10)).advertencias).toHaveLength(1);
+    expect(sanearCurp('MIAR610609HDFRNF68', utc(1961, 7, 9)).advertencias).toHaveLength(1);
+    expect(sanearCurp('MIAR610609HDFRNF68', utc(1961, 6, 10)).advertencias).toHaveLength(1);
   });
 
   it('CP-227 sin fecha de nacimiento no se compara y no advierte', () => {
-    const r = sanearCurp('MMAR610609HDFRNF68', null);
-    expect(r.valor).toBe('MMAR610609HDFRNF68');
+    const r = sanearCurp('MIAR610609HDFRNF68', null);
+    expect(r.valor).toBe('MIAR610609HDFRNF68');
     expect(r.advertencias).toEqual([]);
   });
 
@@ -112,10 +135,10 @@ describe('sanearCurp', () => {
 
   it('CP-234 ningún mensaje contiene la CURP completa, ni como venía ni normalizada', () => {
     const casos: [string, Date | null][] = [
-      ['mmar610609hdfrnf68', utc(1962, 6, 9)],
-      ['QFQD 760716 MOCPJXE8', utc(1976, 7, 16)],
-      ['GKSC730208MPLJVFT', null],
-      ['CUQH751312MQRBZC31', null],
+      ['miar610609hdfrnf68', utc(1962, 6, 9)],
+      ['QAQD 760716 MOCPJXE8', utc(1976, 7, 16)],
+      ['GASC730208MPLJVFT', null],
+      ['CAQH751312MQRBZC31', null],
     ];
     for (const [original, nacimiento] of casos) {
       const limpio = original.replace(/\s/g, '').toUpperCase();
@@ -137,8 +160,8 @@ describe('sanearCurp', () => {
 
 describe('sexoDeCurp', () => {
   it('CP-309 sexo_desde_curp: el carácter 11 "H" da "H" y "M" da "M"', () => {
-    expect(sexoDeCurp('MMAR610609HDFRNF68')).toBe('H');
-    expect(sexoDeCurp('QFQD760716MOCPJXE8')).toBe('M');
+    expect(sexoDeCurp('MIAR610609HDFRNF68')).toBe('H');
+    expect(sexoDeCurp('QAQD760716MOCPJXE8')).toBe('M');
   });
 });
 
