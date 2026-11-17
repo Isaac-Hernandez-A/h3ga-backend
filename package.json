@@ -20,6 +20,7 @@
     "db:seed:supervisor": "node --env-file-if-exists=.env db/seed-supervisor.mjs",
     "etl:importar": "pnpm --filter @h3ga/api build && node --env-file-if-exists=.env apps/api/dist/etl/cli-main.js",
     "pruebas:newman": "node scripts/postman/correr-newman.mjs",
+    "pruebas:datos": "pnpm --filter @h3ga/api build && node --env-file-if-exists=.env apps/api/dist/scripts/preparar-datos-integrales.js",
     "db:test:prepare": "node --env-file-if-exists=.env db/preparar-bd-pruebas.mjs",
     "dev:token": "node --env-file-if-exists=.env apps/api/scripts/dev-token.mjs"
   },
