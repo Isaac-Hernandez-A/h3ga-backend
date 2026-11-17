@@ -19,6 +19,12 @@ const clave = (texto: string): string =>
 
 const ESTATUS_POR_CLAVE = new Map(ESTATUS_ETAPA.map((e) => [clave(e), e]));
 
+// Estatus que usa el Excel real y no son del sistema. "En proceso" solo es ambiguo (cliente, asesor o
+// Instituto) y no tiene alias: rechaza.
+const ALIAS_DE_ESTATUS = new Map<string, EstatusEtapa>([
+  ['en revision asesor', 'En proceso asesor'],
+]);
+
 // Avance a entero de 0 a 100, o null si falta o no se entiende. De 0 a 1 es fracción; un entero entre 1 y
 // 100 ya es porcentaje; con "%" siempre es porcentaje. Un número con decimales mayor que 1 ("1,5") no es
 // ni fracción ni porcentaje: se descarta en vez de adivinar.
@@ -52,15 +58,34 @@ function leerAvance(raw: unknown): { pct: number | null; ajustes: string[] } {
 export function sanearEstatusAvance(estatus: unknown, avance: unknown): Saneado<EstatusAvance> {
   const r: Saneado<EstatusAvance> = { valor: null, ajustes: [], advertencias: [], rechazo: null };
   const texto = typeof estatus === 'string' ? limpiarTexto(estatus).texto : '';
-  const nombre = texto === '' ? undefined : ESTATUS_POR_CLAVE.get(clave(texto));
-  if (!nombre) {
-    r.rechazo =
-      texto === ''
-        ? 'El estatus de la etapa viene vacío.'
-        : 'El estatus de la etapa no está en el catálogo.';
+  const vacio =
+    estatus === null || estatus === undefined || (typeof estatus === 'string' && texto === '');
+
+  let nombre: EstatusEtapa;
+  if (vacio) {
+    // Una etapa sin estatus es una etapa que aún no se trabaja: se carga como Por iniciar, con aviso.
+    nombre = 'Por iniciar';
+    r.advertencias.push(
+      'estatus_vacio_por_iniciar: el estatus de la etapa viene vacío; se carga Por iniciar.',
+    );
+  } else if (typeof estatus !== 'string') {
+    r.rechazo = 'El estatus de la etapa no está en el catálogo.';
     return r;
+  } else if (clave(texto) === 'en proceso') {
+    r.rechazo = 'estatus ambiguo: indicar cliente, asesor o Instituto.';
+    return r;
+  } else if (ALIAS_DE_ESTATUS.has(clave(texto))) {
+    nombre = ALIAS_DE_ESTATUS.get(clave(texto))!;
+    r.advertencias.push(`estatus_alias: "${texto}" se carga como "${nombre}".`);
+  } else {
+    const encontrado = ESTATUS_POR_CLAVE.get(clave(texto));
+    if (!encontrado) {
+      r.rechazo = 'El estatus de la etapa no está en el catálogo.';
+      return r;
+    }
+    nombre = encontrado;
+    if (nombre !== estatus) r.ajustes.push('estatus_normalizado');
   }
-  if (nombre !== estatus) r.ajustes.push('estatus_normalizado');
 
   const { pct, ajustes } = leerAvance(avance);
   r.ajustes.push(...ajustes);

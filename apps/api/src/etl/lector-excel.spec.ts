@@ -1,7 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import * as ExcelJS from 'exceljs';
-import { ArchivoInvalidoError, COLUMNAS_OBLIGATORIAS, leerHojaClientes } from './lector-excel';
+import {
+  ArchivoInvalidoError,
+  COLUMNAS_OBLIGATORIAS,
+  esRenglonVacio,
+  leerHojaClientes,
+} from './lector-excel';
 
 // Lector de la hoja Clientes del FORMATO_CONTROL_OPERATIVO (Actividad 5, Tarea 2). Los libros de prueba se
 // arman en memoria con exceljs; el fixture ficticio vive en test/fixtures/etl/.
@@ -215,5 +220,20 @@ describe('leerHojaClientes', () => {
       expect((error as Error).message).toContain(columna);
     }
     expect((error as Error).message).toContain('4 columnas');
+  });
+  it('CP-340 esRenglonVacio: sin nombre, sin CURP y sin NSS es un resto de fórmulas; con cualquiera de los tres, no', () => {
+    const resto = {
+      'Nombre del cliente': null,
+      CURP: '',
+      NSS: '   ',
+      Edad: 0,
+      'Días desde alta': 12,
+    };
+    expect(esRenglonVacio(resto)).toBe(true);
+    expect(esRenglonVacio({})).toBe(true);
+    expect(esRenglonVacio({ ...resto, 'Nombre del cliente': 'Ana' })).toBe(false);
+    expect(esRenglonVacio({ ...resto, CURP: 'HOUW700909MNLTWL04' })).toBe(false);
+    expect(esRenglonVacio({ ...resto, NSS: 99033042845 })).toBe(false);
+    expect(esRenglonVacio({ ...resto, NSS: 0 })).toBe(false); // un 0 es un dato, no un vacío
   });
 });

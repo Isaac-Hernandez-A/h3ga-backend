@@ -169,6 +169,9 @@ export async function ejecutarCli(
     salida.out(
       `Con ajustes: ${t.conAjustes} | Con advertencias: ${t.conAdvertencias} | Lotes: ${t.lotes} (degradados: ${t.lotesDegradados})`,
     );
+    if (t.renglonesVaciosIgnorados > 0) {
+      salida.out(`Renglones vacíos ignorados (restos de fórmulas): ${t.renglonesVaciosIgnorados}`);
+    }
     salida.out(
       `Conciliación: ${reporte.conciliacion.ok ? 'correcta' : 'FALLÓ'}. ${reporte.conciliacion.detalle}`,
     );

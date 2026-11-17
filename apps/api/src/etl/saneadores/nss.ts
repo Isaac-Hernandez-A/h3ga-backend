@@ -10,12 +10,18 @@ export function sanearNss(raw: unknown, regimen: string | null): Saneado<string>
 
   let texto = '';
   let eraTexto = false;
+  let ceroInicial = false;
   if (typeof raw === 'number') {
     if (!Number.isInteger(raw) || raw < 0) {
       r.rechazo = 'El NSS no es un número entero válido.';
       return r;
     }
     texto = String(raw);
+    // Excel guarda el NSS como número y pierde el cero inicial: de 10 dígitos se completa con un cero.
+    if (texto.length === 10) {
+      texto = `0${texto}`;
+      ceroInicial = true;
+    }
   } else if (typeof raw === 'string') {
     eraTexto = true;
     texto = limpiarTexto(raw).texto;
@@ -37,7 +43,8 @@ export function sanearNss(raw: unknown, regimen: string | null): Saneado<string>
     r.rechazo = 'El NSS no tiene exactamente 11 dígitos.';
     return r;
   }
-  if (eraTexto && nss !== raw) r.ajustes.push('nss_normalizado');
+  if (ceroInicial) r.ajustes.push('nss_cero_inicial');
+  else if (eraTexto && nss !== raw) r.ajustes.push('nss_normalizado');
   r.valor = nss;
   return r;
 }

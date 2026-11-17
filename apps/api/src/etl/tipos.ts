@@ -51,10 +51,14 @@ export interface ReporteEtl {
     lotesDegradados: number;
     pendientesDeCaptura: number;
     objetivoAsumido: number;
+    // Restos de fórmulas (sin nombre, CURP ni NSS) que no se leen como renglones.
+    renglonesVaciosIgnorados: number;
   };
   conciliacion: { ok: boolean; detalle: string };
   // Cuántos renglones cargados llevan cada código de ajuste o advertencia (incluye los rutinarios).
   resumenPorCodigo: Record<string, number>;
+  // Por etapa ("0" a "15"): renglones cargados cuyo estatus venía vacío y se cargó como Por iniciar.
+  estatusVaciosPorEtapa: Record<string, number>;
   renglones: {
     fila: number;
     idExcel: number | null;

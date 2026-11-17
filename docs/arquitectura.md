@@ -70,7 +70,7 @@ Transversal en `AppModule`: `ConfigModule` global con `validarEntorno` (en produ
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Esquema SQL, entidades, DTO, módulos, contrato Swagger | Hecho                                                                                                                                                                                       |
 | Control de acceso (3 guards + `dev:token` + pruebas)   | Hecho y aplicado en las 119 rutas (matriz probada)                                                                                                                                          |
-| Pruebas                                                | 75 suites, 717 pruebas (716 pasan y 1 se omite: el generador de evidencia, que solo corre con `ETL_EVIDENCIA=1`), 0 `it.todo`; casos CP-01 a CP-331 documentados en `pruebas-resultados.md` |
+| Pruebas                                                | 75 suites, 738 pruebas (737 pasan y 1 se omite: el generador de evidencia, que solo corre con `ETL_EVIDENCIA=1`), 0 `it.todo`; casos CP-01 a CP-347 documentados en `pruebas-resultados.md` |
 
 ## Importación desde Excel (ETL)
 
@@ -79,6 +79,7 @@ Núcleo único (`EtlService.importar`) que usan `POST /etl/importaciones` (multi
 - Los clientes se crean con `ClientesService.crear` dentro de la transacción del lote y sus 16 etapas se escriben directo con el estatus, avance, acción y fecha del Excel, sin historial.
 - Configuración: `ETL_EQUIVALENCIAS` (JSON nombre del asesor a correo; sin él, 503) y `ETL_SALIDA` (carpeta de reportes, una subcarpeta propia por corrida; no se versiona).
 - Corrida de aceptación con el Excel ficticio: `docs/etl-corrida-ficticia/`.
+- Reglas para el Excel real (Tarea 14): dependientes vacíos o NO en 0, estatus de etapa vacío como Por iniciar, NSS numérico de 10 dígitos con cero inicial, restos de fórmulas ignorados (`renglonesVaciosIgnorados`); estado civil y AFORE vacíos siguen rechazando.
 
 ## Dashboard de Inicio
 

@@ -119,6 +119,18 @@ describe('sanearCatalogo', () => {
     }
   });
 
+  it('CP-335 alias_union_libre: "UNION LIBRE" carga como concubinato con ajuste', () => {
+    for (const texto of ['UNION LIBRE', 'Unión libre', ' union  libre ']) {
+      const r = sanearCatalogo(texto, 'estadoCivil');
+      expect(r.valor).toBe('concubinato');
+      expect(r.rechazo).toBeNull();
+      expect(r.ajustes).toEqual(['estado_civil_alias']);
+    }
+    // Estado civil vacío o desconocido sigue rechazando.
+    expect(sanearCatalogo('', 'estadoCivil').rechazo).not.toBeNull();
+    expect(sanearCatalogo('Comprometido', 'estadoCivil').rechazo).not.toBeNull();
+  });
+
   it('CP-238 "No determinado" no es una AFORE ni un estado civil: rechaza', () => {
     expect(sanearCatalogo('No determinado', 'afore').rechazo).not.toBeNull();
     expect(sanearCatalogo('No determinado', 'estadoCivil').rechazo).not.toBeNull();
@@ -149,12 +161,45 @@ describe('sanearEstatusAvance', () => {
     expect(r.rechazo).not.toBeNull();
   });
 
-  it('CP-239 un estatus vacío o que no es texto también rechaza', () => {
-    for (const malo of [null, undefined, '', '  ', 5]) {
+  it('CP-239 un estatus que no es texto ni está vacío (un número) rechaza', () => {
+    for (const malo of [5, true]) {
       const r = ea(malo, 0.3);
       expect(r.valor).toBeNull();
       expect(r.rechazo).not.toBeNull();
     }
+  });
+
+  it('CP-332 estatus_vacio_por_iniciar: un estatus vacío carga como Por iniciar (avance 10) con advertencia', () => {
+    for (const vacio of [null, undefined, '', '  ']) {
+      const r = ea(vacio, null);
+      expect(r.valor).toEqual({ estatus: 'Por iniciar', avance: 10, motivo: null });
+      expect(r.rechazo).toBeNull();
+      expect(r.advertencias).toHaveLength(1);
+      expect(r.advertencias[0]).toContain('estatus_vacio_por_iniciar');
+    }
+    // El avance de una etapa vacía también queda en 10 (con advertencia si traía otro valor).
+    expect(ea('', 0.5).valor?.avance).toBe(10);
+  });
+
+  it('CP-333 alias_en_revision_asesor: "En revisión Asesor" carga como En proceso asesor con advertencia', () => {
+    for (const texto of ['En revisión Asesor', 'en revision asesor', ' EN REVISIÓN ASESOR ']) {
+      const r = ea(texto, 0.4);
+      expect(r.valor).toEqual({ estatus: 'En proceso asesor', avance: 40, motivo: null });
+      expect(r.rechazo).toBeNull();
+      expect(r.advertencias.some((m) => m.includes('estatus_alias'))).toBe(true);
+    }
+    // Sigue las reglas de En proceso: fuera de rango se lleva al más cercano.
+    expect(ea('En revisión Asesor', 0.1).valor?.avance).toBe(20);
+  });
+
+  it('CP-334 estatus_ambiguo: "En proceso" solo sigue rechazando, con el motivo que pide indicar quién', () => {
+    for (const texto of ['En proceso', 'en proceso', ' EN  PROCESO ']) {
+      const r = ea(texto, 0.4);
+      expect(r.valor).toBeNull();
+      expect(r.rechazo).toContain('estatus ambiguo: indicar cliente, asesor o Instituto');
+    }
+    // Con quién sí es válido.
+    expect(ea('En proceso Instituto', 0.4).valor?.estatus).toBe('En proceso Instituto');
   });
 
   it('CP-239 reconoce los 9 estatus sin importar mayúsculas, acentos ni espacios', () => {

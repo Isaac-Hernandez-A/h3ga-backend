@@ -157,3 +157,12 @@ export async function leerHojaClientes(
   }
   return { encabezados, renglones };
 }
+
+// Un resto de fórmulas: sin nombre, sin CURP y sin NSS. El formato trae renglones con estilo y fórmulas que
+// dan un valor (Edad, Días desde alta) aunque no haya cliente; no son renglones de datos. Un 0 sí es un dato.
+const vacioCelda = (valor: unknown) =>
+  valor === null || valor === undefined || (typeof valor === 'string' && valor.trim() === '');
+
+export function esRenglonVacio(celdas: Record<string, unknown>): boolean {
+  return ['Nombre del cliente', 'CURP', 'NSS'].every((columna) => vacioCelda(celdas[columna]));
+}

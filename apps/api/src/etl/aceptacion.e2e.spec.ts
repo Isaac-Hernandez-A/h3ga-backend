@@ -366,7 +366,7 @@ describeConBd('Aceptación de la importación con el Excel ficticio', () => {
     expect(cuerpo.avance_global).toBeLessThanOrEqual(100);
   });
 
-  it('CP-305 evidencia_en_docs: docs/etl-corrida-ficticia trae las tres corridas y la comparación de defectos', () => {
+  it('CP-346 evidencia_en_docs: docs/etl-corrida-ficticia trae las tres corridas y la comparación de defectos', () => {
     const leer = (ruta: string) => readFileSync(join(EVIDENCIA, ruta), 'utf8');
     const reporte = (ruta: string) => JSON.parse(leer(ruta)) as ReporteEtl;
 
@@ -426,7 +426,7 @@ describeConBd('Aceptación de la importación con el Excel ficticio', () => {
   // Regenera la evidencia: ETL_EVIDENCIA=1 npx jest src/etl/aceptacion. Usa ejecutarCli, el mismo código
   // que `pnpm etl:importar`. Orden: simulacro sobre la base limpia, corrida real e idempotencia.
   itEvidencia(
-    'CP-306 genera_evidencia: escribe docs/etl-corrida-ficticia con las tres corridas',
+    'CP-347 genera_evidencia: escribe docs/etl-corrida-ficticia con las tres corridas',
     async () => {
       const correo = (
         await ctx.ds.query<{ correo_electronico: string }[]>(
@@ -434,7 +434,17 @@ describeConBd('Aceptación de la importación con el Excel ficticio', () => {
           [supervisor.id],
         )
       )[0].correo_electronico;
-      rmSync(EVIDENCIA, { recursive: true, force: true });
+      // Se reescribe solo lo que genera esta prueba: la captura de Swagger (PNG) se toma aparte y no se borra.
+      for (const generado of [
+        'simulacro',
+        'segunda-corrida',
+        'reporte.json',
+        'rechazados.csv',
+        'consola.txt',
+        'defectos-vs-resultado.md',
+      ]) {
+        rmSync(join(EVIDENCIA, generado), { recursive: true, force: true });
+      }
       mkdirSync(EVIDENCIA, { recursive: true });
       const consola: string[] = [
         'Evidencia de la importación con el Excel ficticio (datos ficticios).',

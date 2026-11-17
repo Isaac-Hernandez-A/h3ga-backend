@@ -50,8 +50,16 @@ export async function validarRenglon(
   const rechazos: string[] = [];
 
   // Anota los mensajes de un saneador con su columna de origen y devuelve el valor.
-  const tomar = <T>(columna: string, s: Saneado<T>, opciones: { sinAjustes?: boolean } = {}) => {
-    if (!opciones.sinAjustes) ajustes.push(...s.ajustes.map((m) => `${columna}: ${m}`));
+  const tomar = <T>(
+    columna: string,
+    s: Saneado<T>,
+    opciones: { omitirAjustes?: string[] } = {},
+  ) => {
+    ajustes.push(
+      ...s.ajustes
+        .filter((m) => !opciones.omitirAjustes?.includes(m))
+        .map((m) => `${columna}: ${m}`),
+    );
     advertencias.push(...s.advertencias.map((m) => `${columna}: ${m}`));
     if (s.rechazo) rechazos.push(`${columna}: ${s.rechazo}`);
     return s.valor;
@@ -104,20 +112,39 @@ export async function validarRenglon(
   const nss = tomar('NSS', sanearNss(celdas['NSS'], regimen));
   const leyProbable = tomar('Ley probable', sanearCatalogo(celdas['Ley probable'], 'ley'));
   const afore = tomar('AFORE', sanearCatalogo(celdas['AFORE'], 'afore'));
-  // El estado civil del Excel ("Soltero (a)") es una equivalencia estándar con el enum, no un ajuste.
+  // El estado civil del Excel ("Soltero (a)") es una equivalencia estándar con el enum, no un ajuste; el
+  // alias UNION LIBRE sí se anota (estado_civil_alias).
   const estadoCivil = tomar('Estado civil', sanearCatalogo(celdas['Estado civil'], 'estadoCivil'), {
-    sinAjustes: true,
+    omitirAjustes: ['catalogo_normalizado'],
   });
 
+  // Dependientes económicos: vacío o "NO" se asume en 0, con advertencia; "SÍ" u otro texto rechaza porque
+  // no se sabe cuántos son.
   const dependientes = celdas['Dependientes económicos'];
   let dependientesEconomicos = 0;
+  const textoDependientes = typeof dependientes === 'string' ? dependientes : '';
+  const claveDependientes = textoDependientes
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .trim();
   if (typeof dependientes === 'number' && Number.isInteger(dependientes) && dependientes >= 0) {
     dependientesEconomicos = dependientes;
-  } else if (typeof dependientes === 'string' && /^\s*\d+\s*$/.test(dependientes)) {
-    dependientesEconomicos = Number(dependientes);
+  } else if (typeof dependientes === 'string' && /^\d+$/.test(claveDependientes)) {
+    dependientesEconomicos = Number(claveDependientes);
     ajustes.push('Dependientes económicos: dependientes_de_texto');
+  } else if (
+    dependientes === null ||
+    dependientes === undefined ||
+    (typeof dependientes === 'string' && (claveDependientes === '' || claveDependientes === 'no'))
+  ) {
+    advertencias.push(
+      'Dependientes económicos: dependientes_asumidos_en_cero: viene vacío o NO; se carga 0.',
+    );
   } else {
-    rechazos.push('Dependientes económicos: debe ser un número entero de 0 en adelante.');
+    rechazos.push(
+      'Dependientes económicos: no se sabe cuántos son; debe ser un número entero de 0 en adelante, vacío o NO.',
+    );
   }
 
   let semanasImssReconocidas = tomar(

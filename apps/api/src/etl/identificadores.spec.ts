@@ -193,6 +193,23 @@ describe('sanearNss', () => {
     expect(sanearNss(-99446026195, 'IMSS').rechazo).not.toBeNull();
   });
 
+  it('CP-336 nss_cero_inicial: un número de 10 dígitos se completa con un cero a la izquierda (ajuste)', () => {
+    const r = sanearNss(9904304284, 'IMSS');
+    expect(r.valor).toBe('09904304284');
+    expect(r.valor).toHaveLength(11);
+    expect(r.ajustes).toEqual(['nss_cero_inicial']);
+    expect(r.rechazo).toBeNull();
+    expect(mensajes(r).join(' ')).not.toContain('9904304284');
+  });
+
+  it('CP-336 con texto no se completa: "9904304284" de 10 dígitos rechaza; tampoco 9 ni 12 dígitos como número', () => {
+    expect(sanearNss('9904304284', 'IMSS').rechazo).not.toBeNull();
+    expect(sanearNss(990430428, 'IMSS').rechazo).not.toBeNull();
+    expect(sanearNss(990430428451, 'IMSS').rechazo).not.toBeNull();
+    // Un número de 11 dígitos sigue sin ajustes.
+    expect(sanearNss(99033042845, 'IMSS').ajustes).toEqual([]);
+  });
+
   it('CP-230 nss_9_digitos_rechaza', () => {
     const r = sanearNss('991041726', 'IMSS');
     expect(r.valor).toBeNull();

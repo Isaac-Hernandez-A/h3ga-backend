@@ -6,82 +6,82 @@ Generado el 2026-11-17 con `node scripts/reporte-pruebas.mjs` a partir de `jest 
 
 | Suite                                                 | Pruebas | Pasan   | Fallan | Tiempo (s) |
 | ----------------------------------------------------- | ------- | ------- | ------ | ---------- |
-| acceso-matriz.spec.ts                                 | 9       | 9       | 0      | 22.58      |
-| agenda/agenda.e2e.spec.ts                             | 3       | 3       | 0      | 3.51       |
-| auth/auth.e2e.spec.ts                                 | 7       | 7       | 0      | 3.60       |
-| auth/auth.service.spec.ts                             | 9       | 9       | 0      | 1.91       |
-| auth/contrasena.e2e.spec.ts                           | 7       | 7       | 0      | 4.96       |
-| avisos/avisos-enriquecidos.e2e.spec.ts                | 7       | 7       | 0      | 3.88       |
-| avisos/avisos-reapertura.e2e.spec.ts                  | 5       | 5       | 0      | 4.57       |
-| avisos/avisos.service.spec.ts                         | 7       | 7       | 0      | 5.63       |
-| catalogos.e2e.spec.ts                                 | 4       | 4       | 0      | 4.49       |
-| clientes/auxiliares.e2e.spec.ts                       | 3       | 3       | 0      | 4.48       |
-| clientes/cliente-auxiliar.autorizacion.spec.ts        | 4       | 4       | 0      | 1.42       |
-| clientes/clientes-acceso.spec.ts                      | 14      | 14      | 0      | 2.08       |
-| clientes/clientes-lecturas.e2e.spec.ts                | 5       | 5       | 0      | 3.78       |
-| clientes/clientes.controller.roles.spec.ts            | 8       | 8       | 0      | 1.67       |
-| clientes/clientes.e2e.spec.ts                         | 10      | 10      | 0      | 3.87       |
-| clientes/clientes.service.spec.ts                     | 1       | 1       | 0      | 3.20       |
-| clientes/crear-interno.spec.ts                        | 5       | 5       | 0      | 4.22       |
-| clientes/issste.e2e.spec.ts                           | 12      | 12      | 0      | 5.41       |
-| common/auth/cliente-access.guard.spec.ts              | 13      | 13      | 0      | 2.32       |
+| acceso-matriz.spec.ts                                 | 9       | 9       | 0      | 25.56      |
+| agenda/agenda.e2e.spec.ts                             | 3       | 3       | 0      | 5.69       |
+| auth/auth.e2e.spec.ts                                 | 7       | 7       | 0      | 4.10       |
+| auth/auth.service.spec.ts                             | 9       | 9       | 0      | 2.32       |
+| auth/contrasena.e2e.spec.ts                           | 7       | 7       | 0      | 5.17       |
+| avisos/avisos-enriquecidos.e2e.spec.ts                | 7       | 7       | 0      | 5.48       |
+| avisos/avisos-reapertura.e2e.spec.ts                  | 5       | 5       | 0      | 6.45       |
+| avisos/avisos.service.spec.ts                         | 7       | 7       | 0      | 5.38       |
+| catalogos.e2e.spec.ts                                 | 4       | 4       | 0      | 4.88       |
+| clientes/auxiliares.e2e.spec.ts                       | 3       | 3       | 0      | 4.13       |
+| clientes/cliente-auxiliar.autorizacion.spec.ts        | 4       | 4       | 0      | 1.04       |
+| clientes/clientes-acceso.spec.ts                      | 14      | 14      | 0      | 3.40       |
+| clientes/clientes-lecturas.e2e.spec.ts                | 5       | 5       | 0      | 3.87       |
+| clientes/clientes.controller.roles.spec.ts            | 8       | 8       | 0      | 2.87       |
+| clientes/clientes.e2e.spec.ts                         | 10      | 10      | 0      | 4.86       |
+| clientes/clientes.service.spec.ts                     | 1       | 1       | 0      | 4.09       |
+| clientes/crear-interno.spec.ts                        | 5       | 5       | 0      | 4.05       |
+| clientes/issste.e2e.spec.ts                           | 12      | 12      | 0      | 6.81       |
+| common/auth/cliente-access.guard.spec.ts              | 13      | 13      | 0      | 2.24       |
 | common/auth/clientes-accesibles.spec.ts               | 4       | 4       | 0      | 0.08       |
-| common/auth/dev-token.spec.ts                         | 11      | 11      | 0      | 2.89       |
-| common/auth/jwt-auth.guard.spec.ts                    | 11      | 11      | 0      | 1.32       |
-| common/auth/normalizar-rol.spec.ts                    | 10      | 10      | 0      | 0.09       |
+| common/auth/dev-token.spec.ts                         | 11      | 11      | 0      | 2.88       |
+| common/auth/jwt-auth.guard.spec.ts                    | 11      | 11      | 0      | 1.59       |
+| common/auth/normalizar-rol.spec.ts                    | 10      | 10      | 0      | 0.08       |
 | common/auth/permisos.spec.ts                          | 4       | 4       | 0      | 0.07       |
-| common/auth/roles.guard.spec.ts                       | 9       | 9       | 0      | 0.85       |
-| common/config/cors.spec.ts                            | 7       | 7       | 0      | 2.00       |
-| common/config/validar-entorno.spec.ts                 | 9       | 9       | 0      | 0.11       |
-| common/fechas.spec.ts                                 | 10      | 10      | 0      | 0.69       |
-| common/filters/all-exceptions.filter.spec.ts          | 4       | 4       | 0      | 0.82       |
-| common/seguridad/password-hasher.spec.ts              | 4       | 4       | 0      | 1.30       |
-| common/testing/bd-pruebas.spec.ts                     | 5       | 5       | 0      | 2.22       |
-| common/testing/defectos.spec.ts                       | 4       | 4       | 0      | 0.08       |
-| dashboard/dashboard.e2e.spec.ts                       | 13      | 13      | 0      | 5.83       |
-| diagnosticos/f1-avance-pdf.e2e.spec.ts                | 8       | 8       | 0      | 10.66      |
-| diagnosticos/f1-cabecera.e2e.spec.ts                  | 8       | 8       | 0      | 4.79       |
-| diagnosticos/f1-listas.e2e.spec.ts                    | 22      | 22      | 0      | 8.19       |
-| diagnosticos/f1-secciones.e2e.spec.ts                 | 10      | 10      | 0      | 6.93       |
-| documentos/documentos.e2e.spec.ts                     | 10      | 10      | 0      | 5.49       |
-| documentos/storage/local-storage.adapter.spec.ts      | 4       | 4       | 0      | 0.13       |
-| documentos/storage/spaces-storage.adapter.spec.ts     | 5       | 5       | 0      | 0.20       |
-| etapas/etapas-auxiliar.e2e.spec.ts                    | 3       | 3       | 0      | 4.28       |
-| etapas/etapas.e2e.spec.ts                             | 6       | 6       | 0      | 3.88       |
-| etapas/etapas.service.spec.ts                         | 5       | 5       | 0      | 3.75       |
-| etapas/reglas-avance.spec.ts                          | 9       | 9       | 0      | 0.10       |
-| etl/aceptacion.e2e.spec.ts                            | 10      | 9       | 0      | 10.24      |
-| etl/cargador.spec.ts                                  | 17      | 17      | 0      | 6.72       |
-| etl/catalogos-etapa.spec.ts                           | 36      | 36      | 0      | 1.13       |
-| etl/cli.spec.ts                                       | 12      | 12      | 0      | 7.18       |
-| etl/etl.e2e.spec.ts                                   | 16      | 16      | 0      | 6.99       |
-| etl/etl.service.spec.ts                               | 18      | 18      | 0      | 23.26      |
-| etl/fecha.spec.ts                                     | 28      | 28      | 0      | 0.64       |
-| etl/identificadores.spec.ts                           | 34      | 34      | 0      | 1.21       |
-| etl/lector-excel.spec.ts                              | 8       | 8       | 0      | 2.47       |
-| etl/mapa-asesores.spec.ts                             | 13      | 13      | 0      | 0.94       |
-| etl/texto.spec.ts                                     | 20      | 20      | 0      | 0.11       |
-| etl/validador.spec.ts                                 | 41      | 41      | 0      | 0.93       |
-| health/health.controller.spec.ts                      | 1       | 1       | 0      | 1.92       |
-| reporte-pruebas.spec.ts                               | 3       | 3       | 0      | 0.35       |
-| reportes/pdf/f0-modelo.spec.ts                        | 12      | 12      | 0      | 0.18       |
-| reportes/pdf/f0-pdf.e2e.spec.ts                       | 2       | 2       | 0      | 7.94       |
-| reportes/pdf/f0-pdf.service.spec.ts                   | 6       | 6       | 0      | 22.93      |
-| reportes/pdf/reporte-pdf.service.spec.ts              | 4       | 4       | 0      | 7.41       |
-| reportes/reportes-pdf.e2e.spec.ts                     | 3       | 3       | 0      | 10.94      |
-| reportes/reportes-trimestral-trazabilidad.e2e.spec.ts | 8       | 8       | 0      | 6.46       |
-| reportes/reportes.e2e.spec.ts                         | 2       | 2       | 0      | 4.00       |
-| reportes/reportes.service.spec.ts                     | 10      | 10      | 0      | 4.49       |
-| scripts/seed-supervisor.spec.ts                       | 4       | 4       | 0      | 5.86       |
-| swagger.e2e.spec.ts                                   | 3       | 3       | 0      | 3.15       |
-| tramites/correcciones-modulo.e2e.spec.ts              | 16      | 16      | 0      | 18.99      |
-| tramites/correcciones.e2e.spec.ts                     | 12      | 12      | 0      | 8.13       |
-| tramites/reglas-correcciones.spec.ts                  | 9       | 9       | 0      | 0.65       |
-| tramites/tramites.e2e.spec.ts                         | 11      | 11      | 0      | 5.10       |
-| usuarios-roles/restablecer-contrasena.e2e.spec.ts     | 7       | 7       | 0      | 4.72       |
-| usuarios-roles/usuarios-roles.e2e.spec.ts             | 11      | 11      | 0      | 4.74       |
-| usuarios-roles/usuarios-roles.service.spec.ts         | 12      | 12      | 0      | 1.45       |
-| **Total**                                             | **717** | **716** | **0**  | **335.52** |
+| common/auth/roles.guard.spec.ts                       | 9       | 9       | 0      | 0.96       |
+| common/config/cors.spec.ts                            | 7       | 7       | 0      | 2.31       |
+| common/config/validar-entorno.spec.ts                 | 9       | 9       | 0      | 0.10       |
+| common/fechas.spec.ts                                 | 10      | 10      | 0      | 0.55       |
+| common/filters/all-exceptions.filter.spec.ts          | 4       | 4       | 0      | 0.70       |
+| common/seguridad/password-hasher.spec.ts              | 4       | 4       | 0      | 1.39       |
+| common/testing/bd-pruebas.spec.ts                     | 5       | 5       | 0      | 1.86       |
+| common/testing/defectos.spec.ts                       | 4       | 4       | 0      | 0.07       |
+| dashboard/dashboard.e2e.spec.ts                       | 13      | 13      | 0      | 6.08       |
+| diagnosticos/f1-avance-pdf.e2e.spec.ts                | 8       | 8       | 0      | 16.16      |
+| diagnosticos/f1-cabecera.e2e.spec.ts                  | 8       | 8       | 0      | 5.17       |
+| diagnosticos/f1-listas.e2e.spec.ts                    | 22      | 22      | 0      | 11.14      |
+| diagnosticos/f1-secciones.e2e.spec.ts                 | 10      | 10      | 0      | 9.16       |
+| documentos/documentos.e2e.spec.ts                     | 10      | 10      | 0      | 5.58       |
+| documentos/storage/local-storage.adapter.spec.ts      | 4       | 4       | 0      | 0.11       |
+| documentos/storage/spaces-storage.adapter.spec.ts     | 5       | 5       | 0      | 0.18       |
+| etapas/etapas-auxiliar.e2e.spec.ts                    | 3       | 3       | 0      | 4.54       |
+| etapas/etapas.e2e.spec.ts                             | 6       | 6       | 0      | 4.37       |
+| etapas/etapas.service.spec.ts                         | 5       | 5       | 0      | 3.62       |
+| etapas/reglas-avance.spec.ts                          | 9       | 9       | 0      | 0.09       |
+| etl/aceptacion.e2e.spec.ts                            | 10      | 9       | 0      | 15.66      |
+| etl/cargador.spec.ts                                  | 17      | 17      | 0      | 6.65       |
+| etl/catalogos-etapa.spec.ts                           | 40      | 40      | 0      | 1.50       |
+| etl/cli.spec.ts                                       | 12      | 12      | 0      | 16.39      |
+| etl/etl.e2e.spec.ts                                   | 16      | 16      | 0      | 9.12       |
+| etl/etl.service.spec.ts                               | 25      | 25      | 0      | 28.25      |
+| etl/fecha.spec.ts                                     | 28      | 28      | 0      | 1.00       |
+| etl/identificadores.spec.ts                           | 36      | 36      | 0      | 1.55       |
+| etl/lector-excel.spec.ts                              | 9       | 9       | 0      | 2.39       |
+| etl/mapa-asesores.spec.ts                             | 13      | 13      | 0      | 0.92       |
+| etl/texto.spec.ts                                     | 20      | 20      | 0      | 0.10       |
+| etl/validador.spec.ts                                 | 48      | 48      | 0      | 1.40       |
+| health/health.controller.spec.ts                      | 1       | 1       | 0      | 2.74       |
+| reporte-pruebas.spec.ts                               | 3       | 3       | 0      | 0.27       |
+| reportes/pdf/f0-modelo.spec.ts                        | 12      | 12      | 0      | 0.15       |
+| reportes/pdf/f0-pdf.e2e.spec.ts                       | 2       | 2       | 0      | 10.07      |
+| reportes/pdf/f0-pdf.service.spec.ts                   | 6       | 6       | 0      | 24.68      |
+| reportes/pdf/reporte-pdf.service.spec.ts              | 4       | 4       | 0      | 9.36       |
+| reportes/reportes-pdf.e2e.spec.ts                     | 3       | 3       | 0      | 14.88      |
+| reportes/reportes-trimestral-trazabilidad.e2e.spec.ts | 8       | 8       | 0      | 8.19       |
+| reportes/reportes.e2e.spec.ts                         | 2       | 2       | 0      | 4.18       |
+| reportes/reportes.service.spec.ts                     | 10      | 10      | 0      | 4.43       |
+| scripts/seed-supervisor.spec.ts                       | 4       | 4       | 0      | 5.15       |
+| swagger.e2e.spec.ts                                   | 3       | 3       | 0      | 3.52       |
+| tramites/correcciones-modulo.e2e.spec.ts              | 16      | 16      | 0      | 20.07      |
+| tramites/correcciones.e2e.spec.ts                     | 12      | 12      | 0      | 10.01      |
+| tramites/reglas-correcciones.spec.ts                  | 9       | 9       | 0      | 0.49       |
+| tramites/tramites.e2e.spec.ts                         | 11      | 11      | 0      | 4.94       |
+| usuarios-roles/restablecer-contrasena.e2e.spec.ts     | 7       | 7       | 0      | 5.74       |
+| usuarios-roles/usuarios-roles.e2e.spec.ts             | 11      | 11      | 0      | 5.91       |
+| usuarios-roles/usuarios-roles.service.spec.ts         | 12      | 12      | 0      | 2.59       |
+| **Total**                                             | **738** | **737** | **0**  | **403.57** |
 
 Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATABASE_URL`) cuentan en "Pruebas" pero no en "Pasan" ni "Fallan".
 
@@ -445,7 +445,7 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 | CP-238 | afore_y_estado_civil_vacios_o_desconocidos: dan rechazo, sin valor neutro                                                                                                              | ✔ Pasa      |
 | CP-238 | "No determinado" no es una AFORE ni un estado civil: rechaza                                                                                                                           | ✔ Pasa      |
 | CP-239 | estatus_desconocido_rechaza: "En trámite" da rechazo                                                                                                                                   | ✔ Pasa      |
-| CP-239 | un estatus vacío o que no es texto también rechaza                                                                                                                                     | ✔ Pasa      |
+| CP-239 | un estatus que no es texto ni está vacío (un número) rechaza                                                                                                                           | ✔ Pasa      |
 | CP-239 | reconoce los 9 estatus sin importar mayúsculas, acentos ni espacios                                                                                                                    | ✔ Pasa      |
 | CP-239 | sobre el fixture: solo el estatus "En trámite" (ID 50) rechaza                                                                                                                         | ✔ Pasa      |
 | CP-240 | por_iniciar_avance_0_o_10_da_10: con 0 da 10 con ajuste; con 0.1 da 10 sin ajuste                                                                                                      | ✔ Pasa      |
@@ -478,7 +478,7 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 | CP-253 | los datos del cliente quedan saneados y completos                                                                                                                                      | ✔ Pasa      |
 | CP-253 | referidor vacío da texto vacío con advertencia; observaciones vacías, texto vacío sin advertencia                                                                                      | ✔ Pasa      |
 | CP-253 | ISSSTE y contadora: Sí, No y Por confirmar; vacío o desconocido da por_confirmar con advertencia                                                                                       | ✔ Pasa      |
-| CP-253 | dependientes económicos: entero de 0 en adelante; vacío, texto, negativo o con decimales rechazan                                                                                      | ✔ Pasa      |
+| CP-253 | dependientes económicos: un entero de 0 en adelante pasa; texto, negativo o con decimales rechazan                                                                                     | ✔ Pasa      |
 | CP-253 | el estado civil de la hoja Catálogo ("Casado (a)") no cuenta como ajuste                                                                                                               | ✔ Pasa      |
 | CP-254 | acumula_todos_los_rechazos: CURP, asesor y fecha de nacimiento inválidos traen los tres motivos                                                                                        | ✔ Pasa      |
 | CP-254 | cada rechazo dice de qué columna viene                                                                                                                                                 | ✔ Pasa      |
@@ -563,10 +563,8 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 | CP-303 | cada clase se compara con su criterio                                                                                                                                                  | ✔ Pasa      |
 | CP-303 | el markdown enmascara CURP y NSS y marca lo que no coincide                                                                                                                            | ✔ Pasa      |
 | CP-304 | clientes_cargados_se_ven_con_la_api_existente: la lista, las 16 etapas y el alcance por asesor siguen funcionando                                                                      | ✔ Pasa      |
-| CP-305 | evidencia_en_docs: docs/etl-corrida-ficticia trae las tres corridas y la comparación de defectos                                                                                       | ✔ Pasa      |
 | CP-305 | el nombre se divide en nombre y apellidos, el sexo sale de la CURP y se anotan los ajustes                                                                                             | ✔ Pasa      |
 | CP-305 | divide_3_palabras: 1 nombre y 2 apellidos                                                                                                                                              | ✔ Pasa      |
-| CP-306 | genera_evidencia: escribe docs/etl-corrida-ficticia con las tres corridas                                                                                                              | ○ Pendiente |
 | CP-306 | divide_4_palabras: 2 nombres y 2 apellidos                                                                                                                                             | ✔ Pasa      |
 | CP-307 | divide_con_particulas: las partículas se pegan al apellido                                                                                                                             | ✔ Pasa      |
 | CP-308 | un nombre de dos palabras queda con apellido materno vacío                                                                                                                             | ✔ Pasa      |
@@ -603,3 +601,26 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 | CP-329 | sin --equivalencias usa ETL_EQUIVALENCIAS, y sin --lote el lote es de 25                                                                                                               | ✔ Pasa      |
 | CP-330 | el comando npm está declarado: script etl:importar y punto de entrada                                                                                                                  | ✔ Pasa      |
 | CP-331 | un "--" inicial (pnpm etl:importar -- --archivo ...) se ignora                                                                                                                         | ✔ Pasa      |
+| CP-332 | estatus_vacio_por_iniciar: un estatus vacío carga como Por iniciar (avance 10) con advertencia                                                                                         | ✔ Pasa      |
+| CP-333 | una etapa "En revisión Asesor" carga como En proceso asesor con advertencia; "En proceso" solo rechaza                                                                                 | ✔ Pasa      |
+| CP-333 | alias_en_revision_asesor: "En revisión Asesor" carga como En proceso asesor con advertencia                                                                                            | ✔ Pasa      |
+| CP-334 | estatus_ambiguo: "En proceso" solo sigue rechazando, con el motivo que pide indicar quién                                                                                              | ✔ Pasa      |
+| CP-335 | UNION LIBRE carga como concubinato con el ajuste anotado; "Soltero (a)" sigue sin ajuste                                                                                               | ✔ Pasa      |
+| CP-335 | alias_union_libre: "UNION LIBRE" carga como concubinato con ajuste                                                                                                                     | ✔ Pasa      |
+| CP-336 | un NSS numérico de 10 dígitos se completa con un cero y anota el ajuste; como texto rechaza                                                                                            | ✔ Pasa      |
+| CP-336 | nss_cero_inicial: un número de 10 dígitos se completa con un cero a la izquierda (ajuste)                                                                                              | ✔ Pasa      |
+| CP-336 | con texto no se completa: "9904304284" de 10 dígitos rechaza; tampoco 9 ni 12 dígitos como número                                                                                      | ✔ Pasa      |
+| CP-337 | dependientes_asumidos_en_cero: vacío o "NO" carga 0 con advertencia                                                                                                                    | ✔ Pasa      |
+| CP-337 | "SÍ" u otro texto rechaza: no se sabe cuántos dependientes hay                                                                                                                         | ✔ Pasa      |
+| CP-338 | estatus_vacio_por_iniciar: las etapas sin estatus cargan como Por iniciar con una advertencia por etapa                                                                                | ✔ Pasa      |
+| CP-339 | asesor_vacio_rechaza: un renglón sin asesor se rechaza (no hay asesor por defecto)                                                                                                     | ✔ Pasa      |
+| CP-340 | esRenglonVacio: sin nombre, sin CURP y sin NSS es un resto de fórmulas; con cualquiera de los tres, no                                                                                 | ✔ Pasa      |
+| CP-341 | renglones_vacios_ignorados: los restos de fórmulas se ignoran, se cuentan aparte y la conciliación cuadra sin ellos                                                                    | ✔ Pasa      |
+| CP-341 | un renglón con solo nombre, solo CURP o solo NSS NO es un resto: se lee y se rechaza                                                                                                   | ✔ Pasa      |
+| CP-341 | un libro donde todos los renglones son restos no falla: 0 leídos y todos ignorados                                                                                                     | ✔ Pasa      |
+| CP-342 | estatus_vacios_por_etapa: el reporte cuenta, por etapa, los estatus vacíos de los renglones cargados                                                                                   | ✔ Pasa      |
+| CP-343 | el fixture ficticio no trae restos ni estatus vacíos: los conteos nuevos quedan en cero                                                                                                | ✔ Pasa      |
+| CP-344 | columnas_sin_destino: Avance16 y Avance17 se rotulan "columna sin destino"; los cotejos siguen siendo documentos                                                                       | ✔ Pasa      |
+| CP-345 | las reglas del Excel real, de punta a punta: lo asumido y lo normalizado queda en la base con su advertencia o ajuste                                                                  | ✔ Pasa      |
+| CP-346 | evidencia_en_docs: docs/etl-corrida-ficticia trae las tres corridas y la comparación de defectos                                                                                       | ✔ Pasa      |
+| CP-347 | genera_evidencia: escribe docs/etl-corrida-ficticia con las tres corridas                                                                                                              | ○ Pendiente |

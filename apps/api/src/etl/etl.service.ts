@@ -13,7 +13,12 @@ import { ArchivoSubido } from '../documentos/documentos.service';
 import { limpiarNombre, TAMANO_MAXIMO } from '../documentos/reglas-archivo';
 import { CargadorClientes } from './cargador';
 import { marcarDuplicados } from './duplicados';
-import { ArchivoInvalidoError, COLUMNAS_OBLIGATORIAS, leerHojaClientes } from './lector-excel';
+import {
+  ArchivoInvalidoError,
+  COLUMNAS_OBLIGATORIAS,
+  esRenglonVacio,
+  leerHojaClientes,
+} from './lector-excel';
 import { MapaAsesores, UsuariosLookup } from './mapa-asesores';
 import { codigoDe, enmascarar, escribirReporte, esRutinario, subcarpetaDeCorrida } from './reporte';
 import { RenglonValidado, ReporteEtl } from './tipos';
@@ -52,6 +57,7 @@ const NO_MIGRADAS_FIJAS: { columna: string; motivo: string }[] = [
   },
 ];
 const MOTIVO_DOCUMENTO = 'Cotejo de documento: los documentos no se migran en esta etapa.';
+const MOTIVO_SIN_DESTINO = 'Columna sin destino en el modelo: no se migra.';
 
 const REGEX_DUPLICADO_ARCHIVO = /duplicado en el archivo/i;
 const REGEX_YA_EXISTE = /ya existe/i;
@@ -73,7 +79,10 @@ export class EtlService {
     const simulacro = opciones.simulacro ?? false;
     const huellaSha256 = createHash('sha256').update(buffer).digest('hex');
 
-    const { encabezados, renglones } = await leerHojaClientes(buffer);
+    const { encabezados, renglones: leidosCrudos } = await leerHojaClientes(buffer);
+    // Los restos de fórmulas (sin nombre, CURP ni NSS) no son renglones: se ignoran y se cuentan aparte.
+    const renglones = leidosCrudos.filter((r) => !esRenglonVacio(r.celdas));
+    const renglonesVaciosIgnorados = leidosCrudos.length - renglones.length;
     const asesores = new MapaAsesores(opciones.equivalencias, this.usuariosPorCorreo());
     const hoy = opciones.hoy ?? new Date();
     const validados: RenglonValidado[] = [];
@@ -115,6 +124,16 @@ export class EtlService {
       );
       for (const codigo of codigos) resumenPorCodigo[codigo] = (resumenPorCodigo[codigo] ?? 0) + 1;
     }
+    // Estatus vacíos por etapa (0 a 15) entre los renglones cargados.
+    const estatusVaciosPorEtapa: Record<string, number> = Object.fromEntries(
+      Array.from({ length: 16 }, (_, n) => [String(n), 0]),
+    );
+    for (const r of cargados) {
+      for (const m of r.advertencias) {
+        const etapa = /^Etapa (\d+): estatus_vacio_por_iniciar/.exec(m)?.[1];
+        if (etapa !== undefined) estatusVaciosPorEtapa[etapa]++;
+      }
+    }
     const conAlgo = (r: RenglonValidado, lista: 'ajustes' | 'advertencias') =>
       r[lista].some((m) => !esRutinario(m));
     const con = (r: RenglonValidado, codigo: string) =>
@@ -145,9 +164,11 @@ export class EtlService {
         lotesDegradados: resultado.lotesDegradados,
         pendientesDeCaptura: cargados.filter((r) => con(r, 'campos_pendientes_de_captura')).length,
         objetivoAsumido: cargados.filter((r) => con(r, 'objetivo_asumido')).length,
+        renglonesVaciosIgnorados,
       },
       conciliacion,
       resumenPorCodigo,
+      estatusVaciosPorEtapa,
       renglones: tras.map((r, i) => ({
         fila: r.fila,
         idExcel: r.idExcel,
@@ -168,7 +189,11 @@ export class EtlService {
         ...NO_MIGRADAS_FIJAS,
         ...encabezados
           .filter((e) => !COLUMNAS_OBLIGATORIAS.includes(e))
-          .map((columna) => ({ columna, motivo: MOTIVO_DOCUMENTO })),
+          .map((columna) => ({
+            columna,
+            // Los cotejos de documentos se numeran ("1. ACTA"); lo demás no tiene destino.
+            motivo: /^\d+\.\s/.test(columna) ? MOTIVO_DOCUMENTO : MOTIVO_SIN_DESTINO,
+          })),
       ],
     };
   }

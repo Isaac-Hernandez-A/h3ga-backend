@@ -6,13 +6,20 @@ import { ClientesService } from '../clientes/clientes.service';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
 import { borrarClientesConEtapas, tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 import {
+  celdasLimpias,
+  CURPS_VALIDAS,
+  libroSintetico,
+  NSS_VALIDOS,
+  restoDeFormulas,
+} from '../common/testing/libro-sintetico';
+import {
   crearUsuarioPrueba,
   limpiarDatosClientes,
   UsuarioPrueba,
 } from '../common/testing/datos-clientes';
 import { CargadorClientes, ResultadoCarga } from './cargador';
 import { EtlService, OpcionesImportacion } from './etl.service';
-import { ArchivoInvalidoError, leerHojaClientes } from './lector-excel';
+import { ArchivoInvalidoError, COLUMNAS_OBLIGATORIAS, leerHojaClientes } from './lector-excel';
 import { enmascarar, escribirReporte } from './reporte';
 import { ReporteEtl } from './tipos';
 
@@ -381,5 +388,164 @@ describeConBd('EtlService.importar (integración con la base de pruebas)', () =>
       ArchivoInvalidoError,
     );
     expect(await cargadosEnBase()).toBe(0);
+  });
+  it('CP-341 renglones_vacios_ignorados: los restos de fórmulas se ignoran, se cuentan aparte y la conciliación cuadra sin ellos', async () => {
+    const libro = await libroSintetico([
+      celdasLimpias(1),
+      restoDeFormulas(2),
+      celdasLimpias(3, { CURP: CURPS_VALIDAS[1], NSS: NSS_VALIDOS[1] }),
+      restoDeFormulas(4),
+      restoDeFormulas(5),
+    ]);
+    const r = await importar({ simulacro: true }, libro);
+    expect(r.totales).toMatchObject({
+      leidos: 2,
+      renglonesVaciosIgnorados: 3,
+      cargados: 2,
+      rechazados: 0,
+    });
+    expect(r.totales.leidos).toBe(r.totales.cargados + r.totales.rechazados);
+    expect(r.conciliacion.ok).toBe(true);
+    // Los ignorados no aparecen entre los renglones del reporte.
+    expect(r.renglones.map((x) => x.fila)).toEqual([6, 8]);
+
+    // Carga real: solo se guardan los 2 clientes.
+    const real = await importar({}, libro);
+    expect(real.totales).toMatchObject({ leidos: 2, renglonesVaciosIgnorados: 3, cargados: 2 });
+    expect(real.conciliacion.ok).toBe(true);
+    expect(await cargadosEnBase()).toBe(2);
+  });
+
+  it('CP-341 un renglón con solo nombre, solo CURP o solo NSS NO es un resto: se lee y se rechaza', async () => {
+    const libro = await libroSintetico([
+      celdasLimpias(1, { CURP: null, NSS: null }), // solo nombre
+      { ...restoDeFormulas(2), CURP: CURPS_VALIDAS[1] }, // solo CURP
+      { ...restoDeFormulas(3), NSS: 9904304284 }, // solo NSS
+      restoDeFormulas(4),
+    ]);
+    const r = await importar({ simulacro: true }, libro);
+    expect(r.totales).toMatchObject({
+      leidos: 3,
+      renglonesVaciosIgnorados: 1,
+      cargados: 0,
+      rechazados: 3,
+    });
+    expect(r.conciliacion.ok).toBe(true);
+  });
+
+  it('CP-341 un libro donde todos los renglones son restos no falla: 0 leídos y todos ignorados', async () => {
+    const libro = await libroSintetico([restoDeFormulas(1), restoDeFormulas(2)]);
+    const r = await importar({ simulacro: true }, libro);
+    expect(r.totales).toMatchObject({ leidos: 0, renglonesVaciosIgnorados: 2, cargados: 0 });
+    expect(r.conciliacion.ok).toBe(true);
+    expect(r.renglones).toEqual([]);
+  });
+
+  it('CP-342 estatus_vacios_por_etapa: el reporte cuenta, por etapa, los estatus vacíos de los renglones cargados', async () => {
+    const vacio = (n: number) => ({
+      [COLUMNAS_OBLIGATORIAS.find((c) => c.startsWith(`${n}. `))!]: null,
+    });
+    const libro = await libroSintetico([
+      celdasLimpias(1, { ...vacio(13) }),
+      celdasLimpias(2, { ...vacio(13), ...vacio(14) }),
+      celdasLimpias(3),
+      // Rechazado por CURP repetida: sus vacíos no cuentan.
+      celdasLimpias(1, { ...vacio(13), ...vacio(2), NSS: NSS_VALIDOS[2] }),
+    ]);
+    const r = await importar({ simulacro: true }, libro);
+    expect(r.totales).toMatchObject({ cargados: 3, rechazados: 1 });
+    expect(r.estatusVaciosPorEtapa).toEqual(
+      Object.fromEntries(
+        Array.from({ length: 16 }, (_, n) => [String(n), n === 13 ? 2 : n === 14 ? 1 : 0]),
+      ),
+    );
+    expect(r.resumenPorCodigo['estatus_vacio_por_iniciar']).toBe(2);
+  });
+
+  it('CP-343 el fixture ficticio no trae restos ni estatus vacíos: los conteos nuevos quedan en cero', async () => {
+    const r = await importar({ simulacro: true });
+    expect(r.totales).toMatchObject({
+      leidos: 54,
+      cargados: 44,
+      rechazados: 10,
+      renglonesVaciosIgnorados: 0,
+    });
+    expect(Object.values(r.estatusVaciosPorEtapa)).toEqual(new Array(16).fill(0));
+  });
+
+  it('CP-344 columnas_sin_destino: Avance16 y Avance17 se rotulan "columna sin destino"; los cotejos siguen siendo documentos', async () => {
+    const libro = await libroSintetico([celdasLimpias(1)], ['Avance16', 'Avance17', '1. ACTA']);
+    const r = await importar({ simulacro: true }, libro);
+    const por = (columna: string) => r.columnasNoMigradas.find((c) => c.columna === columna)!;
+    expect(por('Avance16').motivo).toMatch(/^Columna sin destino/);
+    expect(por('Avance17').motivo).toMatch(/^Columna sin destino/);
+    expect(por('Avance16').motivo).not.toMatch(/documento/i);
+    expect(por('1. ACTA').motivo).toMatch(/documento/i);
+    expect(r.columnasNoMigradas.map((c) => c.columna).slice(0, 4)).toEqual([
+      'ID',
+      'Edad',
+      'Días desde alta',
+      'Fecha compromiso total',
+    ]);
+  });
+
+  it('CP-345 las reglas del Excel real, de punta a punta: lo asumido y lo normalizado queda en la base con su advertencia o ajuste', async () => {
+    const etapa = (n: number) => COLUMNAS_OBLIGATORIAS.find((c) => c.startsWith(`${n}. `))!;
+    const libro = await libroSintetico([
+      celdasLimpias(1, {
+        'Dependientes económicos': null,
+        'Estado civil': 'UNION LIBRE',
+        NSS: 9904304284,
+        [etapa(3)]: null,
+        [etapa(4)]: 'En revisión Asesor',
+        Avance4: 0.5,
+      }),
+      celdasLimpias(2, {
+        CURP: CURPS_VALIDAS[1],
+        NSS: NSS_VALIDOS[1],
+        'Dependientes económicos': 'NO',
+      }),
+      // "SÍ" no dice cuántos dependientes hay y "En proceso" es ambiguo: se rechazan.
+      celdasLimpias(3, {
+        CURP: CURPS_VALIDAS[2],
+        NSS: NSS_VALIDOS[2],
+        'Dependientes económicos': 'SÍ',
+        [etapa(5)]: 'En proceso',
+      }),
+    ]);
+    const r = await importar({}, libro);
+    expect(r.totales).toMatchObject({ leidos: 3, cargados: 2, rechazados: 1 });
+    expect(r.conciliacion.ok).toBe(true);
+    const rechazo = r.renglones.find((x) => x.clase === 'rechazado')!;
+    expect(rechazo.rechazos.join(' | ')).toMatch(/Dependientes económicos/);
+    expect(rechazo.rechazos.join(' | ')).toContain(
+      'estatus ambiguo: indicar cliente, asesor o Instituto',
+    );
+
+    const [uno] = await ctx.ds.query<Record<string, string>[]>(
+      `SELECT id, dependientes_economicos, estado_civil, nss FROM clientes WHERE curp = $1`,
+      [CURPS_VALIDAS[0]],
+    );
+    expect(uno).toMatchObject({
+      dependientes_economicos: 0,
+      estado_civil: 'concubinato',
+      nss: '09904304284',
+    });
+    const etapas = await ctx.ds.query<
+      { numero_paso: number; estatus: string; avance_porcentaje: number }[]
+    >(
+      `SELECT p.numero_paso, s.nombre AS estatus, e.avance_porcentaje FROM etapas_tramite e
+         JOIN etapas_proceso p ON p.id = e.etapa_id JOIN estatus_tramite s ON s.id = e.estatus_id
+        WHERE e.cliente_id = $1 ORDER BY p.numero_paso`,
+      [uno.id],
+    );
+    expect(etapas[3]).toMatchObject({ estatus: 'Por iniciar', avance_porcentaje: 10 });
+    expect(etapas[4]).toMatchObject({ estatus: 'En proceso asesor', avance_porcentaje: 50 });
+    const dueno = r.renglones.find((x) => x.fila === 6)!;
+    expect(dueno.advertencias.join(' | ')).toContain('dependientes_asumidos_en_cero');
+    expect(dueno.advertencias.join(' | ')).toContain('estatus_vacio_por_iniciar');
+    expect(dueno.advertencias.join(' | ')).toContain('estatus_alias');
+    expect(dueno.ajustes.join(' | ')).toContain('estado_civil_alias');
+    expect(dueno.ajustes.join(' | ')).toContain('nss_cero_inicial');
   });
 });

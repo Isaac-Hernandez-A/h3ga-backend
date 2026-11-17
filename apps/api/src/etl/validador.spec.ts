@@ -371,12 +371,104 @@ describe('validarRenglon', () => {
     }
   });
 
-  it('CP-253 dependientes económicos: entero de 0 en adelante; vacío, texto, negativo o con decimales rechazan', async () => {
+  it('CP-253 dependientes económicos: un entero de 0 en adelante pasa; texto, negativo o con decimales rechazan', async () => {
     expect((await validar({ 'Dependientes económicos': 0 })).datos!.dependientesEconomicos).toBe(0);
-    for (const malo of [null, 'varios', -1, 2.5]) {
+    for (const malo of ['varios', -1, 2.5]) {
       const r = await validar({ 'Dependientes económicos': malo });
       expect(r.datos).toBeNull();
       expect(r.rechazos.some((m) => m.startsWith('Dependientes económicos'))).toBe(true);
+    }
+  });
+
+  it('CP-337 dependientes_asumidos_en_cero: vacío o "NO" carga 0 con advertencia', async () => {
+    for (const asumido of [null, '', '   ', 'NO', 'no', ' No ']) {
+      const r = await validar({ 'Dependientes económicos': asumido });
+      expect([asumido, r.rechazos]).toEqual([asumido, []]);
+      expect(r.datos!.dependientesEconomicos).toBe(0);
+      expect(
+        r.advertencias.filter(
+          (m) =>
+            m.startsWith('Dependientes económicos') && m.includes('dependientes_asumidos_en_cero'),
+        ),
+      ).toHaveLength(1);
+    }
+  });
+
+  it('CP-337 "SÍ" u otro texto rechaza: no se sabe cuántos dependientes hay', async () => {
+    for (const malo of ['SÍ', 'Si', 'sí', 'varios', '2 hijos', true]) {
+      const r = await validar({ 'Dependientes económicos': malo });
+      expect([String(malo), r.datos]).toEqual([String(malo), null]);
+      expect(r.rechazos.some((m) => m.startsWith('Dependientes económicos'))).toBe(true);
+    }
+  });
+
+  it('CP-338 estatus_vacio_por_iniciar: las etapas sin estatus cargan como Por iniciar con una advertencia por etapa', async () => {
+    const r = await validar({
+      [estatusDe(3)]: null,
+      [estatusDe(13)]: '  ',
+      [estatusDe(14)]: null,
+      Avance3: null,
+    });
+    expect(r.rechazos).toEqual([]);
+    for (const n of [3, 13, 14]) {
+      expect(r.datos!.etapas[n]).toMatchObject({ estatus: 'Por iniciar', avance: 10 });
+      expect(
+        r.advertencias.filter(
+          (m) => m.startsWith(`Etapa ${n}:`) && m.includes('estatus_vacio_por_iniciar'),
+        ),
+      ).toHaveLength(1);
+    }
+    expect(r.advertencias.filter((m) => m.includes('estatus_vacio_por_iniciar'))).toHaveLength(3);
+  });
+
+  it('CP-333 una etapa "En revisión Asesor" carga como En proceso asesor con advertencia; "En proceso" solo rechaza', async () => {
+    const alias = await validar({ [estatusDe(4)]: 'En revisión Asesor', Avance4: 0.5 });
+    expect(alias.rechazos).toEqual([]);
+    expect(alias.datos!.etapas[4]).toMatchObject({ estatus: 'En proceso asesor', avance: 50 });
+    expect(
+      alias.advertencias.some((m) => m.startsWith('Etapa 4:') && m.includes('estatus_alias')),
+    ).toBe(true);
+
+    const ambiguo = await validar({ [estatusDe(5)]: 'En proceso', Avance5: 0.5 });
+    expect(ambiguo.datos).toBeNull();
+    expect(
+      ambiguo.rechazos.some(
+        (m) =>
+          m.startsWith('Etapa 5:') &&
+          m.includes('estatus ambiguo: indicar cliente, asesor o Instituto'),
+      ),
+    ).toBe(true);
+  });
+
+  it('CP-335 UNION LIBRE carga como concubinato con el ajuste anotado; "Soltero (a)" sigue sin ajuste', async () => {
+    const r = await validar({ 'Estado civil': 'UNION LIBRE' });
+    expect(r.datos!.estadoCivil).toBe('concubinato');
+    expect(r.ajustes).toContain('Estado civil: estado_civil_alias');
+    const normal = await validar({ 'Estado civil': 'Soltero (a)' });
+    expect(normal.ajustes.some((m) => m.startsWith('Estado civil'))).toBe(false);
+    // Estado civil y AFORE vacíos siguen rechazando.
+    const vacios = await validar({ 'Estado civil': null, AFORE: '' });
+    expect(vacios.datos).toBeNull();
+    expect(vacios.rechazos.some((m) => m.startsWith('Estado civil'))).toBe(true);
+    expect(vacios.rechazos.some((m) => m.startsWith('AFORE'))).toBe(true);
+  });
+
+  it('CP-336 un NSS numérico de 10 dígitos se completa con un cero y anota el ajuste; como texto rechaza', async () => {
+    const numero = await validar({ NSS: 9904304284 });
+    expect(numero.rechazos).toEqual([]);
+    expect(numero.datos!.nss).toBe('09904304284');
+    expect(numero.ajustes).toContain('NSS: nss_cero_inicial');
+    const texto = await validar({ NSS: '9904304284' });
+    expect(texto.datos).toBeNull();
+    expect(texto.rechazos.some((m) => m.startsWith('NSS'))).toBe(true);
+    expect(JSON.stringify([numero.ajustes, numero.advertencias])).not.toContain('9904304284');
+  });
+
+  it('CP-339 asesor_vacio_rechaza: un renglón sin asesor se rechaza (no hay asesor por defecto)', async () => {
+    for (const vacio of [null, '', '   ']) {
+      const r = await validar({ Asesor: vacio });
+      expect(r.datos).toBeNull();
+      expect(r.rechazos.some((m) => m.startsWith('Asesor') && /vac/i.test(m))).toBe(true);
     }
   });
 

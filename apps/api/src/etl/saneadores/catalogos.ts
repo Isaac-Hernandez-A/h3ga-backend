@@ -69,8 +69,12 @@ const CATALOGOS: Record<NombreCatalogo, Record<string, string>> = {
     viuda: 'viudo',
     'viudo (a)': 'viudo',
     concubinato: 'concubinato',
+    'union libre': 'concubinato',
   },
 };
+
+// Alias que se anotan con su propio código de ajuste (no con el genérico catalogo_normalizado).
+const AJUSTE_DE_ALIAS: Record<string, string> = { 'estadoCivil:union libre': 'estado_civil_alias' };
 
 const ETIQUETA: Record<NombreCatalogo, string> = {
   regimen: 'régimen',
@@ -89,7 +93,9 @@ export function sanearCatalogo(raw: unknown, catalogo: NombreCatalogo): Saneado<
   const etiqueta = ETIQUETA[catalogo];
 
   if (encontrado !== undefined) {
-    if (encontrado !== original) r.ajustes.push('catalogo_normalizado');
+    const ajusteAlias = AJUSTE_DE_ALIAS[`${catalogo}:${clave(texto)}`];
+    if (ajusteAlias) r.ajustes.push(ajusteAlias);
+    else if (encontrado !== original) r.ajustes.push('catalogo_normalizado');
     r.valor = encontrado;
     return r;
   }

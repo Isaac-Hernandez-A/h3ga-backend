@@ -3,10 +3,10 @@
     "archivo": "FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx",
     "huellaSha256": "973a8f14ee97db7ae999d3426031c6e75ea9ce942540e3f6fd841a055168824a",
     "modo": "comando",
-    "ejecutor": "27cbc4fc-99bb-427d-8a28-b53c947a3f44",
+    "ejecutor": "eb698aaf-ec7c-49de-bd23-bbdc941d380e",
     "simulacro": false,
-    "inicio": "2026-11-17T15:19:04.541Z",
-    "fin": "2026-11-17T15:19:04.588Z"
+    "inicio": "2026-11-17T21:18:56.514Z",
+    "fin": "2026-11-17T21:18:56.590Z"
   },
   "totales": {
     "leidos": 54,
@@ -19,13 +19,32 @@
     "lotes": 0,
     "lotesDegradados": 0,
     "pendientesDeCaptura": 0,
-    "objetivoAsumido": 0
+    "objetivoAsumido": 0,
+    "renglonesVaciosIgnorados": 0
   },
   "conciliacion": {
     "ok": true,
     "detalle": "Cuadra: leídos 54 = cargados 0 + rechazados 54; en la base se encontraron 0 de 0 CURP cargadas."
   },
   "resumenPorCodigo": {},
+  "estatusVaciosPorEtapa": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 0,
+    "10": 0,
+    "11": 0,
+    "12": 0,
+    "13": 0,
+    "14": 0,
+    "15": 0
+  },
   "renglones": [
     {
       "fila": 6,
