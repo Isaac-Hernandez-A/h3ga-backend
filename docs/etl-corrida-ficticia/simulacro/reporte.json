@@ -1,0 +1,1013 @@
+{
+  "cabecera": {
+    "archivo": "FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx",
+    "huellaSha256": "973a8f14ee97db7ae999d3426031c6e75ea9ce942540e3f6fd841a055168824a",
+    "modo": "comando",
+    "ejecutor": "27cbc4fc-99bb-427d-8a28-b53c947a3f44",
+    "simulacro": true,
+    "inicio": "2026-11-17T15:19:03.907Z",
+    "fin": "2026-11-17T15:19:03.980Z"
+  },
+  "totales": {
+    "leidos": 54,
+    "cargados": 44,
+    "rechazados": 10,
+    "duplicadosEnArchivo": 2,
+    "yaExistian": 0,
+    "conAdvertencias": 6,
+    "conAjustes": 9,
+    "lotes": 2,
+    "lotesDegradados": 0,
+    "pendientesDeCaptura": 44,
+    "objetivoAsumido": 44
+  },
+  "conciliacion": {
+    "ok": true,
+    "detalle": "Simulacro: no se consultó la base. Cuadra: leídos 54 = cargados 44 + rechazados 10."
+  },
+  "resumenPorCodigo": {
+    "nombre_dividido": 44,
+    "catalogo_normalizado": 10,
+    "campos_pendientes_de_captura": 44,
+    "objetivo_asumido": 44,
+    "nombre_propio": 2,
+    "telefono_normalizado": 3,
+    "avance_por_iniciar_a_10": 16,
+    "fecha_de_texto": 4,
+    "correo_normalizado": 1,
+    "curp_normalizada": 2,
+    "nss_normalizado": 2,
+    "curp_no_coincide_con_nacimiento": 1,
+    "posible_duplicado": 1,
+    "semanas_no_numericas": 1,
+    "avance_fuera_de_rango": 1,
+    "bloqueado_sin_motivo": 1,
+    "ley_desconocido": 1,
+    "avance_no_multiplo_de_10": 1
+  },
+  "renglones": [
+    {
+      "fila": 6,
+      "idExcel": 1,
+      "clase": "cargado",
+      "curp": "••••••••••••••WL04",
+      "nss": "•••••••9787",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 7,
+      "idExcel": 2,
+      "clase": "cargado",
+      "curp": "••••••••••••••SX91",
+      "nss": null,
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 8,
+      "idExcel": 3,
+      "clase": "cargado",
+      "curp": "••••••••••••••BV55",
+      "nss": "•••••••9318",
+      "ajustes": [
+        "Nombre del cliente: nombre_propio",
+        "Nombre del cliente: nombre_dividido",
+        "Teléfono: telefono_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 9,
+      "idExcel": 4,
+      "clase": "cargado",
+      "curp": "••••••••••••••SHV8",
+      "nss": "•••••••6820",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 10,
+      "idExcel": 5,
+      "clase": "cargado",
+      "curp": "••••••••••••••BCG3",
+      "nss": "•••••••9397",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 11,
+      "idExcel": 6,
+      "clase": "cargado",
+      "curp": "••••••••••••••RXI5",
+      "nss": "•••••••4230",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 9: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 12,
+      "idExcel": 7,
+      "clase": "cargado",
+      "curp": "••••••••••••••JPX7",
+      "nss": null,
+      "ajustes": [
+        "Nombre del cliente: espacios",
+        "Nombre del cliente: nombre_propio",
+        "Nombre del cliente: nombre_dividido",
+        "Fecha ingreso: fecha_de_texto"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 13,
+      "idExcel": 8,
+      "clase": "cargado",
+      "curp": "••••••••••••••MCM2",
+      "nss": "•••••••2802",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 11: avance_por_iniciar_a_10",
+        "Etapa 14: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 14,
+      "idExcel": 9,
+      "clase": "cargado",
+      "curp": "••••••••••••••DDF7",
+      "nss": "•••••••5237",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 15,
+      "idExcel": 10,
+      "clase": "cargado",
+      "curp": "••••••••••••••NF68",
+      "nss": "•••••••5996",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Email: correo_normalizado",
+        "CURP: curp_normalizada",
+        "Ley probable: catalogo_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 16,
+      "idExcel": 11,
+      "clase": "cargado",
+      "curp": "••••••••••••••FBS6",
+      "nss": "•••••••7540",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 17,
+      "idExcel": 12,
+      "clase": "cargado",
+      "curp": "••••••••••••••VQG9",
+      "nss": null,
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 18,
+      "idExcel": 13,
+      "clase": "cargado",
+      "curp": "••••••••••••••RZ68",
+      "nss": "•••••••7001",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Régimen seguridad social: catalogo_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 19,
+      "idExcel": 14,
+      "clase": "cargado",
+      "curp": "••••••••••••••FHN6",
+      "nss": "•••••••4572",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 20,
+      "idExcel": 15,
+      "clase": "cargado",
+      "curp": "••••••••••••••WBJ5",
+      "nss": "•••••••5247",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 21,
+      "idExcel": 16,
+      "clase": "cargado",
+      "curp": "••••••••••••••JXE8",
+      "nss": "•••••••2845",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "CURP: curp_normalizada",
+        "NSS: nss_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 22,
+      "idExcel": 17,
+      "clase": "cargado",
+      "curp": "••••••••••••••WK60",
+      "nss": "•••••••7922",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 23,
+      "idExcel": 18,
+      "clase": "cargado",
+      "curp": "••••••••••••••ZLQ1",
+      "nss": null,
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 24,
+      "idExcel": 19,
+      "clase": "cargado",
+      "curp": "••••••••••••••SMR7",
+      "nss": "•••••••2136",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Teléfono: telefono_normalizado",
+        "NSS: nss_normalizado"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 25,
+      "idExcel": 20,
+      "clase": "cargado",
+      "curp": "••••••••••••••MY75",
+      "nss": "•••••••9650",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 26,
+      "idExcel": 21,
+      "clase": "cargado",
+      "curp": "••••••••••••••HFF5",
+      "nss": "•••••••7077",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 27,
+      "idExcel": 22,
+      "clase": "cargado",
+      "curp": "••••••••••••••VRR0",
+      "nss": "•••••••4441",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Fecha ingreso: fecha_de_texto"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 28,
+      "idExcel": 23,
+      "clase": "cargado",
+      "curp": "••••••••••••••WCH5",
+      "nss": "•••••••5987",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 14: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 29,
+      "idExcel": 24,
+      "clase": "cargado",
+      "curp": "••••••••••••••ZZJ0",
+      "nss": "•••••••5240",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 30,
+      "idExcel": 25,
+      "clase": "cargado",
+      "curp": "••••••••••••••HP51",
+      "nss": "•••••••2476",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Fecha de nacimiento: fecha_de_texto",
+        "AFORE: catalogo_normalizado",
+        "Etapa 14: avance_por_iniciar_a_10",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 31,
+      "idExcel": 26,
+      "clase": "cargado",
+      "curp": "••••••••••••••TRD5",
+      "nss": "•••••••0907",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 14: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 32,
+      "idExcel": 27,
+      "clase": "cargado",
+      "curp": "••••••••••••••PJ99",
+      "nss": "•••••••1723",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 33,
+      "idExcel": 28,
+      "clase": "cargado",
+      "curp": "••••••••••••••LBT2",
+      "nss": "•••••••6195",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado",
+        "Etapa 11: avance_por_iniciar_a_10",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 34,
+      "idExcel": 29,
+      "clase": "cargado",
+      "curp": "••••••••••••••RQE1",
+      "nss": "•••••••4030",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 35,
+      "idExcel": 30,
+      "clase": "cargado",
+      "curp": "••••••••••••••CG61",
+      "nss": "•••••••5485",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 36,
+      "idExcel": 31,
+      "clase": "cargado",
+      "curp": "••••••••••••••ZGB4",
+      "nss": "•••••••9870",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Teléfono: telefono_normalizado",
+        "Fecha ingreso: fecha_de_texto"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 37,
+      "idExcel": 32,
+      "clase": "cargado",
+      "curp": "••••••••••••••GJ96",
+      "nss": "•••••••1351",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 38,
+      "idExcel": 33,
+      "clase": "cargado",
+      "curp": "••••••••••••••HPA2",
+      "nss": "•••••••8341",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "CURP: curp_no_coincide_con_nacimiento: la fecha de la CURP difiere de la fecha de nacimiento.",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme.",
+        "posible_duplicado: mismo nombre y fecha de nacimiento que la fila 14, con otro CURP."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 39,
+      "idExcel": 34,
+      "clase": "cargado",
+      "curp": "••••••••••••••LG36",
+      "nss": "•••••••7139",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado"
+      ],
+      "advertencias": [
+        "Semanas a recuperar: semanas_no_numericas: las semanas no son un número y se cargan en 0.",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 40,
+      "idExcel": 35,
+      "clase": "cargado",
+      "curp": "••••••••••••••BN18",
+      "nss": "•••••••1648",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 11: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 41,
+      "idExcel": 36,
+      "clase": "cargado",
+      "curp": "••••••••••••••VLU2",
+      "nss": "•••••••6643",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 9: avance_por_iniciar_a_10",
+        "Etapa 11: avance_por_iniciar_a_10",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 42,
+      "idExcel": 37,
+      "clase": "cargado",
+      "curp": "••••••••••••••HH41",
+      "nss": "•••••••2920",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 43,
+      "idExcel": 38,
+      "clase": "cargado",
+      "curp": "••••••••••••••SZS8",
+      "nss": "•••••••0837",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Ley probable: catalogo_normalizado",
+        "Etapa 14: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "Etapa 1: avance_fuera_de_rango: En proceso va de 20 a 90; se lleva al valor más cercano.",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 44,
+      "idExcel": 39,
+      "clase": "cargado",
+      "curp": "••••••••••••••ZD79",
+      "nss": "•••••••9795",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 4: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "Etapa 1: bloqueado_sin_motivo: el Excel no trae motivo de bloqueo.",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 45,
+      "idExcel": 40,
+      "clase": "cargado",
+      "curp": "••••••••••••••RXT2",
+      "nss": "•••••••4307",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 11: avance_por_iniciar_a_10",
+        "Etapa 14: avance_por_iniciar_a_10",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "Ley probable: ley_desconocido: el ley probable no está en el catálogo; se carga \"No determinado\".",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 46,
+      "idExcel": 41,
+      "clase": "cargado",
+      "curp": "••••••••••••••QS91",
+      "nss": "•••••••4852",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 10: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 47,
+      "idExcel": 42,
+      "clase": "cargado",
+      "curp": "••••••••••••••ZR60",
+      "nss": "•••••••1774",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "Etapa 11: avance_no_multiplo_de_10: el avance no es múltiplo de 10 y se carga tal cual.",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 48,
+      "idExcel": 43,
+      "clase": "cargado",
+      "curp": "••••••••••••••GSF7",
+      "nss": "•••••••8736",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 49,
+      "idExcel": 44,
+      "clase": "rechazado",
+      "curp": "•••••••••••••JVFT",
+      "nss": "•••••••2520",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "CURP: La CURP no tiene el formato oficial de 18 caracteres."
+      ]
+    },
+    {
+      "fila": 50,
+      "idExcel": 45,
+      "clase": "rechazado",
+      "curp": "••••••••••••••ZC31",
+      "nss": "•••••••3022",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 10: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "CURP: La CURP trae una fecha de nacimiento que no existe."
+      ]
+    },
+    {
+      "fila": 51,
+      "idExcel": 46,
+      "clase": "rechazado",
+      "curp": "••••••••••••••YZM9",
+      "nss": "•••••••3752",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "Fecha de nacimiento: La fecha de nacimiento no tiene un formato de fecha válido (dd/mm/aaaa, aaaa-mm-dd o dd-mmm-aaaa)."
+      ]
+    },
+    {
+      "fila": 52,
+      "idExcel": 47,
+      "clase": "rechazado",
+      "curp": "••••••••••••••RLS5",
+      "nss": "•••••1726",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 6: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "NSS: El NSS no tiene exactamente 11 dígitos."
+      ]
+    },
+    {
+      "fila": 53,
+      "idExcel": 48,
+      "clase": "rechazado",
+      "curp": "••••••••••••••FKF7",
+      "nss": "•••••••7837",
+      "ajustes": [
+        "Etapa 4: avance_por_iniciar_a_10",
+        "Etapa 6: avance_por_iniciar_a_10",
+        "Etapa 15: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "Nombre del cliente: El nombre del cliente viene vacío."
+      ]
+    },
+    {
+      "fila": 54,
+      "idExcel": 49,
+      "clase": "rechazado",
+      "curp": "••••••••••••••JBU4",
+      "nss": "•••••••4049",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 2: avance_por_iniciar_a_10",
+        "Etapa 10: avance_por_iniciar_a_10",
+        "Etapa 11: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "Asesor: Asesor sin equivalencia: Lic. Pedro Gómez."
+      ]
+    },
+    {
+      "fila": 55,
+      "idExcel": 50,
+      "clase": "rechazado",
+      "curp": "••••••••••••••QH39",
+      "nss": "•••••••1648",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 7: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "Etapa 1: El estatus de la etapa no está en el catálogo."
+      ]
+    },
+    {
+      "fila": 56,
+      "idExcel": 51,
+      "clase": "cargado",
+      "curp": "••••••••••••••LMA2",
+      "nss": "•••••••1904",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": []
+    },
+    {
+      "fila": 57,
+      "idExcel": 52,
+      "clase": "rechazado",
+      "curp": "••••••••••••••GHW0",
+      "nss": "•••••••1721",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 7: avance_por_iniciar_a_10",
+        "Etapa 14: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [],
+      "rechazos": [
+        "Semanas IMSS reconocidas: Las semanas deben ser un número entero de 0 en adelante."
+      ]
+    },
+    {
+      "fila": 58,
+      "idExcel": 53,
+      "clase": "rechazado",
+      "curp": "••••••••••••••VQG9",
+      "nss": "•••••••7123",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 3: avance_por_iniciar_a_10",
+        "Etapa 11: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "CURP: curp_no_coincide_con_nacimiento: la fecha de la CURP difiere de la fecha de nacimiento.",
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": [
+        "CURP duplicado en el archivo: ya aparece en la fila 17."
+      ]
+    },
+    {
+      "fila": 59,
+      "idExcel": 54,
+      "clase": "rechazado",
+      "curp": "••••••••••••••XZP2",
+      "nss": "•••••••9650",
+      "ajustes": [
+        "Nombre del cliente: nombre_dividido",
+        "Etapa 12: avance_por_iniciar_a_10"
+      ],
+      "advertencias": [
+        "campos_pendientes_de_captura: domicilio, estado y subdelegación IMSS se cargan como \"Pendiente de captura\" y el cambio de AFORE por confirmar.",
+        "objetivo_asumido: el Excel no trae el objetivo del cliente; se asume pensionarse_asap para que el asesor lo confirme."
+      ],
+      "rechazos": [
+        "NSS duplicado en el archivo: ya aparece en la fila 25."
+      ]
+    }
+  ],
+  "nombresDivididos": [
+    "Fila 6: Leticia / May / Uc",
+    "Fila 7: Raúl / Mendoza / Dzul",
+    "Fila 8: Rubén / Jiménez / Euán",
+    "Fila 9: Gerardo / García / Ramírez",
+    "Fila 10: Raúl / Díaz / Ramírez",
+    "Fila 11: Rosa María / May / García",
+    "Fila 12: Esteban / Torres / Aguilar",
+    "Fila 13: Ricardo / Pérez / Ruiz",
+    "Fila 14: Sergio / Ruiz / Vázquez",
+    "Fila 15: Manuel / Díaz / Aguilar",
+    "Fila 16: Norma / García / Vázquez",
+    "Fila 17: Araceli / Vázquez / López",
+    "Fila 18: Monica / Jimenez / Gutierrez",
+    "Fila 19: Ricardo / Reyes / Jiménez",
+    "Fila 20: Claudia / Pérez / Dzul",
+    "Fila 21: Martha Elena / Sánchez / Euán",
+    "Fila 22: Sergio / Dzul / Martínez",
+    "Fila 23: Patricia / Ramírez / Reyes",
+    "Fila 24: Esteban / Euán / Sánchez",
+    "Fila 25: Silvia / Gómez / Ruiz",
+    "Fila 26: Jorge / Sánchez / Vázquez",
+    "Fila 27: Leticia / Ortiz / Flores",
+    "Fila 28: Arturo / Pech / May",
+    "Fila 29: Roberto / Martínez / Ramírez",
+    "Fila 30: Héctor / Jiménez / Morales",
+    "Fila 31: Verónica / López / González",
+    "Fila 32: Fernando / Díaz / Vázquez",
+    "Fila 33: Patricia / Martínez / Díaz",
+    "Fila 34: José Luis / García / Uc",
+    "Fila 35: Gabriela / Reyes / Martínez",
+    "Fila 36: Beatriz / Morales / Torres",
+    "Fila 37: Roberto / Castillo / May",
+    "Fila 38: Sergio / Ruiz / Vázquez",
+    "Fila 39: Jorge / Ramírez / Gómez",
+    "Fila 40: Yolanda / Torres / Jiménez",
+    "Fila 41: Yolanda / Aguilar / Reyes",
+    "Fila 42: Martha Elena / Gutiérrez / Ruiz",
+    "Fila 43: Martha Elena / Gutiérrez / Mendoza",
+    "Fila 44: Miguel Ángel / López / Sánchez",
+    "Fila 45: Arturo / Díaz / Martínez",
+    "Fila 46: Raúl / Díaz / González",
+    "Fila 47: Alicia / González / Uc",
+    "Fila 48: Francisco Javier / López / Vázquez",
+    "Fila 56: Beatriz / Gutiérrez / Chan"
+  ],
+  "columnasNoMigradas": [
+    {
+      "columna": "ID",
+      "motivo": "Solo identifica el renglón en el reporte; el sistema genera su propio id."
+    },
+    {
+      "columna": "Edad",
+      "motivo": "Es una fórmula del Excel (DATEDIF); se recalcula a partir de la fecha de nacimiento."
+    },
+    {
+      "columna": "Días desde alta",
+      "motivo": "Es una fórmula del Excel; se recalcula a partir de la fecha de ingreso."
+    },
+    {
+      "columna": "Fecha compromiso total",
+      "motivo": "Es una fórmula del Excel (máximo de las fechas compromiso); se recalcula."
+    },
+    {
+      "columna": "1. ACTA",
+      "motivo": "Cotejo de documento: los documentos no se migran en esta etapa."
+    },
+    {
+      "columna": "2. CURP",
+      "motivo": "Cotejo de documento: los documentos no se migran en esta etapa."
+    },
+    {
+      "columna": "3. INE",
+      "motivo": "Cotejo de documento: los documentos no se migran en esta etapa."
+    },
+    {
+      "columna": "4. COMP DOMICILIO",
+      "motivo": "Cotejo de documento: los documentos no se migran en esta etapa."
+    },
+    {
+      "columna": "5. RFC",
+      "motivo": "Cotejo de documento: los documentos no se migran en esta etapa."
+    },
+    {
+      "columna": "6. SEMANAS COTIZADAS",
+      "motivo": "Cotejo de documento: los documentos no se migran en esta etapa."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+﻿fila,id_excel,curp,nss,motivos
+6,1,••••••••••••••WL04,•••••••9787,CURP ya existe en la base. | NSS ya existe en la base.
+7,2,••••••••••••••SX91,,CURP ya existe en la base.
+8,3,••••••••••••••BV55,•••••••9318,CURP ya existe en la base. | NSS ya existe en la base.
+9,4,••••••••••••••SHV8,•••••••6820,CURP ya existe en la base. | NSS ya existe en la base.
+10,5,••••••••••••••BCG3,•••••••9397,CURP ya existe en la base. | NSS ya existe en la base.
+11,6,••••••••••••••RXI5,•••••••4230,CURP ya existe en la base. | NSS ya existe en la base.
+12,7,••••••••••••••JPX7,,CURP ya existe en la base.
+13,8,••••••••••••••MCM2,•••••••2802,CURP ya existe en la base. | NSS ya existe en la base.
+14,9,••••••••••••••DDF7,•••••••5237,CURP ya existe en la base. | NSS ya existe en la base.
+15,10,••••••••••••••NF68,•••••••5996,CURP ya existe en la base. | NSS ya existe en la base.
+16,11,••••••••••••••FBS6,•••••••7540,CURP ya existe en la base. | NSS ya existe en la base.
+17,12,••••••••••••••VQG9,,CURP ya existe en la base.
+18,13,••••••••••••••RZ68,•••••••7001,CURP ya existe en la base. | NSS ya existe en la base.
+19,14,••••••••••••••FHN6,•••••••4572,CURP ya existe en la base. | NSS ya existe en la base.
+20,15,••••••••••••••WBJ5,•••••••5247,CURP ya existe en la base. | NSS ya existe en la base.
+21,16,••••••••••••••JXE8,•••••••2845,CURP ya existe en la base. | NSS ya existe en la base.
+22,17,••••••••••••••WK60,•••••••7922,CURP ya existe en la base. | NSS ya existe en la base.
+23,18,••••••••••••••ZLQ1,,CURP ya existe en la base.
+24,19,••••••••••••••SMR7,•••••••2136,CURP ya existe en la base. | NSS ya existe en la base.
+25,20,••••••••••••••MY75,•••••••9650,CURP ya existe en la base. | NSS ya existe en la base.
+26,21,••••••••••••••HFF5,•••••••7077,CURP ya existe en la base. | NSS ya existe en la base.
+27,22,••••••••••••••VRR0,•••••••4441,CURP ya existe en la base. | NSS ya existe en la base.
+28,23,••••••••••••••WCH5,•••••••5987,CURP ya existe en la base. | NSS ya existe en la base.
+29,24,••••••••••••••ZZJ0,•••••••5240,CURP ya existe en la base. | NSS ya existe en la base.
+30,25,••••••••••••••HP51,•••••••2476,CURP ya existe en la base. | NSS ya existe en la base.
+31,26,••••••••••••••TRD5,•••••••0907,CURP ya existe en la base. | NSS ya existe en la base.
+32,27,••••••••••••••PJ99,•••••••1723,CURP ya existe en la base. | NSS ya existe en la base.
+33,28,••••••••••••••LBT2,•••••••6195,CURP ya existe en la base. | NSS ya existe en la base.
+34,29,••••••••••••••RQE1,•••••••4030,CURP ya existe en la base. | NSS ya existe en la base.
+35,30,••••••••••••••CG61,•••••••5485,CURP ya existe en la base. | NSS ya existe en la base.
+36,31,••••••••••••••ZGB4,•••••••9870,CURP ya existe en la base. | NSS ya existe en la base.
+37,32,••••••••••••••GJ96,•••••••1351,CURP ya existe en la base. | NSS ya existe en la base.
+38,33,••••••••••••••HPA2,•••••••8341,CURP ya existe en la base. | NSS ya existe en la base.
+39,34,••••••••••••••LG36,•••••••7139,CURP ya existe en la base. | NSS ya existe en la base.
+40,35,••••••••••••••BN18,•••••••1648,CURP ya existe en la base. | NSS ya existe en la base.
+41,36,••••••••••••••VLU2,•••••••6643,CURP ya existe en la base. | NSS ya existe en la base.
+42,37,••••••••••••••HH41,•••••••2920,CURP ya existe en la base. | NSS ya existe en la base.
+43,38,••••••••••••••SZS8,•••••••0837,CURP ya existe en la base. | NSS ya existe en la base.
+44,39,••••••••••••••ZD79,•••••••9795,CURP ya existe en la base. | NSS ya existe en la base.
+45,40,••••••••••••••RXT2,•••••••4307,CURP ya existe en la base. | NSS ya existe en la base.
+46,41,••••••••••••••QS91,•••••••4852,CURP ya existe en la base. | NSS ya existe en la base.
+47,42,••••••••••••••ZR60,•••••••1774,CURP ya existe en la base. | NSS ya existe en la base.
+48,43,••••••••••••••GSF7,•••••••8736,CURP ya existe en la base. | NSS ya existe en la base.
+49,44,•••••••••••••JVFT,•••••••2520,CURP: La CURP no tiene el formato oficial de 18 caracteres.
+50,45,••••••••••••••ZC31,•••••••3022,CURP: La CURP trae una fecha de nacimiento que no existe.
+51,46,••••••••••••••YZM9,•••••••3752,"Fecha de nacimiento: La fecha de nacimiento no tiene un formato de fecha válido (dd/mm/aaaa, aaaa-mm-dd o dd-mmm-aaaa)."
+52,47,••••••••••••••RLS5,•••••1726,NSS: El NSS no tiene exactamente 11 dígitos.
+53,48,••••••••••••••FKF7,•••••••7837,Nombre del cliente: El nombre del cliente viene vacío.
+54,49,••••••••••••••JBU4,•••••••4049,Asesor: Asesor sin equivalencia: Lic. Pedro Gómez.
+55,50,••••••••••••••QH39,•••••••1648,Etapa 1: El estatus de la etapa no está en el catálogo.
+56,51,••••••••••••••LMA2,•••••••1904,CURP ya existe en la base. | NSS ya existe en la base.
+57,52,••••••••••••••GHW0,•••••••1721,Semanas IMSS reconocidas: Las semanas deben ser un número entero de 0 en adelante.
+58,53,••••••••••••••VQG9,•••••••7123,CURP ya existe en la base.
+59,54,••••••••••••••XZP2,•••••••9650,NSS ya existe en la base.

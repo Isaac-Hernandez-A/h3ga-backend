@@ -1,0 +1,106 @@
+Evidencia de la importación con el Excel ficticio (datos ficticios).
+Se generó llamando a ejecutarCli, la misma función que usa el comando de línea, y NO con "pnpm etl:importar".
+Orden de las corridas: 1) simulacro sobre la base limpia (no guarda nada), 2) corrida real, 3) segunda corrida (idempotencia).
+Argumentos de cada corrida: --archivo <Excel del fixture> --ejecutor <correo del Supervisor> --equivalencias <JSON del fixture> --salida <carpeta>.
+
+> ejecutarCli --archivo FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx --ejecutor <supervisor> --simulacro
+# Simulacro sobre la base limpia: no guarda nada
+Importación terminada (simulacro: no se guardó nada en la base).
+Archivo: FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx
+Leídos: 54 | Cargados: 44 | Rechazados: 10 (duplicados en el archivo: 2, ya existían: 0)
+Con ajustes: 9 | Con advertencias: 6 | Lotes: 2 (degradados: 0)
+Conciliación: correcta. Simulacro: no se consultó la base. Cuadra: leídos 54 = cargados 44 + rechazados 10.
+Rechazado: fila 49 (ID 44): CURP: La CURP no tiene el formato oficial de 18 caracteres.
+Rechazado: fila 50 (ID 45): CURP: La CURP trae una fecha de nacimiento que no existe.
+Rechazado: fila 51 (ID 46): Fecha de nacimiento: La fecha de nacimiento no tiene un formato de fecha válido (dd/mm/aaaa, aaaa-mm-dd o dd-mmm-aaaa).
+Rechazado: fila 52 (ID 47): NSS: El NSS no tiene exactamente 11 dígitos.
+Rechazado: fila 53 (ID 48): Nombre del cliente: El nombre del cliente viene vacío.
+Rechazado: fila 54 (ID 49): Asesor: Asesor sin equivalencia: Lic. Pedro Gómez.
+Rechazado: fila 55 (ID 50): Etapa 1: El estatus de la etapa no está en el catálogo.
+Rechazado: fila 57 (ID 52): Semanas IMSS reconocidas: Las semanas deben ser un número entero de 0 en adelante.
+Rechazado: fila 58 (ID 53): CURP duplicado en el archivo: ya aparece en la fila 17.
+Rechazado: fila 59 (ID 54): NSS duplicado en el archivo: ya aparece en la fila 25.
+Reporte: C:\Users\isaac\Proyectos\h3ga-backend\docs\etl-corrida-ficticia\simulacro
+
+> ejecutarCli --archivo FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx --ejecutor <supervisor>
+# Primera corrida real
+Importación terminada.
+Archivo: FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx
+Leídos: 54 | Cargados: 44 | Rechazados: 10 (duplicados en el archivo: 2, ya existían: 0)
+Con ajustes: 9 | Con advertencias: 6 | Lotes: 2 (degradados: 0)
+Conciliación: correcta. Cuadra: leídos 54 = cargados 44 + rechazados 10; en la base se encontraron 44 de 44 CURP cargadas.
+Rechazado: fila 49 (ID 44): CURP: La CURP no tiene el formato oficial de 18 caracteres.
+Rechazado: fila 50 (ID 45): CURP: La CURP trae una fecha de nacimiento que no existe.
+Rechazado: fila 51 (ID 46): Fecha de nacimiento: La fecha de nacimiento no tiene un formato de fecha válido (dd/mm/aaaa, aaaa-mm-dd o dd-mmm-aaaa).
+Rechazado: fila 52 (ID 47): NSS: El NSS no tiene exactamente 11 dígitos.
+Rechazado: fila 53 (ID 48): Nombre del cliente: El nombre del cliente viene vacío.
+Rechazado: fila 54 (ID 49): Asesor: Asesor sin equivalencia: Lic. Pedro Gómez.
+Rechazado: fila 55 (ID 50): Etapa 1: El estatus de la etapa no está en el catálogo.
+Rechazado: fila 57 (ID 52): Semanas IMSS reconocidas: Las semanas deben ser un número entero de 0 en adelante.
+Rechazado: fila 58 (ID 53): CURP duplicado en el archivo: ya aparece en la fila 17.
+Rechazado: fila 59 (ID 54): NSS duplicado en el archivo: ya aparece en la fila 25.
+Reporte: C:\Users\isaac\Proyectos\h3ga-backend\docs\etl-corrida-ficticia
+
+> ejecutarCli --archivo FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx --ejecutor <supervisor>
+# Segunda corrida: idempotencia
+Importación terminada.
+Archivo: FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx
+Leídos: 54 | Cargados: 0 | Rechazados: 54 (duplicados en el archivo: 0, ya existían: 46)
+Con ajustes: 0 | Con advertencias: 0 | Lotes: 0 (degradados: 0)
+Conciliación: correcta. Cuadra: leídos 54 = cargados 0 + rechazados 54; en la base se encontraron 0 de 0 CURP cargadas.
+Rechazado: fila 6 (ID 1): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 7 (ID 2): CURP ya existe en la base.
+Rechazado: fila 8 (ID 3): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 9 (ID 4): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 10 (ID 5): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 11 (ID 6): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 12 (ID 7): CURP ya existe en la base.
+Rechazado: fila 13 (ID 8): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 14 (ID 9): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 15 (ID 10): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 16 (ID 11): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 17 (ID 12): CURP ya existe en la base.
+Rechazado: fila 18 (ID 13): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 19 (ID 14): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 20 (ID 15): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 21 (ID 16): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 22 (ID 17): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 23 (ID 18): CURP ya existe en la base.
+Rechazado: fila 24 (ID 19): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 25 (ID 20): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 26 (ID 21): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 27 (ID 22): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 28 (ID 23): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 29 (ID 24): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 30 (ID 25): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 31 (ID 26): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 32 (ID 27): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 33 (ID 28): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 34 (ID 29): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 35 (ID 30): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 36 (ID 31): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 37 (ID 32): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 38 (ID 33): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 39 (ID 34): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 40 (ID 35): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 41 (ID 36): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 42 (ID 37): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 43 (ID 38): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 44 (ID 39): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 45 (ID 40): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 46 (ID 41): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 47 (ID 42): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 48 (ID 43): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 49 (ID 44): CURP: La CURP no tiene el formato oficial de 18 caracteres.
+Rechazado: fila 50 (ID 45): CURP: La CURP trae una fecha de nacimiento que no existe.
+Rechazado: fila 51 (ID 46): Fecha de nacimiento: La fecha de nacimiento no tiene un formato de fecha válido (dd/mm/aaaa, aaaa-mm-dd o dd-mmm-aaaa).
+Rechazado: fila 52 (ID 47): NSS: El NSS no tiene exactamente 11 dígitos.
+Rechazado: fila 53 (ID 48): Nombre del cliente: El nombre del cliente viene vacío.
+Rechazado: fila 54 (ID 49): Asesor: Asesor sin equivalencia: Lic. Pedro Gómez.
+Rechazado: fila 55 (ID 50): Etapa 1: El estatus de la etapa no está en el catálogo.
+Rechazado: fila 56 (ID 51): CURP ya existe en la base. | NSS ya existe en la base.
+Rechazado: fila 57 (ID 52): Semanas IMSS reconocidas: Las semanas deben ser un número entero de 0 en adelante.
+Rechazado: fila 58 (ID 53): CURP ya existe en la base.
+Rechazado: fila 59 (ID 54): NSS ya existe en la base.
+Reporte: C:\Users\isaac\Proyectos\h3ga-backend\docs\etl-corrida-ficticia\segunda-corrida
+

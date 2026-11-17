@@ -6,3 +6,6 @@ coverage
 pnpm-lock.yaml
 docs/superpowers
 .superpowers
+
+# Evidencia generada por la importacion con el Excel ficticio: se conserva tal como la escribio la corrida
+docs/etl-corrida-ficticia
