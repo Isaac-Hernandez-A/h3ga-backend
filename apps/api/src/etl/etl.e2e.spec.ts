@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import * as ExcelJS from 'exceljs';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
-import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
+import { borrarClientesConEtapas, tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 import {
   crearUsuarioPrueba,
   limpiarDatosClientes,
@@ -87,13 +87,10 @@ describeConBd('POST /etl/importaciones (aplicación real y base de pruebas)', ()
       )[0].n,
     );
   async function borrarClientes() {
-    const donde = `SELECT id FROM clientes WHERE asesor_id = ANY($1) OR curp = ANY($2)`;
-    const parametros = [[marco.id, ana.id], curpsCrudas];
-    await ctx.ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN (${donde})`, parametros);
-    await ctx.ds.query(
-      `DELETE FROM clientes WHERE asesor_id = ANY($1) OR curp = ANY($2)`,
-      parametros,
-    );
+    await borrarClientesConEtapas(ctx.ds, `asesor_id = ANY($1) OR curp = ANY($2)`, [
+      [marco.id, ana.id],
+      curpsCrudas,
+    ]);
   }
 
   // Libro con la forma del formato, armado en memoria, para las pruebas de archivos inválidos.

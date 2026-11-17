@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
-import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
+import { borrarClientesConEtapas, tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 import { ROL_ID } from '../common/auth/roles-sistema';
 import {
   crearUsuarioPrueba,
@@ -102,12 +102,10 @@ describeConBd('Aceptación de la importación con el Excel ficticio', () => {
     )[0];
 
   async function borrarTodo() {
-    const donde = `SELECT id FROM clientes WHERE asesor_id IN (SELECT id FROM usuarios WHERE lower(correo_electronico) = ANY($1)) OR curp = ANY($2)`;
-    const parametros = [correos, [...curpsPorId.values()]];
-    await ctx.ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN (${donde})`, parametros);
-    await ctx.ds.query(
-      `DELETE FROM clientes WHERE asesor_id IN (SELECT id FROM usuarios WHERE lower(correo_electronico) = ANY($1)) OR curp = ANY($2)`,
-      parametros,
+    await borrarClientesConEtapas(
+      ctx.ds,
+      `asesor_id IN (SELECT id FROM usuarios WHERE lower(correo_electronico) = ANY($1)) OR curp = ANY($2)`,
+      [correos, [...curpsPorId.values()]],
     );
     await ctx.ds.query(`DELETE FROM usuarios WHERE lower(correo_electronico) = ANY($1)`, [correos]);
   }
@@ -146,11 +144,7 @@ describeConBd('Aceptación de la importación con el Excel ficticio', () => {
 
   // Cada prueba parte de la base sin clientes del fixture (los asesores se conservan).
   afterEach(async () => {
-    await ctx.ds.query(
-      `DELETE FROM etapas_tramite WHERE cliente_id IN (SELECT id FROM clientes WHERE asesor_id = ANY($1) OR curp = ANY($2))`,
-      [[marco.id, ana.id], [...curpsPorId.values()]],
-    );
-    await ctx.ds.query(`DELETE FROM clientes WHERE asesor_id = ANY($1) OR curp = ANY($2)`, [
+    await borrarClientesConEtapas(ctx.ds, `asesor_id = ANY($1) OR curp = ANY($2)`, [
       [marco.id, ana.id],
       [...curpsPorId.values()],
     ]);

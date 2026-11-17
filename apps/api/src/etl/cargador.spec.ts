@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { DataSource } from 'typeorm';
 import { ClientesService } from '../clientes/clientes.service';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
+import { borrarClientesConEtapas } from '../common/testing/bloqueo-etl';
 import {
   crearUsuarioPrueba,
   curpFicticia,
@@ -145,12 +146,7 @@ describeConBd('CargadorClientes (integración con la base de pruebas)', () => {
 
   afterEach(async () => {
     jest.restoreAllMocks();
-    await ds.query(
-      `DELETE FROM etapas_tramite WHERE cliente_id IN
-      (SELECT id FROM clientes WHERE referido_por = $1)`,
-      [MARCA_CLIENTE],
-    );
-    await ds.query(`DELETE FROM clientes WHERE referido_por = $1`, [MARCA_CLIENTE]);
+    await borrarClientesConEtapas(ds, `referido_por = $1`, [MARCA_CLIENTE]);
   });
 
   afterAll(async () => {

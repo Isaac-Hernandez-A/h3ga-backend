@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { ClientesService } from '../clientes/clientes.service';
 import { AppConBd, describeConBd, iniciarAppConBd } from '../common/testing/bd-pruebas';
-import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
+import { borrarClientesConEtapas, tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 import {
   crearUsuarioPrueba,
   limpiarDatosClientes,
@@ -61,13 +61,10 @@ describeConBd('EtlService.importar (integración con la base de pruebas)', () =>
       )[0].n,
     );
   async function borrarClientesDelFixture() {
-    const donde = `SELECT id FROM clientes WHERE asesor_id = ANY($1) OR curp = ANY($2)`;
-    const parametros = [[marco.id, ana.id], curpsCrudas];
-    await ctx.ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN (${donde})`, parametros);
-    await ctx.ds.query(
-      `DELETE FROM clientes WHERE asesor_id = ANY($1) OR curp = ANY($2)`,
-      parametros,
-    );
+    await borrarClientesConEtapas(ctx.ds, `asesor_id = ANY($1) OR curp = ANY($2)`, [
+      [marco.id, ana.id],
+      curpsCrudas,
+    ]);
   }
 
   beforeAll(async () => {
