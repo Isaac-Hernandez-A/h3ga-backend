@@ -80,40 +80,41 @@ function contrasenas(): Record<string, string> {
   return resultado;
 }
 
-// Borra, en orden de llaves foráneas, lo que cuelga de los usuarios de prueba y de sus clientes.
+// Borra las filas de `tabla` que cumplen `donde` y, antes, todo lo que las referencia por llave foránea
+// (recursivo, leyendo las llaves de pg_constraint): así la limpieza no depende de una lista a mano de tablas.
+async function borrarEn(
+  ds: DataSource,
+  tabla: string,
+  donde: string,
+  parametros: unknown[],
+  ruta: string[] = [],
+): Promise<void> {
+  const hijas = await ds.query<{ hija: string; columna: string; ref: string }[]>(
+    `SELECT c.conrelid::regclass::text AS hija, a.attname AS columna, r.attname AS ref
+       FROM pg_constraint c
+       JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = c.conkey[1]
+       JOIN pg_attribute r ON r.attrelid = c.confrelid AND r.attnum = c.confkey[1]
+      WHERE c.contype = 'f' AND c.confrelid = $1::regclass`,
+    [tabla],
+  );
+  for (const h of hijas) {
+    if (h.hija === tabla || ruta.includes(h.hija)) continue;
+    await borrarEn(
+      ds,
+      h.hija,
+      `${h.columna} IN (SELECT ${h.ref} FROM ${tabla} WHERE ${donde})`,
+      parametros,
+      [...ruta, tabla],
+    );
+  }
+  await ds.query(`DELETE FROM ${tabla} WHERE ${donde}`, parametros);
+}
+
+// Borra los 4 usuarios de prueba y, por sus llaves foráneas, sus clientes, etapas, eventos, avisos,
+// diagnósticos, documentos, etc. Solo toca lo que cuelga de esos usuarios.
 async function limpiar(ds: DataSource): Promise<void> {
   const correos = USUARIOS.map((u) => u.correo.toLowerCase());
-  const usuarios = `SELECT id FROM usuarios WHERE lower(correo_electronico) = ANY($1)`;
-  const clientes = `SELECT id FROM clientes WHERE asesor_id IN (${usuarios})`;
-  const etapas = `SELECT id FROM etapas_tramite WHERE cliente_id IN (${clientes})`;
-  const eventos = `SELECT id FROM eventos_agenda WHERE asesor_id IN (${usuarios}) OR cliente_id IN (${clientes})`;
-  const p = [correos];
-  await ds.query(
-    `DELETE FROM avisos WHERE etapa_tramite_id IN (${etapas}) OR evento_id IN (${eventos}) OR atendido_por IN (${usuarios})`,
-    p,
-  );
-  await ds.query(
-    `DELETE FROM etapas_tramite_historial WHERE etapa_tramite_id IN (${etapas}) OR cambiado_por IN (${usuarios})`,
-    p,
-  );
-  await ds.query(`DELETE FROM eventos_agenda WHERE id IN (${eventos})`, p);
-  await ds.query(`DELETE FROM etapas_tramite WHERE cliente_id IN (${clientes})`, p);
-  await ds.query(
-    `DELETE FROM cliente_auxiliares WHERE cliente_id IN (${clientes}) OR auxiliar_id IN (${usuarios}) OR autorizado_por IN (${usuarios})`,
-    p,
-  );
-  for (const tabla of [
-    'cliente_objetivos_especificos',
-    'correcciones_cliente',
-    'diagnostico_especializado',
-    'documentos_clientes',
-    'historial_laboral',
-    'periodos_inconsistencias',
-  ]) {
-    await ds.query(`DELETE FROM ${tabla} WHERE cliente_id IN (${clientes})`, p);
-  }
-  await ds.query(`DELETE FROM clientes WHERE id IN (${clientes})`, p);
-  await ds.query(`DELETE FROM usuarios WHERE lower(correo_electronico) = ANY($1)`, p);
+  await borrarEn(ds, 'usuarios', 'lower(correo_electronico) = ANY($1)', [correos]);
 }
 
 async function principal(): Promise<void> {
@@ -149,7 +150,7 @@ async function principal(): Promise<void> {
     });
     if (!reporte.conciliacion.ok) throw new Error('La conciliación de la importación falló.');
 
-    // 1,000 eventos del Asesor 1 sobre uno de sus clientes, repartidos en hoy y los dos días siguientes.
+    // 1,000 eventos del Asesor 1 sobre uno de sus clientes, repartidos en hoy y los dos días siguientes (fecha de Cancún, la zona del sistema).
     const cliente = await ds.query<{ id: string }[]>(
       `SELECT id FROM clientes WHERE asesor_id = $1 ORDER BY id LIMIT 1`,
       [ids.asesor1],
@@ -157,7 +158,7 @@ async function principal(): Promise<void> {
     if (!cliente[0]) throw new Error('El Asesor 1 no recibió clientes del ETL.');
     await ds.query(
       `INSERT INTO eventos_agenda (asesor_id, cliente_id, fecha, hora, motivo, estatus)
-       SELECT $1, $2, CURRENT_DATE + (g % 3), '09:00', 'Cita ficticia ' || g, 'pendiente'
+       SELECT $1, $2, (now() AT TIME ZONE 'America/Cancun')::date + (g % 3), '09:00', 'Cita ficticia ' || g, 'pendiente'
          FROM generate_series(1, ${EVENTOS}) g`,
       [ids.asesor1, cliente[0].id],
     );

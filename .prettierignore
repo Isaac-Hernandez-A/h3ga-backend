@@ -12,3 +12,4 @@ docs/etl-corrida-ficticia
 
 # Documentos de trabajo fuera del producto (no los ve el CI)
 mnt
+docs/pruebas-integrales/postman/newman-reporte.html
