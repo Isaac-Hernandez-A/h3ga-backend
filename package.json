@@ -23,6 +23,7 @@
     "pruebas:newman": "node --env-file-if-exists=.env.pruebas scripts/postman/correr-newman.mjs",
     "pruebas:tiempos": "node --env-file-if-exists=.env --env-file-if-exists=.env.pruebas scripts/postman/medir-tiempos.mjs",
     "pruebas:datos": "pnpm --filter @h3ga/api build && node --env-file-if-exists=.env apps/api/dist/scripts/preparar-datos-integrales.js",
+    "pruebas:datos:limpiar": "pnpm --filter @h3ga/api build && node --env-file-if-exists=.env apps/api/dist/scripts/preparar-datos-integrales.js --solo-limpiar",
     "db:test:prepare": "node --env-file-if-exists=.env db/preparar-bd-pruebas.mjs",
     "dev:token": "node --env-file-if-exists=.env apps/api/scripts/dev-token.mjs"
   },

@@ -11,6 +11,8 @@ import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 // cargar usuarios, los 44 clientes del Excel ficticio (con EtlService, no con SQL) y 1,000 eventos de
 // agenda como en CP-43. Solo corre contra una base local cuyo nombre termina en _test.
 //
+// Con --solo-limpiar solo borra lo de una corrida anterior (útil antes de correr la suite de Jest).
+//
 // Contraseñas: se leen de PRUEBAS_<ROL>_CONTRASENA; si faltan se generan al azar y se guardan en
 // .env.pruebas (ignorado por git), que el comando de Newman lee. Nunca se imprimen ni se versionan.
 const RAIZ = resolve(__dirname, '../../../..');
@@ -130,6 +132,10 @@ async function principal(): Promise<void> {
   const liberar = await tomarBloqueoEtl(ds);
   try {
     await limpiar(ds);
+    if (process.argv.includes('--solo-limpiar')) {
+      console.log('Datos de pruebas integrales borrados de la base de pruebas.');
+      return;
+    }
     const ids: Record<string, string> = {};
     for (const u of USUARIOS) {
       const filas = await ds.query<{ id: string }[]>(
