@@ -15352,6 +15352,280 @@
           ]
         }
       ]
+    },
+    {
+      "name": "10 Consultas clave",
+      "item": [
+        {
+          "name": "GET /dashboard (Asesor 1)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAsesor1}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /dashboard (Supervisor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenSupervisor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /clientes (Asesor 1)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAsesor1}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["clientes"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();",
+                  "pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /clientes (Supervisor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenSupervisor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["clientes"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();",
+                  "pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /clientes/:id (Asesor 1)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAsesor1}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clienteExistenteId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["clientes", "{{clienteExistenteId}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();",
+                  "pm.test('es el cliente pedido', () => pm.expect(cuerpo.id).to.eql(pm.collectionVariables.get('clienteExistenteId')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /clientes/:id/etapas (Asesor 1)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAsesor1}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clienteExistenteId}}/etapas",
+              "host": ["{{baseUrl}}"],
+              "path": ["clientes", "{{clienteExistenteId}}", "etapas"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();",
+                  "pm.test('16 etapas', () => pm.expect(cuerpo.etapas).to.have.lengthOf(16));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /agenda (Supervisor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenSupervisor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/agenda",
+              "host": ["{{baseUrl}}"],
+              "path": ["agenda"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();",
+                  "pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));",
+                  "pm.test('tiempo menor a 5 s (RNF-01)', () => pm.expect(pm.response.responseTime).to.be.below(5000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /avisos (Supervisor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenSupervisor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos",
+              "host": ["{{baseUrl}}"],
+              "path": ["avisos"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();",
+                  "pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));",
+                  "pm.test('tiempo menor a 5 s (RNF-01)', () => pm.expect(pm.response.responseTime).to.be.below(5000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /correcciones (Asesor 1)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAsesor1}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/correcciones",
+              "host": ["{{baseUrl}}"],
+              "path": ["correcciones"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "const cuerpo = pm.response.json();"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

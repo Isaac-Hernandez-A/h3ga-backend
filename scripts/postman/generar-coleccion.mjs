@@ -926,6 +926,26 @@ const etl = carpeta('09 ETL', [
   }),
 ]);
 
+// ---------- 10 Consultas clave ----------
+// GET que usa el frontend a diario. Sirven también para medir tiempos (agenda y avisos cuentan para RNF-01).
+const consulta = (nombre, ruta, rol, extra = [], rnf = false) =>
+  peticion(nombre, {
+    ruta,
+    rol,
+    pruebas: [estado(200), cuerpoJson(), extra, rnf ? tiempoRnf() : []],
+  });
+const consultas = carpeta('10 Consultas clave', [
+  consulta('GET /dashboard (Asesor 1)', '/dashboard', 'asesor1'),
+  consulta('GET /dashboard (Supervisor)', '/dashboard', 'supervisor'),
+  consulta('GET /clientes (Asesor 1)', '/clientes', 'asesor1', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`]),
+  consulta('GET /clientes (Supervisor)', '/clientes', 'supervisor', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`]),
+  consulta('GET /clientes/:id (Asesor 1)', '/clientes/{{clienteExistenteId}}', 'asesor1', [`pm.test('es el cliente pedido', () => pm.expect(cuerpo.id).to.eql(pm.collectionVariables.get('clienteExistenteId')));`]),
+  consulta('GET /clientes/:id/etapas (Asesor 1)', '/clientes/{{clienteExistenteId}}/etapas', 'asesor1', [`pm.test('16 etapas', () => pm.expect(cuerpo.etapas).to.have.lengthOf(16));`]),
+  consulta('GET /agenda (Supervisor)', '/agenda', 'supervisor', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`], true),
+  consulta('GET /avisos (Supervisor)', '/avisos', 'supervisor', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`], true),
+  consulta('GET /correcciones (Asesor 1)', '/correcciones', 'asesor1'),
+]);
+
 // ---------- salida ----------
 const coleccion = {
   info: {
@@ -934,7 +954,7 @@ const coleccion = {
       'Generada por scripts/postman/generar-coleccion.mjs. Solo datos ficticios, base h3ga_test.',
     schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json',
   },
-  item: [salud, acceso, matriz, clientes, documentos, f0, f1, agenda, reportes, etl],
+  item: [salud, acceso, matriz, clientes, documentos, f0, f1, agenda, reportes, etl, consultas],
 };
 const entorno = {
   name: 'H3GA local (h3ga_test)',
