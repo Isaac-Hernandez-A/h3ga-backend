@@ -4,19 +4,19 @@ Fecha: 2026-11-17. Objetivo específico 9. Entorno local y datos ficticios, base
 
 ## Las cuatro corridas
 
-| Suite                               | Pruebas                        | Pasan          | Fallan | Omitidas | Tiempo                                                                                |
-| ----------------------------------- | ------------------------------ | -------------- | ------ | -------- | ------------------------------------------------------------------------------------- |
-| Backend (Jest, `pnpm test:reporte`) | 738 en 75 suites               | 737            | 0      | 1        | 177.6 s de reloj (702 s sumando el tiempo de cada suite)                              |
-| Frontend unitarias (Vitest)         | 455 en 30 archivos             | 455            | 0      | 0        | 69.9 s                                                                                |
-| Playwright (Chrome)                 | 8 (CF-15 a CF-22)              | 7              | 1      | 0        | corrida completa 39 s (CF-15 falló y 7 no corrieron); CF-16 a CF-22 por separado 64 s |
-| Newman (colección de Postman)       | 461 peticiones, 541 aserciones | 541 aserciones | 0      | 0        | 45.6 s                                                                                |
+| Suite                               | Pruebas                        | Pasan          | Fallan | Omitidas | Tiempo                                                   |
+| ----------------------------------- | ------------------------------ | -------------- | ------ | -------- | -------------------------------------------------------- |
+| Backend (Jest, `pnpm test:reporte`) | 738 en 75 suites               | 737            | 0      | 1        | 177.6 s de reloj (702 s sumando el tiempo de cada suite) |
+| Frontend unitarias (Vitest)         | 455 en 30 archivos             | 455            | 0      | 0        | 69.9 s                                                   |
+| Playwright (Chrome)                 | 8 (CF-15 a CF-22)              | 8              | 0      | 0        | 88 s (1.4 min), corrida final                            |
+| Newman (colección de Postman)       | 461 peticiones, 541 aserciones | 541 aserciones | 0      | 0        | 45.6 s                                                   |
 
 Notas de lectura:
 
 - La corrida de Jest es la que ejecuta `pnpm test:reporte` (corre `jest --json` sobre todo el backend y regenera `docs/pruebas-resultados.md`). Se tomó como la corrida de Jest para no repetir los 3 minutos. Se ejecutó al mismo tiempo que Vitest en la misma computadora, por eso el tiempo sumado por suite (702 s) es mayor que el de la corrida anterior (404 s): las suites compitieron por CPU.
 - La única prueba omitida de Jest es el generador de evidencia de la ETL (CP-347), que solo corre con `ETL_EVIDENCIA=1`.
 - Los números de Vitest y Playwright salen del repositorio `h3ga-frontend` (con sus cambios sin versionar tal como estaban). Los casos de Playwright (CF-15 a CF-22) dependen de la API real: se corrieron contra la API arrancada con la base de pruebas y el Supervisor de `pnpm pruebas:datos`.
-- Playwright en modo serial: al fallar CF-15 no corrieron los otros siete. Se volvieron a correr solos (`--grep "CF-(1[6-9]|2[0-2])"`) y pasaron los siete. No se cambió ninguna prueba ni el producto.
+- Playwright, historial de corridas: la primera corrida dio 1 fallo (CF-15) y 7 sin correr por el modo serial; CF-16 a CF-22 corridos aparte pasaron 7 de 7 (64 s). Tras corregir el localizador de CF-15 (ver Defectos), CF-15 solo pasó (40 s) y la corrida completa dio 8 de 8 en 88 s. No se cambió el producto.
 - Total de casos ejecutados, sin mezclar unidades: 738 de backend, 455 unitarias de frontend, 8 de navegador y 461 peticiones de Newman (541 aserciones).
 
 ## Newman en detalle
@@ -29,7 +29,7 @@ Notas de lectura:
 
 ## Defectos encontrados
 
-1. **CF-15 falla en Playwright (frontend, prueba).** En `tests/e2e/flujos.spec.ts`, línea 74, `page.getByText('Estatus actualizado')` coincide con 2 elementos: el aviso visible y la región de lectura de pantalla del componente de avisos (`role="alert"`, oculta). Playwright lo rechaza por modo estricto. El cambio de estatus llegó a hacerse; falla la espera del aviso. La causa está en el localizador de la prueba (o en un cambio de la librería de interfaz que duplica el texto), no en el backend. No se corrigió: queda a decisión de quien mantiene el frontend (por ejemplo, localizar con `{ exact: true }` y el atributo `data-slot="title"`). Mientras no se corrija, el historial de etapa visto en pantalla no queda verificado en navegador; sí lo cubren CP-22 a CP-24 de Jest y la carpeta 03 de Newman.
+1. **CF-15 tuvo un localizador ambiguo (Playwright, frontend). Corregido en la prueba, no en el producto.** En `tests/e2e/flujos.spec.ts`, `page.getByText('Estatus actualizado')` coincidía con 2 elementos: el aviso visible y la región de lectura de pantalla oculta del componente de avisos, y Playwright lo rechazaba por modo estricto. El cambio de estatus sí se hacía. La aserción de fondo no cambió (sigue verificando que el aviso aparece y es visible, mismo tiempo de espera); solo se volvió no ambigua con `getByText('Estatus actualizado', { exact: true })`. Con eso CF-15 pasa completo, incluido el historial de la etapa en pantalla, y no apareció otro fallo en ese flujo.
 2. **Rutas todavía en 501.** `GET /catalogos/etapas` y `POST /clientes/:clienteId/etapas` siguen sin implementar (documentado en `docs/endpoints.md`). La matriz de acceso las registra como 501 en la columna "código obtenido". No es una regresión.
 
 No se encontraron defectos del backend. Las fallas que aparecieron mientras se armaba la colección fueron errores de las propias pruebas y se corrigieron en ellas, sin tocar el producto ni bajar aserciones:
