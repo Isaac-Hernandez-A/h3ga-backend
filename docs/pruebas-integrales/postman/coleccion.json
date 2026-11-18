@@ -12488,8 +12488,8 @@
                 "exec": [
                   "pm.test('estado 200', () => pm.expect(pm.response.code).to.be.oneOf([200]));",
                   "const cuerpo = pm.response.json();",
-                  "pm.test('trae clientes del ETL', () => pm.expect(cuerpo.length).to.be.above(0));",
-                  "pm.collectionVariables.set('clienteExistenteId', cuerpo[0].id);"
+                  "pm.test('trae clientes del ETL', () => pm.expect(cuerpo.filter((c) => c.referido_por !== 'pruebas-integrales').length).to.be.above(0));",
+                  "pm.collectionVariables.set('clienteExistenteId', cuerpo.find((c) => c.referido_por !== 'pruebas-integrales').id);"
                 ]
               }
             }

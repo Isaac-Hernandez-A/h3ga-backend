@@ -219,8 +219,13 @@ const clientes = carpeta('03 Clientes y etapas', [
     pruebas: [
       estado(200),
       cuerpoJson(),
-      [`pm.test('trae clientes del ETL', () => pm.expect(cuerpo.length).to.be.above(0));`],
-      guardar('clienteExistenteId', 'cuerpo[0].id'),
+      [
+        `pm.test('trae clientes del ETL', () => pm.expect(cuerpo.filter((c) => c.referido_por !== 'pruebas-integrales').length).to.be.above(0));`,
+      ],
+      guardar(
+        'clienteExistenteId',
+        "cuerpo.find((c) => c.referido_por !== 'pruebas-integrales').id",
+      ),
     ],
   }),
   peticion('GET /usuarios (Supervisor): ids de Asesor 2 y Auxiliar', {
@@ -937,12 +942,35 @@ const consulta = (nombre, ruta, rol, extra = [], rnf = false) =>
 const consultas = carpeta('10 Consultas clave', [
   consulta('GET /dashboard (Asesor 1)', '/dashboard', 'asesor1'),
   consulta('GET /dashboard (Supervisor)', '/dashboard', 'supervisor'),
-  consulta('GET /clientes (Asesor 1)', '/clientes', 'asesor1', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`]),
-  consulta('GET /clientes (Supervisor)', '/clientes', 'supervisor', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`]),
-  consulta('GET /clientes/:id (Asesor 1)', '/clientes/{{clienteExistenteId}}', 'asesor1', [`pm.test('es el cliente pedido', () => pm.expect(cuerpo.id).to.eql(pm.collectionVariables.get('clienteExistenteId')));`]),
-  consulta('GET /clientes/:id/etapas (Asesor 1)', '/clientes/{{clienteExistenteId}}/etapas', 'asesor1', [`pm.test('16 etapas', () => pm.expect(cuerpo.etapas).to.have.lengthOf(16));`]),
-  consulta('GET /agenda (Supervisor)', '/agenda', 'supervisor', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`], true),
-  consulta('GET /avisos (Supervisor)', '/avisos', 'supervisor', [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`], true),
+  consulta('GET /clientes (Asesor 1)', '/clientes', 'asesor1', [
+    `pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`,
+  ]),
+  consulta('GET /clientes (Supervisor)', '/clientes', 'supervisor', [
+    `pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`,
+  ]),
+  consulta('GET /clientes/:id (Asesor 1)', '/clientes/{{clienteExistenteId}}', 'asesor1', [
+    `pm.test('es el cliente pedido', () => pm.expect(cuerpo.id).to.eql(pm.collectionVariables.get('clienteExistenteId')));`,
+  ]),
+  consulta(
+    'GET /clientes/:id/etapas (Asesor 1)',
+    '/clientes/{{clienteExistenteId}}/etapas',
+    'asesor1',
+    [`pm.test('16 etapas', () => pm.expect(cuerpo.etapas).to.have.lengthOf(16));`],
+  ),
+  consulta(
+    'GET /agenda (Supervisor)',
+    '/agenda',
+    'supervisor',
+    [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`],
+    true,
+  ),
+  consulta(
+    'GET /avisos (Supervisor)',
+    '/avisos',
+    'supervisor',
+    [`pm.test('es una lista', () => pm.expect(cuerpo).to.be.an('array'));`],
+    true,
+  ),
   consulta('GET /correcciones (Asesor 1)', '/correcciones', 'asesor1'),
 ]);
 
