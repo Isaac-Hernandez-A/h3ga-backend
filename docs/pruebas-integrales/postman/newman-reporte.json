@@ -1,7 +1,7 @@
 {
   "coleccion": "H3GA pruebas integrales (Actividad 6)",
-  "inicio": "2026-11-18T02:08:10.570Z",
-  "duracion_ms": 44489,
+  "inicio": "2026-11-18T02:36:00.903Z",
+  "duracion_ms": 45579,
   "totales": {
     "peticiones": 461,
     "peticiones_falladas": 0,
@@ -17,7 +17,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/health",
       "codigo": 200,
-      "tiempo_ms": 24,
+      "tiempo_ms": 20,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -35,7 +35,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/auth/login",
       "codigo": 200,
-      "tiempo_ms": 116,
+      "tiempo_ms": 74,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -79,7 +79,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/auth/login",
       "codigo": 200,
-      "tiempo_ms": 94,
+      "tiempo_ms": 87,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -101,7 +101,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/auth/login",
       "codigo": 200,
-      "tiempo_ms": 89,
+      "tiempo_ms": 92,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -123,7 +123,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/auth/login",
       "codigo": 401,
-      "tiempo_ms": 87,
+      "tiempo_ms": 66,
       "aserciones": [
         {
           "nombre": "estado 401",
@@ -179,7 +179,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 200,
-      "tiempo_ms": 55,
+      "tiempo_ms": 49,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -207,7 +207,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 200,
-      "tiempo_ms": 26,
+      "tiempo_ms": 31,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -235,7 +235,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 403,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -249,7 +249,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -263,7 +263,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -277,7 +277,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -291,7 +291,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -305,7 +305,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/agenda/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 9,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -319,7 +319,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/agenda/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -333,7 +333,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/agenda/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -361,7 +361,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/auth/contrasena",
       "codigo": 400,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -445,7 +445,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/auxiliares",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -459,7 +459,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/auxiliares",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -473,7 +473,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 68,
+      "tiempo_ms": 79,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -487,7 +487,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 26,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -501,7 +501,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 43,
+      "tiempo_ms": 48,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -515,7 +515,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 9,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -557,7 +557,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/avisos/00000000-0000-4000-8000-000000000000/atender",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -571,7 +571,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/avisos/00000000-0000-4000-8000-000000000000/atender",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -585,7 +585,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/avisos/00000000-0000-4000-8000-000000000000/atender",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -599,7 +599,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/afores",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -613,7 +613,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/afores",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -627,7 +627,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/afores",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 18,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -655,7 +655,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/documentos-diagnostico",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -669,7 +669,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/documentos-diagnostico",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -683,7 +683,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/estatus",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -697,7 +697,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/estatus",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -711,7 +711,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/estatus",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -725,7 +725,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/estrategias-recomendadas",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -739,7 +739,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/estrategias-recomendadas",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -767,7 +767,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/etapas",
       "codigo": 501,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -781,7 +781,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/etapas",
       "codigo": 501,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -795,7 +795,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/etapas",
       "codigo": 501,
-      "tiempo_ms": 2,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -809,7 +809,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/leyes-probables",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -823,7 +823,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/leyes-probables",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -837,7 +837,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/leyes-probables",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -851,7 +851,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-diagnostico",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -865,7 +865,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-diagnostico",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -879,7 +879,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-diagnostico",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -893,7 +893,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-especificos",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -921,7 +921,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-especificos",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -949,7 +949,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-modalidad-10",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -963,7 +963,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-modalidad-10",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -977,7 +977,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-modalidad-40",
       "codigo": 200,
-      "tiempo_ms": 8,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -991,7 +991,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-modalidad-40",
       "codigo": 200,
-      "tiempo_ms": 10,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1005,7 +1005,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/objetivos-modalidad-40",
       "codigo": 200,
-      "tiempo_ms": 8,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1047,7 +1047,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/regimenes",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1075,7 +1075,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/roles",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1117,7 +1117,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-asesor",
       "codigo": 200,
-      "tiempo_ms": 12,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1131,7 +1131,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-asesor",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1159,7 +1159,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-correccion",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1173,7 +1173,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-correccion",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1187,7 +1187,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-documento",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 27,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1201,7 +1201,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-documento",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1215,7 +1215,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-documento",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1243,7 +1243,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-evidencia-recuperacion",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1257,7 +1257,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-evidencia-recuperacion",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1271,7 +1271,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-gestion-recuperacion",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1299,7 +1299,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-gestion-recuperacion",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1313,7 +1313,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-inconsistencia",
       "codigo": 200,
-      "tiempo_ms": 8,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1341,7 +1341,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/tipos-inconsistencia",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1355,7 +1355,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 8,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1369,7 +1369,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1383,7 +1383,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 19,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1397,7 +1397,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 400,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1411,7 +1411,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1439,7 +1439,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1467,7 +1467,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1481,7 +1481,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1495,7 +1495,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1523,7 +1523,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/asesor",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1537,7 +1537,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/asesor",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1551,7 +1551,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/asesor",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1565,7 +1565,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1579,7 +1579,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1593,7 +1593,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1607,7 +1607,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares",
       "codigo": 404,
-      "tiempo_ms": 14,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1621,7 +1621,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares",
       "codigo": 403,
-      "tiempo_ms": 6,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1635,7 +1635,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1649,7 +1649,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1663,7 +1663,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/auxiliares/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1691,7 +1691,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1733,7 +1733,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1747,7 +1747,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1761,7 +1761,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1775,7 +1775,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1803,7 +1803,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1845,7 +1845,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1859,7 +1859,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1901,7 +1901,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1915,7 +1915,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1929,7 +1929,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1943,7 +1943,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1957,7 +1957,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1971,7 +1971,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -1985,7 +1985,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss/secundarios",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 13,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -1999,7 +1999,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss/secundarios",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2013,7 +2013,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss/secundarios",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 14,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2027,7 +2027,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss/secundarios",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2041,7 +2041,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss/secundarios",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2055,7 +2055,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/correcciones/00000000-0000-4000-8000-000000000000/unificacion-nss/secundarios",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2069,7 +2069,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2097,7 +2097,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2111,7 +2111,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2125,7 +2125,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2139,7 +2139,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2167,7 +2167,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2181,7 +2181,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2195,7 +2195,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico-inicial/pdf",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2209,7 +2209,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico-inicial/pdf",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2223,7 +2223,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico-inicial/pdf",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2237,7 +2237,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/conveniencia-retroactivo",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2251,7 +2251,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/conveniencia-retroactivo",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2265,7 +2265,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/conveniencia-retroactivo",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2279,7 +2279,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/conveniencia-retroactivo",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2293,7 +2293,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/conveniencia-retroactivo",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2321,7 +2321,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-10",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2335,7 +2335,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-10",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2363,7 +2363,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-10",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2377,7 +2377,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-10",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2391,7 +2391,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-10",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2405,7 +2405,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-40",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2433,7 +2433,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-40",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2475,7 +2475,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/criterios-modalidad-40",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2489,7 +2489,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/documentos",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2517,7 +2517,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/documentos",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2545,7 +2545,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/documentos",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2559,7 +2559,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/documentos",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2587,7 +2587,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2601,7 +2601,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2615,7 +2615,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2629,7 +2629,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2643,7 +2643,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2671,7 +2671,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2685,7 +2685,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2699,7 +2699,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2713,7 +2713,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2727,7 +2727,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/escenarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2741,7 +2741,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/estrategias-recomendadas",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2755,7 +2755,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/estrategias-recomendadas",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2797,7 +2797,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/estrategias-recomendadas",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2811,7 +2811,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/estrategias-recomendadas",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2825,7 +2825,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/inconsistencias-generales",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2839,7 +2839,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/inconsistencias-generales",
       "codigo": 403,
-      "tiempo_ms": 9,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2853,7 +2853,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/inconsistencias-generales",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2867,7 +2867,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/inconsistencias-generales",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2881,7 +2881,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/inconsistencias-generales",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2909,7 +2909,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/modalidad-40-retroactivo",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2923,7 +2923,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/modalidad-40-retroactivo",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2951,7 +2951,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/modalidad-40-retroactivo",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -2965,7 +2965,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/modalidad-40-retroactivo",
       "codigo": 403,
-      "tiempo_ms": 6,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2979,7 +2979,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/modalidad-40-retroactivo",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -2993,7 +2993,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3021,7 +3021,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3035,7 +3035,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3063,7 +3063,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3077,7 +3077,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-10",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3105,7 +3105,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-10",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3119,7 +3119,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-10",
       "codigo": 404,
-      "tiempo_ms": 10,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3133,7 +3133,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-10",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3147,7 +3147,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-10",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3175,7 +3175,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-40",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3203,7 +3203,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-40",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3217,7 +3217,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-40",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3231,7 +3231,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/objetivos-modalidad-40",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3245,7 +3245,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/pdf",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3259,7 +3259,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/pdf",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3287,7 +3287,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3315,7 +3315,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3329,7 +3329,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3357,7 +3357,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3371,7 +3371,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 9,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3385,7 +3385,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3399,7 +3399,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3413,7 +3413,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3427,7 +3427,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 7,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3441,7 +3441,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/plan-accion/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3455,7 +3455,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-evidencias",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3469,7 +3469,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-evidencias",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3483,7 +3483,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-evidencias",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3511,7 +3511,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-evidencias",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3525,7 +3525,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-evidencias",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3539,7 +3539,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-gestiones",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3553,7 +3553,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-gestiones",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3567,7 +3567,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-gestiones",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3595,7 +3595,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-gestiones",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3609,7 +3609,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-gestiones",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3623,7 +3623,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-semanas",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3637,7 +3637,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-semanas",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3651,7 +3651,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-semanas",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3665,7 +3665,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-semanas",
       "codigo": 404,
-      "tiempo_ms": 14,
+      "tiempo_ms": 11,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3679,7 +3679,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/recuperacion-semanas",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3707,7 +3707,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3735,7 +3735,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3749,7 +3749,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3763,7 +3763,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3777,7 +3777,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3791,7 +3791,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 12,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3805,7 +3805,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3819,7 +3819,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3833,7 +3833,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 404,
-      "tiempo_ms": 13,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3847,7 +3847,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3861,7 +3861,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3875,7 +3875,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 404,
-      "tiempo_ms": 4,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3889,7 +3889,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3903,7 +3903,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/diagnostico/situacion-patrimonial/hijos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -3931,7 +3931,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3945,7 +3945,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3959,7 +3959,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos",
       "codigo": 404,
-      "tiempo_ms": 11,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3973,7 +3973,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -3987,7 +3987,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4001,7 +4001,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4015,7 +4015,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4029,7 +4029,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4043,7 +4043,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4057,7 +4057,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4071,7 +4071,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4085,7 +4085,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000/descargar",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4099,7 +4099,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000/descargar",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4113,7 +4113,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/documentos/00000000-0000-4000-8000-000000000000/descargar",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4127,7 +4127,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4141,7 +4141,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 24,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4155,7 +4155,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4169,7 +4169,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4197,7 +4197,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4211,7 +4211,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4225,7 +4225,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4239,7 +4239,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4253,7 +4253,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas/00000000-0000-4000-8000-000000000000/historial",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4267,7 +4267,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas/00000000-0000-4000-8000-000000000000/historial",
       "codigo": 404,
-      "tiempo_ms": 17,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4281,7 +4281,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/etapas/00000000-0000-4000-8000-000000000000/historial",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4295,7 +4295,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/historial-laboral",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4309,7 +4309,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/historial-laboral",
       "codigo": 403,
-      "tiempo_ms": 6,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4323,7 +4323,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/historial-laboral",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4365,7 +4365,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/historial-laboral",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4393,7 +4393,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/historial-laboral/issste",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4449,7 +4449,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/historial-laboral/issste",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4463,7 +4463,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/objetivos-especificos",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4477,7 +4477,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/objetivos-especificos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4491,7 +4491,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/objetivos-especificos",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4505,7 +4505,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/objetivos-especificos",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4519,7 +4519,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/objetivos-especificos",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4533,7 +4533,7 @@
       "metodo": "PUT",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/objetivos-especificos",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4547,7 +4547,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4561,7 +4561,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4575,7 +4575,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4617,7 +4617,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4631,7 +4631,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4645,7 +4645,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4659,7 +4659,7 @@
       "metodo": "DELETE",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4673,7 +4673,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4701,7 +4701,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/clientes/00000000-0000-4000-8000-000000000000/periodos-inconsistencias/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4743,7 +4743,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/correcciones",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4757,7 +4757,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/dashboard",
       "codigo": 200,
-      "tiempo_ms": 42,
+      "tiempo_ms": 46,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4771,7 +4771,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/dashboard",
       "codigo": 200,
-      "tiempo_ms": 10,
+      "tiempo_ms": 15,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4785,7 +4785,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/dashboard",
       "codigo": 200,
-      "tiempo_ms": 12,
+      "tiempo_ms": 15,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4799,7 +4799,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4813,7 +4813,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4827,7 +4827,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones",
       "codigo": 400,
-      "tiempo_ms": 5,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4841,7 +4841,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/health",
       "codigo": 200,
-      "tiempo_ms": 3,
+      "tiempo_ms": 1,
       "aserciones": [
         {
           "nombre": "pública: sin token, distinto de 401 y 403",
@@ -4855,7 +4855,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/health",
       "codigo": 200,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "pública: sin token, distinto de 401 y 403",
@@ -4869,7 +4869,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/health",
       "codigo": 200,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "pública: sin token, distinto de 401 y 403",
@@ -4883,7 +4883,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes",
       "codigo": 400,
-      "tiempo_ms": 4,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4897,7 +4897,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4911,7 +4911,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes",
       "codigo": 400,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4925,7 +4925,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes/pdf",
       "codigo": 400,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4939,7 +4939,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes/pdf",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4953,7 +4953,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes/pdf",
       "codigo": 400,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -4967,7 +4967,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 403,
-      "tiempo_ms": 2,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4981,7 +4981,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -4995,7 +4995,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 200,
-      "tiempo_ms": 9,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -5009,7 +5009,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5023,7 +5023,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5037,7 +5037,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 400,
-      "tiempo_ms": 6,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -5051,7 +5051,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5065,7 +5065,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5079,7 +5079,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -5093,7 +5093,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5107,7 +5107,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5121,7 +5121,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000",
       "codigo": 404,
-      "tiempo_ms": 8,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -5163,7 +5163,7 @@
       "metodo": "PATCH",
       "url": "http://localhost:3001/api/v1/usuarios/00000000-0000-4000-8000-000000000000/contrasena",
       "codigo": 400,
-      "tiempo_ms": 4,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "supera los guards: distinto de 401 y 403",
@@ -5177,7 +5177,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/regimenes",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5195,7 +5195,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/leyes-probables",
       "codigo": 200,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5213,7 +5213,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/catalogos/afores",
       "codigo": 200,
-      "tiempo_ms": 6,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5231,7 +5231,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5249,7 +5249,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/usuarios",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5267,7 +5267,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 201,
-      "tiempo_ms": 21,
+      "tiempo_ms": 15,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -5283,9 +5283,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "GET /clientes/:id/etapas trae las 16 etapas (0 a 15)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas",
       "codigo": 200,
-      "tiempo_ms": 10,
+      "tiempo_ms": 14,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5309,9 +5309,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "GET /clientes/:id del Asesor 2 (no es suyo)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b",
       "codigo": 404,
-      "tiempo_ms": 5,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 403 o 404",
@@ -5323,9 +5323,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH etapa a Bloqueado sin motivo",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/0ec4d585-046a-4b3b-8cd8-d81f7289c5c1",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/4121dcef-04b8-4059-b1ae-fb16bfb599e9",
       "codigo": 400,
-      "tiempo_ms": 11,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 400",
@@ -5341,9 +5341,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH etapa a Bloqueado con motivo",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/0ec4d585-046a-4b3b-8cd8-d81f7289c5c1",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/4121dcef-04b8-4059-b1ae-fb16bfb599e9",
       "codigo": 200,
-      "tiempo_ms": 18,
+      "tiempo_ms": 20,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5359,9 +5359,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH En proceso cliente con avance 10 (fuera de 20 a 90)",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/0ec4d585-046a-4b3b-8cd8-d81f7289c5c1",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/4121dcef-04b8-4059-b1ae-fb16bfb599e9",
       "codigo": 400,
-      "tiempo_ms": 11,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 400",
@@ -5373,9 +5373,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH En proceso cliente con avance 95 (fuera de 20 a 90)",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/0ec4d585-046a-4b3b-8cd8-d81f7289c5c1",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/4121dcef-04b8-4059-b1ae-fb16bfb599e9",
       "codigo": 400,
-      "tiempo_ms": 11,
+      "tiempo_ms": 13,
       "aserciones": [
         {
           "nombre": "estado 400",
@@ -5387,9 +5387,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH En proceso cliente con avance 50",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/0ec4d585-046a-4b3b-8cd8-d81f7289c5c1",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/4121dcef-04b8-4059-b1ae-fb16bfb599e9",
       "codigo": 200,
-      "tiempo_ms": 17,
+      "tiempo_ms": 13,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5405,9 +5405,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "GET historial de la etapa: bitácora con los dos cambios",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/0ec4d585-046a-4b3b-8cd8-d81f7289c5c1/historial",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/4121dcef-04b8-4059-b1ae-fb16bfb599e9/historial",
       "codigo": 200,
-      "tiempo_ms": 14,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5427,9 +5427,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "GET etapa tras el cambio: estatus y avance coinciden con la bitácora",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas",
       "codigo": 200,
-      "tiempo_ms": 10,
+      "tiempo_ms": 7,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5445,9 +5445,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH /clientes/:id/asesor: el Supervisor reasigna al Asesor 2",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/asesor",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/asesor",
       "codigo": 200,
-      "tiempo_ms": 13,
+      "tiempo_ms": 11,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5463,7 +5463,7 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "GET cliente reasignado: el Asesor 2 ya lo ve",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b",
       "codigo": 200,
       "tiempo_ms": 7,
       "aserciones": [
@@ -5477,9 +5477,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "GET cliente reasignado: el Asesor 1 ya no lo ve",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b",
       "codigo": 404,
-      "tiempo_ms": 14,
+      "tiempo_ms": 5,
       "aserciones": [
         {
           "nombre": "estado 403 o 404",
@@ -5491,9 +5491,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH asesor: el Asesor 2 no puede reasignar (403)",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/asesor",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/asesor",
       "codigo": 403,
-      "tiempo_ms": 3,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -5505,9 +5505,9 @@
       "carpeta": "03 Clientes y etapas",
       "peticion": "PATCH /clientes/:id/asesor: el Supervisor lo devuelve al Asesor 1",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/asesor",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/asesor",
       "codigo": 200,
-      "tiempo_ms": 12,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5519,9 +5519,9 @@
       "carpeta": "04 Documentos",
       "peticion": "GET documentos de un cliente ajeno: el Auxiliar sin autorización",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f218028d-16ef-463c-abf3-388d03e16a42/documentos",
+      "url": "http://localhost:3001/api/v1/clientes/e89c9370-1bd1-4a2e-a93a-5edb23a089b1/documentos",
       "codigo": 404,
-      "tiempo_ms": 9,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 403 o 404",
@@ -5533,9 +5533,9 @@
       "carpeta": "04 Documentos",
       "peticion": "POST documento PDF ficticio (Asesor 1)",
       "metodo": "POST",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/documentos",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/documentos",
       "codigo": 201,
-      "tiempo_ms": 25,
+      "tiempo_ms": 20,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -5551,9 +5551,9 @@
       "carpeta": "04 Documentos",
       "peticion": "GET documentos del cliente: aparece el subido",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/documentos",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/documentos",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 13,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5569,9 +5569,9 @@
       "carpeta": "04 Documentos",
       "peticion": "POST /clientes/:id/auxiliares: el Asesor 1 autoriza al Auxiliar",
       "metodo": "POST",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/auxiliares",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/auxiliares",
       "codigo": 201,
-      "tiempo_ms": 18,
+      "tiempo_ms": 11,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -5583,9 +5583,9 @@
       "carpeta": "04 Documentos",
       "peticion": "GET documentos: el Auxiliar autorizado ya los ve",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/documentos",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/documentos",
       "codigo": 200,
-      "tiempo_ms": 9,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5601,9 +5601,9 @@
       "carpeta": "04 Documentos",
       "peticion": "PATCH documento: el Auxiliar lo revisa (estatus si)",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/documentos/e66bf18a-1f60-4131-ba2a-22701115a9db",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/documentos/4bec9d04-9a2c-401e-bef6-7ab55a761396",
       "codigo": 200,
-      "tiempo_ms": 13,
+      "tiempo_ms": 12,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5619,9 +5619,9 @@
       "carpeta": "04 Documentos",
       "peticion": "GET descargar documento: es un PDF",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/documentos/e66bf18a-1f60-4131-ba2a-22701115a9db/descargar",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/documentos/4bec9d04-9a2c-401e-bef6-7ab55a761396/descargar",
       "codigo": 200,
-      "tiempo_ms": 9,
+      "tiempo_ms": 16,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5641,7 +5641,7 @@
       "carpeta": "04 Documentos",
       "peticion": "GET descargar documento sin token",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/documentos/e66bf18a-1f60-4131-ba2a-22701115a9db/descargar",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/documentos/4bec9d04-9a2c-401e-bef6-7ab55a761396/descargar",
       "codigo": 401,
       "tiempo_ms": 2,
       "aserciones": [
@@ -5655,9 +5655,9 @@
       "carpeta": "05 F0",
       "peticion": "GET F0 en PDF (Asesor 1)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico-inicial/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico-inicial/pdf",
       "codigo": 200,
-      "tiempo_ms": 346,
+      "tiempo_ms": 242,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5677,9 +5677,9 @@
       "carpeta": "05 F0",
       "peticion": "GET F0 en PDF (Auxiliar autorizado)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico-inicial/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico-inicial/pdf",
       "codigo": 200,
-      "tiempo_ms": 314,
+      "tiempo_ms": 287,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5699,9 +5699,9 @@
       "carpeta": "05 F0",
       "peticion": "GET F0 en PDF (Auxiliar, cliente no autorizado)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f218028d-16ef-463c-abf3-388d03e16a42/diagnostico-inicial/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/e89c9370-1bd1-4a2e-a93a-5edb23a089b1/diagnostico-inicial/pdf",
       "codigo": 404,
-      "tiempo_ms": 7,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403 o 404",
@@ -5713,7 +5713,7 @@
       "carpeta": "05 F0",
       "peticion": "GET F0 en PDF sin token",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico-inicial/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico-inicial/pdf",
       "codigo": 401,
       "tiempo_ms": 2,
       "aserciones": [
@@ -5727,9 +5727,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "GET F1 en PDF sin diagnóstico creado: 409",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/pdf",
       "codigo": 409,
-      "tiempo_ms": 11,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "estado 409",
@@ -5741,9 +5741,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "POST diagnóstico vacío",
       "metodo": "POST",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico",
       "codigo": 201,
-      "tiempo_ms": 27,
+      "tiempo_ms": 20,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -5755,9 +5755,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "GET etapa 1 sigue Por iniciar con un diagnóstico vacío",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas",
       "codigo": 200,
-      "tiempo_ms": 12,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5773,9 +5773,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT objetivos (primera sección completa)",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/objetivos",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/objetivos",
       "codigo": 200,
-      "tiempo_ms": 31,
+      "tiempo_ms": 21,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5787,9 +5787,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "GET etapa 1: En proceso asesor con avance 25",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5809,9 +5809,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "GET F1 en PDF con faltantes: 409 y la lista de lo que falta",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/pdf",
       "codigo": 409,
-      "tiempo_ms": 34,
+      "tiempo_ms": 30,
       "aserciones": [
         {
           "nombre": "estado 409",
@@ -5831,9 +5831,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PATCH diagnóstico: campos obligatorios del formato",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico",
       "codigo": 200,
-      "tiempo_ms": 22,
+      "tiempo_ms": 30,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5845,9 +5845,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT objetivos (con objetivo propio)",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/objetivos",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/objetivos",
       "codigo": 200,
-      "tiempo_ms": 23,
+      "tiempo_ms": 17,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5859,21 +5859,7 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT documentos",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/documentos",
-      "codigo": 200,
-      "tiempo_ms": 24,
-      "aserciones": [
-        {
-          "nombre": "estado 200",
-          "paso": true
-        }
-      ]
-    },
-    {
-      "carpeta": "06 F1 por pasos",
-      "peticion": "PUT inconsistencias-generales",
-      "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/inconsistencias-generales",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/documentos",
       "codigo": 200,
       "tiempo_ms": 16,
       "aserciones": [
@@ -5885,11 +5871,11 @@
     },
     {
       "carpeta": "06 F1 por pasos",
-      "peticion": "PUT recuperacion-semanas",
+      "peticion": "PUT inconsistencias-generales",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/recuperacion-semanas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/inconsistencias-generales",
       "codigo": 200,
-      "tiempo_ms": 31,
+      "tiempo_ms": 28,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5899,9 +5885,9 @@
     },
     {
       "carpeta": "06 F1 por pasos",
-      "peticion": "PUT recuperacion-gestiones",
+      "peticion": "PUT recuperacion-semanas",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/recuperacion-gestiones",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/recuperacion-semanas",
       "codigo": 200,
       "tiempo_ms": 22,
       "aserciones": [
@@ -5913,9 +5899,23 @@
     },
     {
       "carpeta": "06 F1 por pasos",
+      "peticion": "PUT recuperacion-gestiones",
+      "metodo": "PUT",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/recuperacion-gestiones",
+      "codigo": 200,
+      "tiempo_ms": 17,
+      "aserciones": [
+        {
+          "nombre": "estado 200",
+          "paso": true
+        }
+      ]
+    },
+    {
+      "carpeta": "06 F1 por pasos",
       "peticion": "PUT recuperacion-evidencias",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/recuperacion-evidencias",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/recuperacion-evidencias",
       "codigo": 200,
       "tiempo_ms": 21,
       "aserciones": [
@@ -5929,9 +5929,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT objetivos-modalidad-10",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/objetivos-modalidad-10",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/objetivos-modalidad-10",
       "codigo": 200,
-      "tiempo_ms": 25,
+      "tiempo_ms": 14,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5943,9 +5943,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT criterios-modalidad-10",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/criterios-modalidad-10",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/criterios-modalidad-10",
       "codigo": 200,
-      "tiempo_ms": 20,
+      "tiempo_ms": 32,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5957,21 +5957,7 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT objetivos-modalidad-40",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/objetivos-modalidad-40",
-      "codigo": 200,
-      "tiempo_ms": 17,
-      "aserciones": [
-        {
-          "nombre": "estado 200",
-          "paso": true
-        }
-      ]
-    },
-    {
-      "carpeta": "06 F1 por pasos",
-      "peticion": "PUT criterios-modalidad-40",
-      "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/criterios-modalidad-40",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/objetivos-modalidad-40",
       "codigo": 200,
       "tiempo_ms": 16,
       "aserciones": [
@@ -5983,11 +5969,25 @@
     },
     {
       "carpeta": "06 F1 por pasos",
+      "peticion": "PUT criterios-modalidad-40",
+      "metodo": "PUT",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/criterios-modalidad-40",
+      "codigo": 200,
+      "tiempo_ms": 15,
+      "aserciones": [
+        {
+          "nombre": "estado 200",
+          "paso": true
+        }
+      ]
+    },
+    {
+      "carpeta": "06 F1 por pasos",
       "peticion": "PUT modalidad-40-retroactivo",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/modalidad-40-retroactivo",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/modalidad-40-retroactivo",
       "codigo": 200,
-      "tiempo_ms": 21,
+      "tiempo_ms": 16,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -5999,9 +5999,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT conveniencia-retroactivo",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/conveniencia-retroactivo",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/conveniencia-retroactivo",
       "codigo": 200,
-      "tiempo_ms": 17,
+      "tiempo_ms": 15,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6013,9 +6013,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "POST escenario de pensión",
       "metodo": "POST",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/escenarios",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/escenarios",
       "codigo": 201,
-      "tiempo_ms": 31,
+      "tiempo_ms": 32,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -6027,9 +6027,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT situacion-patrimonial",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/situacion-patrimonial",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/situacion-patrimonial",
       "codigo": 200,
-      "tiempo_ms": 22,
+      "tiempo_ms": 24,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6041,9 +6041,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT situacion-patrimonial/hijos",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/situacion-patrimonial/hijos",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/situacion-patrimonial/hijos",
       "codigo": 200,
-      "tiempo_ms": 30,
+      "tiempo_ms": 19,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6055,9 +6055,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "PUT estrategias-recomendadas",
       "metodo": "PUT",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/estrategias-recomendadas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/estrategias-recomendadas",
       "codigo": 200,
-      "tiempo_ms": 17,
+      "tiempo_ms": 26,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6069,9 +6069,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "POST plan-accion",
       "metodo": "POST",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/plan-accion",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/plan-accion",
       "codigo": 201,
-      "tiempo_ms": 35,
+      "tiempo_ms": 20,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -6083,9 +6083,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "POST periodo con inconsistencia",
       "metodo": "POST",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/periodos-inconsistencias",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/periodos-inconsistencias",
       "codigo": 201,
-      "tiempo_ms": 25,
+      "tiempo_ms": 18,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -6097,9 +6097,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "GET etapa 1 con el F1 completo: avance entre 25 y 90",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6119,9 +6119,9 @@
       "carpeta": "06 F1 por pasos",
       "peticion": "GET F1 en PDF completo: 200",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/diagnostico/pdf",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/diagnostico/pdf",
       "codigo": 200,
-      "tiempo_ms": 323,
+      "tiempo_ms": 242,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6147,7 +6147,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 200,
-      "tiempo_ms": 26,
+      "tiempo_ms": 15,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6169,7 +6169,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 43,
+      "tiempo_ms": 40,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6191,7 +6191,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 201,
-      "tiempo_ms": 15,
+      "tiempo_ms": 11,
       "aserciones": [
         {
           "nombre": "estado 201",
@@ -6205,7 +6205,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 49,
+      "tiempo_ms": 34,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6225,9 +6225,9 @@
       "carpeta": "07 Agenda y avisos",
       "peticion": "PATCH /avisos/:id/atender",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/avisos/6ed85720-7a6a-4206-acc9-9c967eb07d00/atender",
+      "url": "http://localhost:3001/api/v1/avisos/5b31a0c9-ce4c-44c0-b612-95b92ddb9c55/atender",
       "codigo": 200,
-      "tiempo_ms": 21,
+      "tiempo_ms": 15,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6243,7 +6243,7 @@
       "carpeta": "07 Agenda y avisos",
       "peticion": "GET /avisos/:id: ya está atendido",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/avisos/6ed85720-7a6a-4206-acc9-9c967eb07d00",
+      "url": "http://localhost:3001/api/v1/avisos/5b31a0c9-ce4c-44c0-b612-95b92ddb9c55",
       "codigo": 200,
       "tiempo_ms": 6,
       "aserciones": [
@@ -6261,9 +6261,9 @@
       "carpeta": "07 Agenda y avisos",
       "peticion": "PATCH etapa 5: compromiso a dos días",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/clientes/f1bbb283-cec4-4f50-804f-35109825b2b2/etapas/847b0156-68d0-4a98-83b5-80ab5df510ed",
+      "url": "http://localhost:3001/api/v1/clientes/937928a2-f090-4c49-8340-c8d5b85dbf1b/etapas/538a9987-c29a-48d5-8380-5b3f5afbeefd",
       "codigo": 200,
-      "tiempo_ms": 16,
+      "tiempo_ms": 33,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6277,7 +6277,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 45,
+      "tiempo_ms": 63,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6297,9 +6297,9 @@
       "carpeta": "07 Agenda y avisos",
       "peticion": "PATCH /avisos/:id/atender (trámite)",
       "metodo": "PATCH",
-      "url": "http://localhost:3001/api/v1/avisos/f496f984-eb3a-4e7a-a24c-a2d32dabbb2d/atender",
+      "url": "http://localhost:3001/api/v1/avisos/3732e74b-f17d-4755-ad73-91eb11a08cd4/atender",
       "codigo": 200,
-      "tiempo_ms": 11,
+      "tiempo_ms": 14,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6331,7 +6331,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=semanal",
       "codigo": 200,
-      "tiempo_ms": 18,
+      "tiempo_ms": 12,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6353,7 +6353,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=mensual",
       "codigo": 200,
-      "tiempo_ms": 14,
+      "tiempo_ms": 13,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6375,7 +6375,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=trimestral",
       "codigo": 200,
-      "tiempo_ms": 15,
+      "tiempo_ms": 17,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6397,7 +6397,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes/pdf?periodo=mensual",
       "codigo": 200,
-      "tiempo_ms": 286,
+      "tiempo_ms": 222,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6419,7 +6419,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=anual",
       "codigo": 400,
-      "tiempo_ms": 4,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 400",
@@ -6433,7 +6433,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=mensual",
       "codigo": 200,
-      "tiempo_ms": 11,
+      "tiempo_ms": 12,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6451,7 +6451,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=mensual",
       "codigo": 403,
-      "tiempo_ms": 4,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -6465,7 +6465,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/reportes?periodo=mensual",
       "codigo": 401,
-      "tiempo_ms": 3,
+      "tiempo_ms": 2,
       "aserciones": [
         {
           "nombre": "estado 401",
@@ -6479,7 +6479,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 8,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6493,7 +6493,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones?simulacro=true",
       "codigo": 200,
-      "tiempo_ms": 143,
+      "tiempo_ms": 147,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6515,14 +6515,14 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 11,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 200",
           "paso": true
         },
         {
-          "nombre": "el número de clientes del Supervisor no cambió (110)",
+          "nombre": "el número de clientes del Supervisor no cambió (117)",
           "paso": true
         }
       ]
@@ -6533,7 +6533,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones?simulacro=false",
       "codigo": 200,
-      "tiempo_ms": 87,
+      "tiempo_ms": 83,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6559,14 +6559,14 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 9,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "estado 200",
           "paso": true
         },
         {
-          "nombre": "el número de clientes del Supervisor no cambió (110)",
+          "nombre": "el número de clientes del Supervisor no cambió (117)",
           "paso": true
         }
       ]
@@ -6577,7 +6577,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones?simulacro=true",
       "codigo": 400,
-      "tiempo_ms": 3,
+      "tiempo_ms": 6,
       "aserciones": [
         {
           "nombre": "estado 400",
@@ -6591,7 +6591,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones?simulacro=quizas",
       "codigo": 400,
-      "tiempo_ms": 5,
+      "tiempo_ms": 3,
       "aserciones": [
         {
           "nombre": "estado 400",
@@ -6605,7 +6605,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones?simulacro=true",
       "codigo": 403,
-      "tiempo_ms": 5,
+      "tiempo_ms": 4,
       "aserciones": [
         {
           "nombre": "estado 403",
@@ -6619,7 +6619,7 @@
       "metodo": "POST",
       "url": "http://localhost:3001/api/v1/etl/importaciones?simulacro=true",
       "codigo": 401,
-      "tiempo_ms": 3,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "estado 401",
@@ -6633,7 +6633,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/dashboard",
       "codigo": 200,
-      "tiempo_ms": 17,
+      "tiempo_ms": 12,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6647,7 +6647,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/dashboard",
       "codigo": 200,
-      "tiempo_ms": 11,
+      "tiempo_ms": 13,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6661,7 +6661,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 8,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6679,7 +6679,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/clientes",
       "codigo": 200,
-      "tiempo_ms": 12,
+      "tiempo_ms": 31,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6695,7 +6695,7 @@
       "carpeta": "10 Consultas clave",
       "peticion": "GET /clientes/:id (Asesor 1)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f218028d-16ef-463c-abf3-388d03e16a42",
+      "url": "http://localhost:3001/api/v1/clientes/e89c9370-1bd1-4a2e-a93a-5edb23a089b1",
       "codigo": 200,
       "tiempo_ms": 7,
       "aserciones": [
@@ -6713,9 +6713,9 @@
       "carpeta": "10 Consultas clave",
       "peticion": "GET /clientes/:id/etapas (Asesor 1)",
       "metodo": "GET",
-      "url": "http://localhost:3001/api/v1/clientes/f218028d-16ef-463c-abf3-388d03e16a42/etapas",
+      "url": "http://localhost:3001/api/v1/clientes/e89c9370-1bd1-4a2e-a93a-5edb23a089b1/etapas",
       "codigo": 200,
-      "tiempo_ms": 7,
+      "tiempo_ms": 9,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6733,7 +6733,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/agenda",
       "codigo": 200,
-      "tiempo_ms": 29,
+      "tiempo_ms": 35,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6755,7 +6755,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/avisos",
       "codigo": 200,
-      "tiempo_ms": 63,
+      "tiempo_ms": 35,
       "aserciones": [
         {
           "nombre": "estado 200",
@@ -6777,7 +6777,7 @@
       "metodo": "GET",
       "url": "http://localhost:3001/api/v1/correcciones",
       "codigo": 200,
-      "tiempo_ms": 9,
+      "tiempo_ms": 10,
       "aserciones": [
         {
           "nombre": "estado 200",

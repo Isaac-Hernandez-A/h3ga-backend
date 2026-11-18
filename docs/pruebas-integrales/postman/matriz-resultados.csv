@@ -1,358 +1,358 @@
 rol,metodo,ruta,esperado,codigo_obtenido,tiempo_ms
-asesor,GET,/agenda,supera los guards,200,55
+asesor,GET,/agenda,supera los guards,200,49
 auxiliar,GET,/agenda,supera los guards,200,7
-supervisor,GET,/agenda,supera los guards,200,26
+supervisor,GET,/agenda,supera los guards,200,31
 asesor,POST,/agenda,supera los guards,400,3
-auxiliar,POST,/agenda,403,403,7
-supervisor,POST,/agenda,403,403,3
-asesor,GET,/agenda/:eventoId,supera los guards,404,6
-auxiliar,GET,/agenda/:eventoId,supera los guards,404,7
-supervisor,GET,/agenda/:eventoId,supera los guards,404,7
-asesor,PATCH,/agenda/:eventoId,supera los guards,404,9
-auxiliar,PATCH,/agenda/:eventoId,403,403,4
-supervisor,PATCH,/agenda/:eventoId,403,403,3
+auxiliar,POST,/agenda,403,403,4
+supervisor,POST,/agenda,403,403,4
+asesor,GET,/agenda/:eventoId,supera los guards,404,9
+auxiliar,GET,/agenda/:eventoId,supera los guards,404,5
+supervisor,GET,/agenda/:eventoId,supera los guards,404,4
+asesor,PATCH,/agenda/:eventoId,supera los guards,404,4
+auxiliar,PATCH,/agenda/:eventoId,403,403,3
+supervisor,PATCH,/agenda/:eventoId,403,403,4
 asesor,PATCH,/auth/contrasena,supera los guards,400,4
-auxiliar,PATCH,/auth/contrasena,supera los guards,400,4
+auxiliar,PATCH,/auth/contrasena,supera los guards,400,3
 supervisor,PATCH,/auth/contrasena,supera los guards,400,3
 asesor,POST,/auth/login,pública,400,3
 auxiliar,POST,/auth/login,pública,400,2
 supervisor,POST,/auth/login,pública,400,2
 asesor,GET,/auxiliares,supera los guards,200,7
-auxiliar,GET,/auxiliares,403,403,5
-supervisor,GET,/auxiliares,supera los guards,200,6
-asesor,GET,/avisos,supera los guards,200,68
-auxiliar,GET,/avisos,supera los guards,200,26
-supervisor,GET,/avisos,supera los guards,200,43
-asesor,GET,/avisos/:avisoId,supera los guards,404,9
+auxiliar,GET,/auxiliares,403,403,3
+supervisor,GET,/auxiliares,supera los guards,200,10
+asesor,GET,/avisos,supera los guards,200,79
+auxiliar,GET,/avisos,supera los guards,200,10
+supervisor,GET,/avisos,supera los guards,200,48
+asesor,GET,/avisos/:avisoId,supera los guards,404,10
 auxiliar,GET,/avisos/:avisoId,supera los guards,404,6
 supervisor,GET,/avisos/:avisoId,supera los guards,404,5
-asesor,PATCH,/avisos/:avisoId/atender,supera los guards,404,6
-auxiliar,PATCH,/avisos/:avisoId/atender,supera los guards,404,5
-supervisor,PATCH,/avisos/:avisoId/atender,supera los guards,404,7
-asesor,GET,/catalogos/afores,supera los guards,200,5
-auxiliar,GET,/catalogos/afores,supera los guards,200,4
-supervisor,GET,/catalogos/afores,supera los guards,200,6
+asesor,PATCH,/avisos/:avisoId/atender,supera los guards,404,5
+auxiliar,PATCH,/avisos/:avisoId/atender,supera los guards,404,10
+supervisor,PATCH,/avisos/:avisoId/atender,supera los guards,404,6
+asesor,GET,/catalogos/afores,supera los guards,200,6
+auxiliar,GET,/catalogos/afores,supera los guards,200,6
+supervisor,GET,/catalogos/afores,supera los guards,200,18
 asesor,GET,/catalogos/documentos-diagnostico,supera los guards,200,6
-auxiliar,GET,/catalogos/documentos-diagnostico,supera los guards,200,7
-supervisor,GET,/catalogos/documentos-diagnostico,supera los guards,200,4
-asesor,GET,/catalogos/estatus,supera los guards,200,5
-auxiliar,GET,/catalogos/estatus,supera los guards,200,5
-supervisor,GET,/catalogos/estatus,supera los guards,200,4
-asesor,GET,/catalogos/estrategias-recomendadas,supera los guards,200,6
-auxiliar,GET,/catalogos/estrategias-recomendadas,supera los guards,200,6
+auxiliar,GET,/catalogos/documentos-diagnostico,supera los guards,200,4
+supervisor,GET,/catalogos/documentos-diagnostico,supera los guards,200,5
+asesor,GET,/catalogos/estatus,supera los guards,200,6
+auxiliar,GET,/catalogos/estatus,supera los guards,200,9
+supervisor,GET,/catalogos/estatus,supera los guards,200,7
+asesor,GET,/catalogos/estrategias-recomendadas,supera los guards,200,5
+auxiliar,GET,/catalogos/estrategias-recomendadas,supera los guards,200,4
 supervisor,GET,/catalogos/estrategias-recomendadas,supera los guards,200,4
-asesor,GET,/catalogos/etapas,supera los guards,501,3
-auxiliar,GET,/catalogos/etapas,supera los guards,501,5
-supervisor,GET,/catalogos/etapas,supera los guards,501,2
-asesor,GET,/catalogos/leyes-probables,supera los guards,200,7
-auxiliar,GET,/catalogos/leyes-probables,supera los guards,200,5
-supervisor,GET,/catalogos/leyes-probables,supera los guards,200,4
-asesor,GET,/catalogos/objetivos-diagnostico,supera los guards,200,7
-auxiliar,GET,/catalogos/objetivos-diagnostico,supera los guards,200,7
-supervisor,GET,/catalogos/objetivos-diagnostico,supera los guards,200,7
-asesor,GET,/catalogos/objetivos-especificos,supera los guards,200,4
+asesor,GET,/catalogos/etapas,supera los guards,501,4
+auxiliar,GET,/catalogos/etapas,supera los guards,501,2
+supervisor,GET,/catalogos/etapas,supera los guards,501,4
+asesor,GET,/catalogos/leyes-probables,supera los guards,200,6
+auxiliar,GET,/catalogos/leyes-probables,supera los guards,200,3
+supervisor,GET,/catalogos/leyes-probables,supera los guards,200,5
+asesor,GET,/catalogos/objetivos-diagnostico,supera los guards,200,5
+auxiliar,GET,/catalogos/objetivos-diagnostico,supera los guards,200,6
+supervisor,GET,/catalogos/objetivos-diagnostico,supera los guards,200,5
+asesor,GET,/catalogos/objetivos-especificos,supera los guards,200,5
 auxiliar,GET,/catalogos/objetivos-especificos,supera los guards,200,4
-supervisor,GET,/catalogos/objetivos-especificos,supera los guards,200,5
+supervisor,GET,/catalogos/objetivos-especificos,supera los guards,200,4
 asesor,GET,/catalogos/objetivos-modalidad-10,supera los guards,200,5
-auxiliar,GET,/catalogos/objetivos-modalidad-10,supera los guards,200,5
-supervisor,GET,/catalogos/objetivos-modalidad-10,supera los guards,200,4
-asesor,GET,/catalogos/objetivos-modalidad-40,supera los guards,200,8
-auxiliar,GET,/catalogos/objetivos-modalidad-40,supera los guards,200,10
-supervisor,GET,/catalogos/objetivos-modalidad-40,supera los guards,200,8
+auxiliar,GET,/catalogos/objetivos-modalidad-10,supera los guards,200,4
+supervisor,GET,/catalogos/objetivos-modalidad-10,supera los guards,200,5
+asesor,GET,/catalogos/objetivos-modalidad-40,supera los guards,200,4
+auxiliar,GET,/catalogos/objetivos-modalidad-40,supera los guards,200,5
+supervisor,GET,/catalogos/objetivos-modalidad-40,supera los guards,200,6
 asesor,GET,/catalogos/regimenes,supera los guards,200,4
 auxiliar,GET,/catalogos/regimenes,supera los guards,200,4
-supervisor,GET,/catalogos/regimenes,supera los guards,200,6
+supervisor,GET,/catalogos/regimenes,supera los guards,200,4
 asesor,GET,/catalogos/roles,supera los guards,200,5
-auxiliar,GET,/catalogos/roles,supera los guards,200,4
+auxiliar,GET,/catalogos/roles,supera los guards,200,5
 supervisor,GET,/catalogos/roles,supera los guards,200,6
 asesor,GET,/catalogos/tipos-asesor,supera los guards,200,5
-auxiliar,GET,/catalogos/tipos-asesor,supera los guards,200,12
-supervisor,GET,/catalogos/tipos-asesor,supera los guards,200,6
+auxiliar,GET,/catalogos/tipos-asesor,supera los guards,200,4
+supervisor,GET,/catalogos/tipos-asesor,supera los guards,200,4
 asesor,GET,/catalogos/tipos-correccion,supera los guards,200,7
-auxiliar,GET,/catalogos/tipos-correccion,supera los guards,200,4
-supervisor,GET,/catalogos/tipos-correccion,supera los guards,200,6
-asesor,GET,/catalogos/tipos-documento,supera los guards,200,7
-auxiliar,GET,/catalogos/tipos-documento,supera los guards,200,4
-supervisor,GET,/catalogos/tipos-documento,supera los guards,200,6
+auxiliar,GET,/catalogos/tipos-correccion,supera los guards,200,7
+supervisor,GET,/catalogos/tipos-correccion,supera los guards,200,4
+asesor,GET,/catalogos/tipos-documento,supera los guards,200,27
+auxiliar,GET,/catalogos/tipos-documento,supera los guards,200,7
+supervisor,GET,/catalogos/tipos-documento,supera los guards,200,8
 asesor,GET,/catalogos/tipos-evidencia-recuperacion,supera los guards,200,6
-auxiliar,GET,/catalogos/tipos-evidencia-recuperacion,supera los guards,200,4
-supervisor,GET,/catalogos/tipos-evidencia-recuperacion,supera los guards,200,5
-asesor,GET,/catalogos/tipos-gestion-recuperacion,supera los guards,200,7
+auxiliar,GET,/catalogos/tipos-evidencia-recuperacion,supera los guards,200,6
+supervisor,GET,/catalogos/tipos-evidencia-recuperacion,supera los guards,200,10
+asesor,GET,/catalogos/tipos-gestion-recuperacion,supera los guards,200,6
 auxiliar,GET,/catalogos/tipos-gestion-recuperacion,supera los guards,200,4
-supervisor,GET,/catalogos/tipos-gestion-recuperacion,supera los guards,200,7
-asesor,GET,/catalogos/tipos-inconsistencia,supera los guards,200,8
+supervisor,GET,/catalogos/tipos-gestion-recuperacion,supera los guards,200,4
+asesor,GET,/catalogos/tipos-inconsistencia,supera los guards,200,6
 auxiliar,GET,/catalogos/tipos-inconsistencia,supera los guards,200,4
-supervisor,GET,/catalogos/tipos-inconsistencia,supera los guards,200,7
-asesor,GET,/clientes,supera los guards,200,8
-auxiliar,GET,/clientes,supera los guards,200,4
-supervisor,GET,/clientes,supera los guards,200,19
-asesor,POST,/clientes,supera los guards,400,5
-auxiliar,POST,/clientes,403,403,3
+supervisor,GET,/catalogos/tipos-inconsistencia,supera los guards,200,4
+asesor,GET,/clientes,supera los guards,200,6
+auxiliar,GET,/clientes,supera los guards,200,5
+supervisor,GET,/clientes,supera los guards,200,8
+asesor,POST,/clientes,supera los guards,400,4
+auxiliar,POST,/clientes,403,403,4
 supervisor,POST,/clientes,403,403,3
-asesor,GET,/clientes/:clienteId,supera los guards,404,6
+asesor,GET,/clientes/:clienteId,supera los guards,404,10
 auxiliar,GET,/clientes/:clienteId,supera los guards,404,8
-supervisor,GET,/clientes/:clienteId,supera los guards,404,5
-asesor,PATCH,/clientes/:clienteId,supera los guards,404,4
-auxiliar,PATCH,/clientes/:clienteId,403,403,2
+supervisor,GET,/clientes/:clienteId,supera los guards,404,4
+asesor,PATCH,/clientes/:clienteId,supera los guards,404,6
+auxiliar,PATCH,/clientes/:clienteId,403,403,3
 supervisor,PATCH,/clientes/:clienteId,403,403,3
-asesor,PATCH,/clientes/:clienteId/asesor,403,403,2
-auxiliar,PATCH,/clientes/:clienteId/asesor,403,403,4
-supervisor,PATCH,/clientes/:clienteId/asesor,supera los guards,404,6
-asesor,GET,/clientes/:clienteId/auxiliares,supera los guards,404,4
-auxiliar,GET,/clientes/:clienteId/auxiliares,403,403,3
-supervisor,GET,/clientes/:clienteId/auxiliares,supera los guards,404,8
-asesor,POST,/clientes/:clienteId/auxiliares,supera los guards,404,14
-auxiliar,POST,/clientes/:clienteId/auxiliares,403,403,6
-supervisor,POST,/clientes/:clienteId/auxiliares,403,403,3
-asesor,PATCH,/clientes/:clienteId/auxiliares/:clienteAuxiliarId,supera los guards,404,7
-auxiliar,PATCH,/clientes/:clienteId/auxiliares/:clienteAuxiliarId,403,403,4
+asesor,PATCH,/clientes/:clienteId/asesor,403,403,3
+auxiliar,PATCH,/clientes/:clienteId/asesor,403,403,3
+supervisor,PATCH,/clientes/:clienteId/asesor,supera los guards,404,5
+asesor,GET,/clientes/:clienteId/auxiliares,supera los guards,404,5
+auxiliar,GET,/clientes/:clienteId/auxiliares,403,403,2
+supervisor,GET,/clientes/:clienteId/auxiliares,supera los guards,404,4
+asesor,POST,/clientes/:clienteId/auxiliares,supera los guards,404,6
+auxiliar,POST,/clientes/:clienteId/auxiliares,403,403,2
+supervisor,POST,/clientes/:clienteId/auxiliares,403,403,2
+asesor,PATCH,/clientes/:clienteId/auxiliares/:clienteAuxiliarId,supera los guards,404,4
+auxiliar,PATCH,/clientes/:clienteId/auxiliares/:clienteAuxiliarId,403,403,2
 supervisor,PATCH,/clientes/:clienteId/auxiliares/:clienteAuxiliarId,403,403,2
-asesor,GET,/clientes/:clienteId/correcciones,supera los guards,404,5
+asesor,GET,/clientes/:clienteId/correcciones,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/correcciones,403,403,3
 supervisor,GET,/clientes/:clienteId/correcciones,403,403,2
-asesor,POST,/clientes/:clienteId/correcciones,supera los guards,404,8
-auxiliar,POST,/clientes/:clienteId/correcciones,403,403,2
-supervisor,POST,/clientes/:clienteId/correcciones,403,403,5
-asesor,DELETE,/clientes/:clienteId/correcciones/:correccionId,supera los guards,404,7
+asesor,POST,/clientes/:clienteId/correcciones,supera los guards,404,4
+auxiliar,POST,/clientes/:clienteId/correcciones,403,403,5
+supervisor,POST,/clientes/:clienteId/correcciones,403,403,3
+asesor,DELETE,/clientes/:clienteId/correcciones/:correccionId,supera los guards,404,4
 auxiliar,DELETE,/clientes/:clienteId/correcciones/:correccionId,403,403,3
-supervisor,DELETE,/clientes/:clienteId/correcciones/:correccionId,403,403,3
+supervisor,DELETE,/clientes/:clienteId/correcciones/:correccionId,403,403,2
 asesor,GET,/clientes/:clienteId/correcciones/:correccionId,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/correcciones/:correccionId,403,403,3
-supervisor,GET,/clientes/:clienteId/correcciones/:correccionId,403,403,3
-asesor,PATCH,/clientes/:clienteId/correcciones/:correccionId,supera los guards,404,5
+supervisor,GET,/clientes/:clienteId/correcciones/:correccionId,403,403,4
+asesor,PATCH,/clientes/:clienteId/correcciones/:correccionId,supera los guards,404,4
 auxiliar,PATCH,/clientes/:clienteId/correcciones/:correccionId,403,403,3
 supervisor,PATCH,/clientes/:clienteId/correcciones/:correccionId,403,403,2
-asesor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,3
-supervisor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,3
-asesor,PUT,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,supera los guards,404,6
-auxiliar,PUT,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,4
-supervisor,PUT,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,2
-asesor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,4
-supervisor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,2
-asesor,POST,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,supera los guards,404,8
-auxiliar,POST,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,3
-supervisor,POST,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,2
-asesor,GET,/clientes/:clienteId/diagnostico,supera los guards,404,6
+asesor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,2
+supervisor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,2
+asesor,PUT,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,supera los guards,404,5
+auxiliar,PUT,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,2
+supervisor,PUT,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss,403,403,3
+asesor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,supera los guards,404,13
+auxiliar,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,3
+supervisor,GET,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,14
+asesor,POST,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,supera los guards,404,4
+auxiliar,POST,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,2
+supervisor,POST,/clientes/:clienteId/correcciones/:correccionId/unificacion-nss/secundarios,403,403,3
+asesor,GET,/clientes/:clienteId/diagnostico,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/diagnostico,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico,403,403,3
-asesor,PATCH,/clientes/:clienteId/diagnostico,supera los guards,404,4
-auxiliar,PATCH,/clientes/:clienteId/diagnostico,403,403,5
-supervisor,PATCH,/clientes/:clienteId/diagnostico,403,403,4
+supervisor,GET,/clientes/:clienteId/diagnostico,403,403,2
+asesor,PATCH,/clientes/:clienteId/diagnostico,supera los guards,404,6
+auxiliar,PATCH,/clientes/:clienteId/diagnostico,403,403,2
+supervisor,PATCH,/clientes/:clienteId/diagnostico,403,403,3
 asesor,POST,/clientes/:clienteId/diagnostico,supera los guards,404,6
-auxiliar,POST,/clientes/:clienteId/diagnostico,403,403,4
-supervisor,POST,/clientes/:clienteId/diagnostico,403,403,4
-asesor,GET,/clientes/:clienteId/diagnostico-inicial/pdf,supera los guards,404,4
-auxiliar,GET,/clientes/:clienteId/diagnostico-inicial/pdf,supera los guards,404,4
-supervisor,GET,/clientes/:clienteId/diagnostico-inicial/pdf,supera los guards,404,6
-asesor,GET,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,4
-supervisor,GET,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,3
-asesor,PUT,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,supera los guards,404,6
-auxiliar,PUT,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,2
+auxiliar,POST,/clientes/:clienteId/diagnostico,403,403,2
+supervisor,POST,/clientes/:clienteId/diagnostico,403,403,3
+asesor,GET,/clientes/:clienteId/diagnostico-inicial/pdf,supera los guards,404,5
+auxiliar,GET,/clientes/:clienteId/diagnostico-inicial/pdf,supera los guards,404,5
+supervisor,GET,/clientes/:clienteId/diagnostico-inicial/pdf,supera los guards,404,4
+asesor,GET,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,2
+supervisor,GET,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,supera los guards,404,5
+auxiliar,PUT,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,3
 supervisor,PUT,/clientes/:clienteId/diagnostico/conveniencia-retroactivo,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-10,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,3
+asesor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-10,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,4
 supervisor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,2
-asesor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-10,supera los guards,404,4
-auxiliar,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,4
-supervisor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,4
-asesor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-40,supera los guards,404,6
+asesor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-10,supera los guards,404,6
+auxiliar,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,6
+supervisor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-10,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-40,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-40,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-40,403,403,3
+supervisor,GET,/clientes/:clienteId/diagnostico/criterios-modalidad-40,403,403,2
 asesor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-40,supera los guards,404,4
 auxiliar,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-40,403,403,3
-supervisor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-40,403,403,2
-asesor,GET,/clientes/:clienteId/diagnostico/documentos,supera los guards,404,5
+supervisor,PUT,/clientes/:clienteId/diagnostico/criterios-modalidad-40,403,403,3
+asesor,GET,/clientes/:clienteId/diagnostico/documentos,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/diagnostico/documentos,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/documentos,403,403,2
+supervisor,GET,/clientes/:clienteId/diagnostico/documentos,403,403,3
 asesor,PUT,/clientes/:clienteId/diagnostico/documentos,supera los guards,404,4
-auxiliar,PUT,/clientes/:clienteId/diagnostico/documentos,403,403,4
-supervisor,PUT,/clientes/:clienteId/diagnostico/documentos,403,403,4
+auxiliar,PUT,/clientes/:clienteId/diagnostico/documentos,403,403,2
+supervisor,PUT,/clientes/:clienteId/diagnostico/documentos,403,403,3
 asesor,GET,/clientes/:clienteId/diagnostico/escenarios,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/escenarios,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/escenarios,403,403,4
-asesor,POST,/clientes/:clienteId/diagnostico/escenarios,supera los guards,404,4
-auxiliar,POST,/clientes/:clienteId/diagnostico/escenarios,403,403,4
-supervisor,POST,/clientes/:clienteId/diagnostico/escenarios,403,403,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/escenarios,403,403,3
+supervisor,GET,/clientes/:clienteId/diagnostico/escenarios,403,403,3
+asesor,POST,/clientes/:clienteId/diagnostico/escenarios,supera los guards,404,5
+auxiliar,POST,/clientes/:clienteId/diagnostico/escenarios,403,403,2
+supervisor,POST,/clientes/:clienteId/diagnostico/escenarios,403,403,3
 asesor,DELETE,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,supera los guards,404,4
-auxiliar,DELETE,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,6
-supervisor,DELETE,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,2
-asesor,PATCH,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,supera los guards,404,4
-auxiliar,PATCH,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,5
-supervisor,PATCH,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/estrategias-recomendadas,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,4
+auxiliar,DELETE,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,4
+supervisor,DELETE,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,3
+asesor,PATCH,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,supera los guards,404,5
+auxiliar,PATCH,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,2
+supervisor,PATCH,/clientes/:clienteId/diagnostico/escenarios/:escenarioId,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/estrategias-recomendadas,supera los guards,404,10
+auxiliar,GET,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,2
 supervisor,GET,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,2
 asesor,PUT,/clientes/:clienteId/diagnostico/estrategias-recomendadas,supera los guards,404,5
-auxiliar,PUT,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,5
-supervisor,PUT,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,5
-asesor,GET,/clientes/:clienteId/diagnostico/inconsistencias-generales,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,9
-supervisor,GET,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,3
-asesor,PUT,/clientes/:clienteId/diagnostico/inconsistencias-generales,supera los guards,404,6
-auxiliar,PUT,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,2
+auxiliar,PUT,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,3
+supervisor,PUT,/clientes/:clienteId/diagnostico/estrategias-recomendadas,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/inconsistencias-generales,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,6
+supervisor,GET,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/inconsistencias-generales,supera los guards,404,5
+auxiliar,PUT,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,3
 supervisor,PUT,/clientes/:clienteId/diagnostico/inconsistencias-generales,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,supera los guards,404,4
-auxiliar,GET,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,4
+asesor,GET,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,supera los guards,404,5
+auxiliar,GET,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,2
 supervisor,GET,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,2
-asesor,PUT,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,supera los guards,404,4
-auxiliar,PUT,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,6
-supervisor,PUT,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/objetivos,supera los guards,404,6
+asesor,PUT,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,supera los guards,404,5
+auxiliar,PUT,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,2
+supervisor,PUT,/clientes/:clienteId/diagnostico/modalidad-40-retroactivo,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/objetivos,supera los guards,404,3
 auxiliar,GET,/clientes/:clienteId/diagnostico/objetivos,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/objetivos,403,403,3
-asesor,PUT,/clientes/:clienteId/diagnostico/objetivos,supera los guards,404,6
+supervisor,GET,/clientes/:clienteId/diagnostico/objetivos,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/objetivos,supera los guards,404,9
 auxiliar,PUT,/clientes/:clienteId/diagnostico/objetivos,403,403,3
-supervisor,PUT,/clientes/:clienteId/diagnostico/objetivos,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,supera los guards,404,5
+supervisor,PUT,/clientes/:clienteId/diagnostico/objetivos,403,403,5
+asesor,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,4
-asesor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,supera los guards,404,10
-auxiliar,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,5
-supervisor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,3
+supervisor,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,supera los guards,404,4
+auxiliar,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,2
+supervisor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-10,403,403,2
 asesor,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,supera los guards,404,4
-auxiliar,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,2
 supervisor,GET,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,5
-asesor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,supera los guards,404,6
-auxiliar,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,3
-supervisor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/pdf,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/pdf,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,supera los guards,404,4
+auxiliar,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,2
+supervisor,PUT,/clientes/:clienteId/diagnostico/objetivos-modalidad-40,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/pdf,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/pdf,403,403,4
 supervisor,GET,/clientes/:clienteId/diagnostico/pdf,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/plan-accion,supera los guards,404,5
+asesor,GET,/clientes/:clienteId/diagnostico/plan-accion,supera los guards,404,3
 auxiliar,GET,/clientes/:clienteId/diagnostico/plan-accion,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/plan-accion,403,403,3
-asesor,POST,/clientes/:clienteId/diagnostico/plan-accion,supera los guards,404,6
+supervisor,GET,/clientes/:clienteId/diagnostico/plan-accion,403,403,4
+asesor,POST,/clientes/:clienteId/diagnostico/plan-accion,supera los guards,404,5
 auxiliar,POST,/clientes/:clienteId/diagnostico/plan-accion,403,403,3
-supervisor,POST,/clientes/:clienteId/diagnostico/plan-accion,403,403,4
-asesor,DELETE,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,supera los guards,404,9
-auxiliar,DELETE,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,3
-supervisor,DELETE,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,2
-asesor,PATCH,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,supera los guards,404,5
-auxiliar,PATCH,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,7
-supervisor,PATCH,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,4
-asesor,GET,/clientes/:clienteId/diagnostico/recuperacion-evidencias,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,2
-supervisor,GET,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,4
+supervisor,POST,/clientes/:clienteId/diagnostico/plan-accion,403,403,3
+asesor,DELETE,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,supera los guards,404,6
+auxiliar,DELETE,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,2
+supervisor,DELETE,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,3
+asesor,PATCH,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,supera los guards,404,3
+auxiliar,PATCH,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,5
+supervisor,PATCH,/clientes/:clienteId/diagnostico/plan-accion/:planAccionId,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/recuperacion-evidencias,supera los guards,404,6
+auxiliar,GET,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,3
+supervisor,GET,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,3
 asesor,PUT,/clientes/:clienteId/diagnostico/recuperacion-evidencias,supera los guards,404,4
-auxiliar,PUT,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,4
-supervisor,PUT,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,4
-asesor,GET,/clientes/:clienteId/diagnostico/recuperacion-gestiones,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,3
-supervisor,GET,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,4
+auxiliar,PUT,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,5
+supervisor,PUT,/clientes/:clienteId/diagnostico/recuperacion-evidencias,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/recuperacion-gestiones,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,5
+supervisor,GET,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,2
 asesor,PUT,/clientes/:clienteId/diagnostico/recuperacion-gestiones,supera los guards,404,4
-auxiliar,PUT,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,4
-supervisor,PUT,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,5
-asesor,GET,/clientes/:clienteId/diagnostico/recuperacion-semanas,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,3
-supervisor,GET,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,3
-asesor,PUT,/clientes/:clienteId/diagnostico/recuperacion-semanas,supera los guards,404,14
-auxiliar,PUT,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,3
+auxiliar,PUT,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,6
+supervisor,PUT,/clientes/:clienteId/diagnostico/recuperacion-gestiones,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/recuperacion-semanas,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,2
+supervisor,GET,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/recuperacion-semanas,supera los guards,404,11
+auxiliar,PUT,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,2
 supervisor,PUT,/clientes/:clienteId/diagnostico/recuperacion-semanas,403,403,3
-asesor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial,supera los guards,404,5
+asesor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial,supera los guards,404,4
 auxiliar,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,4
-supervisor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,3
-asesor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial,supera los guards,404,6
-auxiliar,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,5
-supervisor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,4
-asesor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,4
-supervisor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,3
-asesor,POST,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,supera los guards,404,13
-auxiliar,POST,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,4
-supervisor,POST,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,2
-asesor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,supera los guards,404,4
-auxiliar,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,4
-supervisor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,3
+supervisor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,2
+asesor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial,supera los guards,404,4
+auxiliar,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,3
+supervisor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial,403,403,2
+asesor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,supera los guards,404,12
+auxiliar,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,5
+supervisor,GET,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,2
+asesor,POST,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,supera los guards,404,4
+auxiliar,POST,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,2
+supervisor,POST,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,4
+asesor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,supera los guards,404,8
+auxiliar,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,2
+supervisor,PUT,/clientes/:clienteId/diagnostico/situacion-patrimonial/hijos,403,403,2
 asesor,GET,/clientes/:clienteId/documentos,supera los guards,404,4
-auxiliar,GET,/clientes/:clienteId/documentos,supera los guards,404,5
-supervisor,GET,/clientes/:clienteId/documentos,supera los guards,404,5
-asesor,POST,/clientes/:clienteId/documentos,supera los guards,404,11
-auxiliar,POST,/clientes/:clienteId/documentos,supera los guards,404,6
-supervisor,POST,/clientes/:clienteId/documentos,403,403,3
-asesor,GET,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,8
-supervisor,GET,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,6
-asesor,PATCH,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,6
-auxiliar,PATCH,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,8
-supervisor,PATCH,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,6
-asesor,GET,/clientes/:clienteId/documentos/:documentoId/descargar,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/documentos/:documentoId/descargar,supera los guards,404,7
-supervisor,GET,/clientes/:clienteId/documentos/:documentoId/descargar,supera los guards,404,5
-asesor,GET,/clientes/:clienteId/etapas,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/etapas,supera los guards,404,5
-supervisor,GET,/clientes/:clienteId/etapas,supera los guards,404,5
-asesor,POST,/clientes/:clienteId/etapas,supera los guards,404,6
+auxiliar,GET,/clientes/:clienteId/documentos,supera los guards,404,4
+supervisor,GET,/clientes/:clienteId/documentos,supera los guards,404,3
+asesor,POST,/clientes/:clienteId/documentos,supera los guards,404,8
+auxiliar,POST,/clientes/:clienteId/documentos,supera los guards,404,4
+supervisor,POST,/clientes/:clienteId/documentos,403,403,2
+asesor,GET,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,9
+supervisor,GET,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,8
+asesor,PATCH,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,4
+auxiliar,PATCH,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,6
+supervisor,PATCH,/clientes/:clienteId/documentos/:documentoId,supera los guards,404,7
+asesor,GET,/clientes/:clienteId/documentos/:documentoId/descargar,supera los guards,404,3
+auxiliar,GET,/clientes/:clienteId/documentos/:documentoId/descargar,supera los guards,404,5
+supervisor,GET,/clientes/:clienteId/documentos/:documentoId/descargar,supera los guards,404,3
+asesor,GET,/clientes/:clienteId/etapas,supera los guards,404,9
+auxiliar,GET,/clientes/:clienteId/etapas,supera los guards,404,24
+supervisor,GET,/clientes/:clienteId/etapas,supera los guards,404,4
+asesor,POST,/clientes/:clienteId/etapas,supera los guards,404,4
 auxiliar,POST,/clientes/:clienteId/etapas,403,403,3
-supervisor,POST,/clientes/:clienteId/etapas,403,403,3
-asesor,PATCH,/clientes/:clienteId/etapas/:etapaTramiteId,supera los guards,404,6
-auxiliar,PATCH,/clientes/:clienteId/etapas/:etapaTramiteId,403,403,4
-supervisor,PATCH,/clientes/:clienteId/etapas/:etapaTramiteId,403,403,4
-asesor,GET,/clientes/:clienteId/etapas/:etapaTramiteId/historial,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/etapas/:etapaTramiteId/historial,supera los guards,404,17
-supervisor,GET,/clientes/:clienteId/etapas/:etapaTramiteId/historial,supera los guards,404,6
-asesor,GET,/clientes/:clienteId/historial-laboral,supera los guards,404,5
-auxiliar,GET,/clientes/:clienteId/historial-laboral,403,403,6
-supervisor,GET,/clientes/:clienteId/historial-laboral,supera los guards,404,6
+supervisor,POST,/clientes/:clienteId/etapas,403,403,2
+asesor,PATCH,/clientes/:clienteId/etapas/:etapaTramiteId,supera los guards,404,7
+auxiliar,PATCH,/clientes/:clienteId/etapas/:etapaTramiteId,403,403,3
+supervisor,PATCH,/clientes/:clienteId/etapas/:etapaTramiteId,403,403,2
+asesor,GET,/clientes/:clienteId/etapas/:etapaTramiteId/historial,supera los guards,404,5
+auxiliar,GET,/clientes/:clienteId/etapas/:etapaTramiteId/historial,supera los guards,404,7
+supervisor,GET,/clientes/:clienteId/etapas/:etapaTramiteId/historial,supera los guards,404,5
+asesor,GET,/clientes/:clienteId/historial-laboral,supera los guards,404,3
+auxiliar,GET,/clientes/:clienteId/historial-laboral,403,403,2
+supervisor,GET,/clientes/:clienteId/historial-laboral,supera los guards,404,4
 asesor,PUT,/clientes/:clienteId/historial-laboral,supera los guards,404,5
 auxiliar,PUT,/clientes/:clienteId/historial-laboral,403,403,3
-supervisor,PUT,/clientes/:clienteId/historial-laboral,403,403,2
+supervisor,PUT,/clientes/:clienteId/historial-laboral,403,403,3
 asesor,GET,/clientes/:clienteId/historial-laboral/issste,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/historial-laboral/issste,403,403,3
+auxiliar,GET,/clientes/:clienteId/historial-laboral/issste,403,403,2
 supervisor,GET,/clientes/:clienteId/historial-laboral/issste,supera los guards,404,4
 asesor,PUT,/clientes/:clienteId/historial-laboral/issste,supera los guards,404,4
 auxiliar,PUT,/clientes/:clienteId/historial-laboral/issste,403,403,2
-supervisor,PUT,/clientes/:clienteId/historial-laboral/issste,403,403,4
-asesor,GET,/clientes/:clienteId/objetivos-especificos,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/objetivos-especificos,403,403,3
-supervisor,GET,/clientes/:clienteId/objetivos-especificos,supera los guards,404,8
-asesor,PUT,/clientes/:clienteId/objetivos-especificos,supera los guards,404,6
-auxiliar,PUT,/clientes/:clienteId/objetivos-especificos,403,403,3
-supervisor,PUT,/clientes/:clienteId/objetivos-especificos,403,403,4
-asesor,GET,/clientes/:clienteId/periodos-inconsistencias,supera los guards,404,6
-auxiliar,GET,/clientes/:clienteId/periodos-inconsistencias,403,403,4
-supervisor,GET,/clientes/:clienteId/periodos-inconsistencias,403,403,3
+supervisor,PUT,/clientes/:clienteId/historial-laboral/issste,403,403,2
+asesor,GET,/clientes/:clienteId/objetivos-especificos,supera los guards,404,4
+auxiliar,GET,/clientes/:clienteId/objetivos-especificos,403,403,2
+supervisor,GET,/clientes/:clienteId/objetivos-especificos,supera los guards,404,4
+asesor,PUT,/clientes/:clienteId/objetivos-especificos,supera los guards,404,4
+auxiliar,PUT,/clientes/:clienteId/objetivos-especificos,403,403,2
+supervisor,PUT,/clientes/:clienteId/objetivos-especificos,403,403,2
+asesor,GET,/clientes/:clienteId/periodos-inconsistencias,supera los guards,404,5
+auxiliar,GET,/clientes/:clienteId/periodos-inconsistencias,403,403,2
+supervisor,GET,/clientes/:clienteId/periodos-inconsistencias,403,403,2
 asesor,POST,/clientes/:clienteId/periodos-inconsistencias,supera los guards,404,5
 auxiliar,POST,/clientes/:clienteId/periodos-inconsistencias,403,403,3
-supervisor,POST,/clientes/:clienteId/periodos-inconsistencias,403,403,5
-asesor,DELETE,/clientes/:clienteId/periodos-inconsistencias/:periodoId,supera los guards,404,6
-auxiliar,DELETE,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,4
-supervisor,DELETE,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,4
-asesor,PATCH,/clientes/:clienteId/periodos-inconsistencias/:periodoId,supera los guards,404,6
+supervisor,POST,/clientes/:clienteId/periodos-inconsistencias,403,403,3
+asesor,DELETE,/clientes/:clienteId/periodos-inconsistencias/:periodoId,supera los guards,404,4
+auxiliar,DELETE,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,3
+supervisor,DELETE,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,2
+asesor,PATCH,/clientes/:clienteId/periodos-inconsistencias/:periodoId,supera los guards,404,4
 auxiliar,PATCH,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,4
-supervisor,PATCH,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,5
+supervisor,PATCH,/clientes/:clienteId/periodos-inconsistencias/:periodoId,403,403,2
 asesor,GET,/correcciones,supera los guards,200,9
 auxiliar,GET,/correcciones,403,403,3
-supervisor,GET,/correcciones,403,403,4
-asesor,GET,/dashboard,supera los guards,200,42
-auxiliar,GET,/dashboard,supera los guards,200,10
-supervisor,GET,/dashboard,supera los guards,200,12
-asesor,POST,/etl/importaciones,403,403,4
-auxiliar,POST,/etl/importaciones,403,403,4
-supervisor,POST,/etl/importaciones,supera los guards,400,5
-asesor,GET,/health,pública,200,3
-auxiliar,GET,/health,pública,200,3
-supervisor,GET,/health,pública,200,3
-asesor,GET,/reportes,supera los guards,400,4
-auxiliar,GET,/reportes,403,403,3
-supervisor,GET,/reportes,supera los guards,400,4
-asesor,GET,/reportes/pdf,supera los guards,400,4
-auxiliar,GET,/reportes/pdf,403,403,3
-supervisor,GET,/reportes/pdf,supera los guards,400,3
-asesor,GET,/usuarios,403,403,2
-auxiliar,GET,/usuarios,403,403,4
-supervisor,GET,/usuarios,supera los guards,200,9
-asesor,POST,/usuarios,403,403,4
-auxiliar,POST,/usuarios,403,403,5
-supervisor,POST,/usuarios,supera los guards,400,6
-asesor,GET,/usuarios/:usuarioId,403,403,4
-auxiliar,GET,/usuarios/:usuarioId,403,403,3
-supervisor,GET,/usuarios/:usuarioId,supera los guards,404,7
-asesor,PATCH,/usuarios/:usuarioId,403,403,4
-auxiliar,PATCH,/usuarios/:usuarioId,403,403,3
-supervisor,PATCH,/usuarios/:usuarioId,supera los guards,404,8
+supervisor,GET,/correcciones,403,403,2
+asesor,GET,/dashboard,supera los guards,200,46
+auxiliar,GET,/dashboard,supera los guards,200,15
+supervisor,GET,/dashboard,supera los guards,200,15
+asesor,POST,/etl/importaciones,403,403,2
+auxiliar,POST,/etl/importaciones,403,403,2
+supervisor,POST,/etl/importaciones,supera los guards,400,7
+asesor,GET,/health,pública,200,1
+auxiliar,GET,/health,pública,200,2
+supervisor,GET,/health,pública,200,2
+asesor,GET,/reportes,supera los guards,400,6
+auxiliar,GET,/reportes,403,403,2
+supervisor,GET,/reportes,supera los guards,400,3
+asesor,GET,/reportes/pdf,supera los guards,400,3
+auxiliar,GET,/reportes/pdf,403,403,2
+supervisor,GET,/reportes/pdf,supera los guards,400,2
+asesor,GET,/usuarios,403,403,10
+auxiliar,GET,/usuarios,403,403,2
+supervisor,GET,/usuarios,supera los guards,200,5
+asesor,POST,/usuarios,403,403,2
+auxiliar,POST,/usuarios,403,403,3
+supervisor,POST,/usuarios,supera los guards,400,3
+asesor,GET,/usuarios/:usuarioId,403,403,2
+auxiliar,GET,/usuarios/:usuarioId,403,403,2
+supervisor,GET,/usuarios/:usuarioId,supera los guards,404,10
+asesor,PATCH,/usuarios/:usuarioId,403,403,2
+auxiliar,PATCH,/usuarios/:usuarioId,403,403,2
+supervisor,PATCH,/usuarios/:usuarioId,supera los guards,404,5
 asesor,PATCH,/usuarios/:usuarioId/contrasena,403,403,4
 auxiliar,PATCH,/usuarios/:usuarioId/contrasena,403,403,2
-supervisor,PATCH,/usuarios/:usuarioId/contrasena,supera los guards,400,4
+supervisor,PATCH,/usuarios/:usuarioId/contrasena,supera los guards,400,9
