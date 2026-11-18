@@ -1,0 +1,51 @@
+{
+  "name": "H3GA local (h3ga_test)",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001/api/v1",
+      "enabled": true
+    },
+    {
+      "key": "supervisorCorreo",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "supervisorContrasena",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "asesor1Correo",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "asesor1Contrasena",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "asesor2Correo",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "asesor2Contrasena",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "auxiliarCorreo",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "auxiliarContrasena",
+      "value": "",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
