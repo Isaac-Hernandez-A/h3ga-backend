@@ -1,0 +1,11 @@
+﻿fila,id_excel,curp,nss,motivos
+49,44,•••••••••••••JVFT,•••••••2520,CURP: La CURP no tiene el formato oficial de 18 caracteres.
+50,45,••••••••••••••ZC31,•••••••3022,CURP: La CURP trae una fecha de nacimiento que no existe.
+51,46,••••••••••••••YZM9,•••••••3752,"Fecha de nacimiento: La fecha de nacimiento no tiene un formato de fecha válido (dd/mm/aaaa, aaaa-mm-dd o dd-mmm-aaaa)."
+52,47,••••••••••••••RLS5,•••••1726,NSS: El NSS no tiene exactamente 11 dígitos.
+53,48,••••••••••••••FKF7,•••••••7837,Nombre del cliente: El nombre del cliente viene vacío.
+54,49,••••••••••••••JBU4,•••••••4049,Asesor: Asesor sin equivalencia: Lic. Pedro Gómez.
+55,50,••••••••••••••QH39,•••••••1648,Etapa 1: El estatus de la etapa no está en el catálogo.
+57,52,••••••••••••••GHW0,•••••••1721,Semanas IMSS reconocidas: Las semanas deben ser un número entero de 0 en adelante.
+58,53,••••••••••••••VQG9,•••••••7123,CURP duplicado en el archivo: ya aparece en la fila 17.
+59,54,••••••••••••••XZP2,•••••••9650,NSS duplicado en el archivo: ya aparece en la fila 25.

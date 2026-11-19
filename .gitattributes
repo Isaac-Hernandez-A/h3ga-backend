@@ -1,0 +1,2 @@
+# Saltos de línea LF en todo el repositorio (Prettier espera LF; evita fallos de lint al clonar en Windows).
+* text=auto eol=lf

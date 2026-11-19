@@ -30,6 +30,6 @@ import { RegimenPrincipal } from './entities/regimen-principal.entity';
   ],
   controllers: [ClientesController],
   providers: [ClientesService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, ClientesService],
 })
 export class ClientesModule {}

@@ -331,7 +331,7 @@ ruta,metodo,rol,codigo_esperado,codigo_obtenido
 /api/v1/dashboard,GET,supervisor,supera los guards,200
 /api/v1/etl/importaciones,POST,asesor,403,403
 /api/v1/etl/importaciones,POST,auxiliar,403,403
-/api/v1/etl/importaciones,POST,supervisor,supera los guards,501
+/api/v1/etl/importaciones,POST,supervisor,supera los guards,400
 /api/v1/health,GET,asesor,pública,200
 /api/v1/health,GET,auxiliar,pública,200
 /api/v1/health,GET,supervisor,pública,200

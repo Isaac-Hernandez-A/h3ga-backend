@@ -2,7 +2,7 @@
 
 Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/v1`. Swagger UI: `/api/docs`.
 
-- **Total: 119 rutas.** Implementadas: 116. Siguen en 501 (esbozo) 3: `POST /clientes/:clienteId/etapas`, `GET /catalogos/etapas` y la importación ETL. La tabla siguiente y la sección de cada módulo dan el estado ruta por ruta.
+- **Total: 119 rutas.** Implementadas: 117. Siguen en 501 (esbozo) 2: `POST /clientes/:clienteId/etapas` y `GET /catalogos/etapas`. La tabla siguiente y la sección de cada módulo dan el estado ruta por ruta.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
 - **Aplicación real de los guards (las 114 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health` y `/auth/login` son públicas). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
@@ -22,9 +22,9 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 | avisos         | 3       | 3             | 0            |
 | dashboard      | 1       | 1             | 0            |
 | reportes       | 2       | 2             | 0            |
-| etl            | 1       | 0             | 1            |
+| etl            | 1       | 1             | 0            |
 | health         | 1       | 1             | 0            |
-| **Total**      | **119** | **116**       | **3**        |
+| **Total**      | **119** | **117**       | **2**        |
 
 ## auth
 
@@ -202,9 +202,9 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 ## etl
 
-| Método | Ruta                        | Descripción                        | Roles      | Estado |
-| ------ | --------------------------- | ---------------------------------- | ---------- | ------ |
-| POST   | `/api/v1/etl/importaciones` | Importar un archivo Excel (esbozo) | supervisor | 501    |
+| Método | Ruta                        | Descripción                                                                                                                                                                                                                            | Roles      | Estado       |
+| ------ | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ |
+| POST   | `/api/v1/etl/importaciones` | Importar clientes desde el Excel de control operativo: multipart con el campo `archivo` (.xlsx, máximo 10 MB) y `?simulacro=true` opcional; responde 200 con el reporte, 400 si el archivo no sirve y 503 si falta `ETL_EQUIVALENCIAS` | supervisor | Implementada |
 
 ## health
 

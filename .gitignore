@@ -147,3 +147,6 @@ docs/*.docx
 
 # Archivos subidos con STORAGE_DRIVER=local (desarrollo)
 almacenamiento/
+
+# Reportes de la importación desde Excel (reporte.json y rechazados.csv; traen datos de clientes)
+etl-salida/

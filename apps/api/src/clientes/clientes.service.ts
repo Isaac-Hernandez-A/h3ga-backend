@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomUUID } from 'node:crypto';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 import { AuthenticatedUser } from '../common/auth/authenticated-user';
 import { aplicarAlcanceClientes } from '../common/auth/clientes-accesibles';
 import { ROL_ID } from '../common/auth/roles-sistema';
@@ -34,6 +34,13 @@ const ERRORES_CLIENTE = {
   unica: 'Ya existe un cliente con esa CURP.',
   llaveForanea: 'El régimen, la ley probable o la AFORE indicados no existen.',
 };
+
+// Opciones internas de `crear`: solo las usa código del servidor (la importación desde Excel). No hay
+// forma de fijarlas por HTTP.
+export interface CrearClienteInterno {
+  manager?: EntityManager;
+  asesorId?: string;
+}
 
 @Injectable()
 export class ClientesService {
@@ -62,28 +69,37 @@ export class ClientesService {
   // asesor_id sale siempre del token: el que venga en el cuerpo se ignora. En la misma transacción se
   // crean las 16 etapas del proceso (una por fila de etapas_proceso) en "Por iniciar": el asesor las
   // va actualizando a mano. Si algo falla, no queda ni el cliente ni sus etapas.
-  async crear(usuario: AuthenticatedUser, dto: CreateClienteDto): Promise<Cliente> {
+  //
+  // `interno` es solo para uso desde el código (la importación desde Excel), nunca desde HTTP: ni el DTO ni
+  // el controlador lo reciben. Con `manager`, trabaja dentro de esa transacción en vez de abrir otra (el
+  // llamador confirma o revierte); con `asesorId`, ese usuario es el asesor y no el del token.
+  async crear(
+    usuario: AuthenticatedUser,
+    dto: CreateClienteDto,
+    interno: CrearClienteInterno = {},
+  ): Promise<Cliente> {
+    const trabajo = async (manager: EntityManager): Promise<Cliente> => {
+      const cliente = await manager.save(
+        manager.create(Cliente, { ...dto, asesor_id: interno.asesorId ?? usuario.sub }),
+      );
+      const inicial = await manager.findOneByOrFail(EstatusTramite, { nombre: 'Por iniciar' });
+      const pasos = await manager.find(EtapaProceso);
+      const ahora = new Date();
+      await manager.insert(
+        EtapaTramite,
+        pasos.map((paso) => ({
+          cliente_id: cliente.id,
+          etapa_id: paso.id,
+          estatus_id: inicial.id,
+          avance_porcentaje: inicial.avance_porcentaje_fijo ?? 0,
+          creado_el: ahora,
+          actualizado_el: ahora,
+        })),
+      );
+      return cliente;
+    };
     try {
-      return await this.ds.transaction(async (manager) => {
-        const cliente = await manager.save(
-          manager.create(Cliente, { ...dto, asesor_id: usuario.sub }),
-        );
-        const inicial = await manager.findOneByOrFail(EstatusTramite, { nombre: 'Por iniciar' });
-        const pasos = await manager.find(EtapaProceso);
-        const ahora = new Date();
-        await manager.insert(
-          EtapaTramite,
-          pasos.map((paso) => ({
-            cliente_id: cliente.id,
-            etapa_id: paso.id,
-            estatus_id: inicial.id,
-            avance_porcentaje: inicial.avance_porcentaje_fijo ?? 0,
-            creado_el: ahora,
-            actualizado_el: ahora,
-          })),
-        );
-        return cliente;
-      });
+      return await (interno.manager ? trabajo(interno.manager) : this.ds.transaction(trabajo));
     } catch (error) {
       return traducirErrorBd(error, ERRORES_CLIENTE);
     }

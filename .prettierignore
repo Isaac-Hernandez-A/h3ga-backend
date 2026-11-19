@@ -5,3 +5,10 @@ dist
 coverage
 pnpm-lock.yaml
 docs/superpowers
+.superpowers
+
+# Evidencia generada por la importacion con el Excel ficticio: se conserva tal como la escribio la corrida
+docs/etl-corrida-ficticia
+
+# Documentos de trabajo fuera del producto (no los ve el CI)
+mnt
