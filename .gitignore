@@ -150,3 +150,9 @@ almacenamiento/
 
 # Reportes de la importación desde Excel (reporte.json y rechazados.csv; traen datos de clientes)
 etl-salida/
+
+# Excel con datos de clientes: nunca al repositorio (solo los dos ficticios de pruebas)
+*.xlsx
+*.xls
+!test/fixtures/etl/FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx
+!docs/pruebas-integrales/postman/archivos/FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx
