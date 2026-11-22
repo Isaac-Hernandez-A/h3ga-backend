@@ -25,7 +25,12 @@ const TAGS: Array<[string, string]> = [
   ['health', 'Estado del servicio.'],
 ];
 
-export function setupSwagger(app: INestApplication): void {
+// Swagger no se publica con NODE_ENV=production. Devuelve si lo publicó.
+export function setupSwagger(
+  app: INestApplication,
+  nodeEnv: string | undefined = process.env.NODE_ENV,
+): boolean {
+  if (nodeEnv === 'production') return false;
   const builder = new DocumentBuilder()
     .setTitle('H3GA API')
     .setDescription(
@@ -55,4 +60,5 @@ export function setupSwagger(app: INestApplication): void {
   SwaggerModule.setup(SWAGGER_PATH, app, document, {
     swaggerOptions: { persistAuthorization: true, docExpansion: 'none' },
   });
+  return true;
 }
