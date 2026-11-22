@@ -9,7 +9,7 @@ Fecha: 2026-11-17. Objetivo específico 9. Entorno local y datos ficticios, base
 | Backend (Jest, `pnpm test:reporte`) | 738 en 75 suites               | 737            | 0      | 1        | 177.6 s de reloj (702 s sumando el tiempo de cada suite) |
 | Frontend unitarias (Vitest)         | 455 en 30 archivos             | 455            | 0      | 0        | 69.9 s                                                   |
 | Playwright (Chrome)                 | 8 (CF-15 a CF-22)              | 8              | 0      | 0        | 88 s (1.4 min), corrida final                            |
-| Newman (colección de Postman)       | 461 peticiones, 541 aserciones | 541 aserciones | 0      | 0        | 45.6 s                                                   |
+| Newman (colección de Postman)       | 464 peticiones, 544 aserciones | 544 aserciones | 0      | 0        | 42.2 s                                                   |
 
 Notas de lectura:
 
@@ -17,13 +17,13 @@ Notas de lectura:
 - La única prueba omitida de Jest es el generador de evidencia de la ETL (CP-347), que solo corre con `ETL_EVIDENCIA=1`.
 - Los números de Vitest y Playwright salen del repositorio `h3ga-frontend` (con sus cambios sin versionar tal como estaban). Los casos de Playwright (CF-15 a CF-22) dependen de la API real: se corrieron contra la API arrancada con la base de pruebas y el Supervisor de `pnpm pruebas:datos`.
 - Playwright, historial de corridas: la primera corrida dio 1 fallo (CF-15) y 7 sin correr por el modo serial; CF-16 a CF-22 corridos aparte pasaron 7 de 7 (64 s). Tras corregir el localizador de CF-15 (ver Defectos), CF-15 solo pasó (40 s) y la corrida completa dio 8 de 8 en 88 s. No se cambió el producto.
-- Total de casos ejecutados, sin mezclar unidades: 738 de backend, 455 unitarias de frontend, 8 de navegador y 461 peticiones de Newman (541 aserciones).
+- Total de casos ejecutados, sin mezclar unidades: 738 de backend, 455 unitarias de frontend, 8 de navegador y 464 peticiones de Newman (544 aserciones). Las cifras de Newman son de la corrida del 2026-11-22 (matriz de 360 filas, con `GET /health/db`); las de Jest, Vitest y Playwright son las de la Actividad 6, y la corrida actual de Jest (80 suites, 782 pruebas) está en `docs/pruebas-resultados.md`.
 
 ## Newman en detalle
 
-- 461 peticiones en 11 carpetas: 00 Salud (1), 01 Acceso (8), 02 Matriz de acceso (357), 03 Clientes y etapas (20), 04 Documentos (8), 05 F0 (4), 06 F1 por pasos (27), 07 Agenda y avisos (10), 08 Reportes (8), 09 ETL (9), 10 Consultas clave (9).
-- 541 aserciones, 0 falladas. La corrida se repitió varias veces sobre datos recargados con `pnpm pruebas:datos` (y 3 iteraciones seguidas dentro de una misma corrida) con el mismo resultado.
-- Matriz de acceso: 357 filas. Regla: esperado 403 debe dar 403; "supera los guards" o ruta pública, un código distinto de 401 y 403. Códigos obtenidos: 158 de 403, 111 de 404, 70 de 200, 15 de 400 y 3 de 501. El detalle por fila está en `postman/matriz-resultados.csv`.
+- 464 peticiones en 11 carpetas: 00 Salud (1), 01 Acceso (8), 02 Matriz de acceso (360), 03 Clientes y etapas (20), 04 Documentos (8), 05 F0 (4), 06 F1 por pasos (27), 07 Agenda y avisos (10), 08 Reportes (8), 09 ETL (9), 10 Consultas clave (9).
+- 544 aserciones, 0 falladas. La corrida se repitió varias veces sobre datos recargados con `pnpm pruebas:datos` (y 3 iteraciones seguidas dentro de una misma corrida) con el mismo resultado.
+- Matriz de acceso: 360 filas (120 rutas por 3 roles; la ruta nueva `GET /health/db` es pública y dio 200 en los tres roles). Regla: esperado 403 debe dar 403; "supera los guards" o ruta pública, un código distinto de 401 y 403. Códigos obtenidos: 158 de 403, 111 de 404, 73 de 200, 15 de 400 y 3 de 501. El detalle por fila está en `postman/matriz-resultados.csv`.
 - Reportes: `postman/newman-reporte.json` (resumen por petición, sin cuerpos ni cabeceras) y `postman/newman-reporte.html`. Ninguno guarda contraseñas ni tokens: el ejecutor los elimina antes de escribir.
 - Tiempos: `tiempos.md` y `tiempos.csv` (104 peticiones, 30 iteraciones). RNF-01: agenda y avisos con máximo de 87 ms contra el umbral de 5 s. No son tiempos de la nube.
 
