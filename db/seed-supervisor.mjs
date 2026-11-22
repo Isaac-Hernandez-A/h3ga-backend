@@ -12,6 +12,7 @@
 // - Los apellidos son obligatorios en la tabla: se guardan "Administrador" (paterno) e "Inicial" (materno).
 import { createRequire } from 'node:module';
 import pg from 'pg';
+import { opcionesCliente } from './ssl-bd.mjs';
 
 const HOSTS_LOCALES = new Set(['localhost', '127.0.0.1', '::1', '[::1]']);
 const ROL_SUPERVISOR = 3; // roles.id de "Supervisor Operativo (Admin)" (migración 202610301007)
@@ -56,7 +57,7 @@ if (!HOSTS_LOCALES.has(host) && !permitirRemota) {
 const correo = SEED_SUPERVISOR_CORREO.trim();
 const contrasenaHash = await hash(SEED_SUPERVISOR_CONTRASENA, COSTO_BCRYPT);
 
-const cliente = new pg.Client({ connectionString: DATABASE_URL });
+const cliente = new pg.Client(opcionesCliente(DATABASE_URL, process.env));
 await cliente.connect();
 try {
   await cliente.query('BEGIN');

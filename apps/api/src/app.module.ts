@@ -8,6 +8,7 @@ import { AvisosModule } from './avisos/avisos.module';
 import { ControlAccesoModule } from './common/auth/control-acceso.module';
 import { JwtAuthGuard } from './common/auth/jwt-auth.guard';
 import { RolesGuard } from './common/auth/roles.guard';
+import { opcionesBd } from './common/config/opciones-bd';
 import { validarEntorno } from './common/config/validar-entorno';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ClientesModule } from './clientes/clientes.module';
@@ -56,15 +57,14 @@ export const PROVEEDORES_GLOBALES: Provider[] = [
     ControlAccesoModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres' as const,
-        url: config.getOrThrow<string>('DATABASE_URL'),
-        autoLoadEntities: true,
-        // CLAUDE.md regla 1: el esquema solo cambia con migraciones SQL versionadas.
-        synchronize: false,
-        migrationsRun: false,
-        uuidExtension: 'pgcrypto' as const,
-      }),
+      // CLAUDE.md regla 1: el esquema solo cambia con migraciones SQL versionadas (opcionesBd nunca
+      // activa synchronize ni migrationsRun). DATABASE_SSL activa TLS hacia la base.
+      useFactory: (config: ConfigService) =>
+        opcionesBd({
+          DATABASE_URL: config.get<string>('DATABASE_URL'),
+          DATABASE_SSL: config.get<string>('DATABASE_SSL'),
+          DATABASE_SSL_CA: config.get<string>('DATABASE_SSL_CA'),
+        }),
     }),
     ...MODULOS_DE_DOMINIO,
   ],
