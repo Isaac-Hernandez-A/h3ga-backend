@@ -299,7 +299,7 @@ describeConBd('POST /etl/importaciones (aplicación real y base de pruebas)', ()
     expect(endpoints).toMatch(
       /\| POST {3}\| `\/api\/v1\/etl\/importaciones` .*\| supervisor \| Implementada \|/,
     );
-    expect(endpoints).toMatch(/Total: 119 rutas\.\*\* Implementadas: 117\./);
+    expect(endpoints).toMatch(/Total: 120 rutas\.\*\* Implementadas: 118\./);
     expect(endpoints).toMatch(/\| etl +\| 1 +\| 1 +\| 0 +\|/);
   });
 
