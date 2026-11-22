@@ -1,4 +1,5 @@
 import { origenesPermitidos } from './cors';
+import { opcionesSslBd } from './ssl-bd';
 import { VARIABLES_SPACES } from '../../documentos/storage/variables-spaces';
 
 // Marcador que trae .env.example; nunca debe usarse como secreto real.
@@ -16,6 +17,7 @@ export function validarEntorno(config: Record<string, unknown>): Record<string, 
   }
   validarAlmacenamiento(config);
   validarCors(config);
+  validarSslBd(config);
   return config;
 }
 
@@ -40,4 +42,10 @@ function validarAlmacenamiento(config: Record<string, unknown>): void {
 function validarCors(config: Record<string, unknown>): void {
   const valor = config.CORS_ORIGINS;
   if (valor !== undefined) origenesPermitidos(typeof valor === 'string' ? valor : '');
+}
+
+// DATABASE_SSL: true, no-verify o false (opcionesSslBd lanza un error que nombra la variable, no su valor).
+function validarSslBd(config: Record<string, unknown>): void {
+  const valor = config.DATABASE_SSL;
+  if (valor !== undefined) opcionesSslBd({ DATABASE_SSL: typeof valor === 'string' ? valor : '' });
 }

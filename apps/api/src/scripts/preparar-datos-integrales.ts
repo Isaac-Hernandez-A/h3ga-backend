@@ -5,6 +5,7 @@ import { hash } from 'bcryptjs';
 import { DataSource } from 'typeorm';
 import { ROL_ID } from '../common/auth/roles-sistema';
 import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
+import { describirDestino, validarBdPruebas } from './validar-bd-pruebas';
 
 // Prepara h3ga_test para las pruebas integrales de la Actividad 6 (pnpm pruebas:datos). Repetible:
 // borra lo que dejó una corrida anterior (solo lo de los 4 usuarios de prueba y sus clientes) y vuelve a
@@ -13,13 +14,15 @@ import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
 //
 // Con --solo-limpiar solo borra lo de una corrida anterior (útil antes de correr la suite de Jest).
 //
+// Con --permitir-staging acepta una base remota o con otro nombre (staging); sin el flag sigue exigiendo una
+// base local *_test. Para una base administrada, define también DATABASE_SSL (ver .env.example).
+//
 // Contraseñas: se leen de PRUEBAS_<ROL>_CONTRASENA; si faltan se generan al azar y se guardan en
 // .env.pruebas (ignorado por git), que el comando de Newman lee. Nunca se imprimen ni se versionan.
 const RAIZ = resolve(__dirname, '../../../..');
 const FIXTURES = resolve(RAIZ, 'test/fixtures/etl');
 const ARCHIVO_ENV = resolve(RAIZ, '.env.pruebas');
 const EVENTOS = 1000;
-const HOSTS_LOCALES = new Set(['localhost', '127.0.0.1', '::1', '[::1]']);
 
 // Los dos asesores llevan los correos del JSON de equivalencias: así el ETL les asigna sus clientes.
 const equivalencias = JSON.parse(
@@ -43,16 +46,6 @@ const USUARIOS = [
     correo: 'auxiliar.integrales@ejemplo.test',
   },
 ];
-
-function validarBdPruebas(url: string | undefined): string {
-  if (!url) throw new Error('Falta TEST_DATABASE_URL (defínela en .env).');
-  const destino = new URL(url);
-  const nombre = decodeURIComponent(destino.pathname.replace(/^\//, ''));
-  if (!HOSTS_LOCALES.has(destino.hostname)) throw new Error('La base de pruebas debe ser local.');
-  if (!/^[a-z0-9_]+_test$/.test(nombre))
-    throw new Error('La base de pruebas debe llamarse *_test.');
-  return url;
-}
 
 function contrasenas(): Record<string, string> {
   const guardadas: Record<string, string> = {};
@@ -120,7 +113,11 @@ async function limpiar(ds: DataSource): Promise<void> {
 }
 
 async function principal(): Promise<void> {
-  const url = validarBdPruebas(process.env.TEST_DATABASE_URL);
+  const permitirStaging = process.argv.includes('--permitir-staging');
+  const url = validarBdPruebas(process.env.TEST_DATABASE_URL, { permitirStaging });
+  if (permitirStaging) {
+    console.warn(`Aviso: --permitir-staging; se escribirá en ${describirDestino(url)}.`);
+  }
   process.env.DATABASE_URL = url; // la aplicación se conecta a la base de pruebas, nunca a la de desarrollo
   const claves = contrasenas();
 

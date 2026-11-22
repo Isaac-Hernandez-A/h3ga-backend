@@ -7,11 +7,13 @@
 // - Rechaza migraciones con DROP o TRUNCATE (regla 1 de CLAUDE.md); solo admite DROP NOT NULL (relaja una
 //   restricción sin borrar nada).
 // - Por defecto solo corre contra una base local; para otra hay que pasar --permitir-remota.
+// - DATABASE_SSL=true activa TLS hacia la base (PostgreSQL administrado); ver db/ssl-bd.mjs.
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import pg from 'pg';
+import { opcionesCliente } from './ssl-bd.mjs';
 
 const MIGRATIONS_DIR = join(dirname(fileURLToPath(import.meta.url)), 'migrations');
 const NOMBRE_VALIDO = /^(\d{12})_[a-z0-9_]+\.sql$/;
@@ -71,7 +73,7 @@ if (!HOSTS_LOCALES.has(host) && !permitirRemota) {
 }
 
 const migraciones = await leerMigraciones();
-const client = new pg.Client({ connectionString: url });
+const client = new pg.Client(opcionesCliente(url, process.env));
 await client.connect();
 
 try {

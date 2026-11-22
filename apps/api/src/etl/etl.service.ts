@@ -5,13 +5,13 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { DataSource } from 'typeorm';
 import { ROL_POR_ID } from '../common/auth/roles-sistema';
 import { ArchivoSubido } from '../documentos/documentos.service';
 import { limpiarNombre, TAMANO_MAXIMO } from '../documentos/reglas-archivo';
 import { CargadorClientes } from './cargador';
+import { cargarEquivalencias } from './equivalencias';
 import { marcarDuplicados } from './duplicados';
 import {
   ArchivoInvalidoError,
@@ -249,25 +249,17 @@ export class EtlService {
     return { buffer, nombre };
   }
 
-  // Equivalencias nombre del Excel a correo, del JSON que indica ETL_EQUIVALENCIAS. Se lee en cada
+  // Equivalencias nombre del Excel a correo: ETL_EQUIVALENCIAS es la ruta del JSON o su contenido. Se lee en cada
   // importación. Si falta o no se puede leer es un problema de configuración del servidor: 503.
   private async leerEquivalencias(): Promise<Record<string, string>> {
-    const ruta = process.env.ETL_EQUIVALENCIAS?.trim();
-    if (!ruta) {
+    const valor = process.env.ETL_EQUIVALENCIAS?.trim();
+    if (!valor) {
       throw new ServiceUnavailableException(
-        'Falta configurar las equivalencias de asesores: defina ETL_EQUIVALENCIAS con la ruta del JSON.',
+        'Falta configurar las equivalencias de asesores: defina ETL_EQUIVALENCIAS con la ruta del JSON o con su contenido.',
       );
     }
     try {
-      const datos: unknown = JSON.parse(await readFile(ruta, 'utf8'));
-      if (
-        typeof datos === 'object' &&
-        datos !== null &&
-        !Array.isArray(datos) &&
-        Object.values(datos).every((v) => typeof v === 'string')
-      ) {
-        return datos as Record<string, string>;
-      }
+      return await cargarEquivalencias(valor);
     } catch {
       // Se informa abajo, sin el texto del error (puede citar rutas o contenido).
     }
