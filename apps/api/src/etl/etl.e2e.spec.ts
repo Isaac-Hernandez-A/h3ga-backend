@@ -344,6 +344,19 @@ describeConBd('POST /etl/importaciones (aplicación real y base de pruebas)', ()
     }
     expect(await cargadosEnBase()).toBe(0);
   });
+  it('CP-351 equivalencias_como_contenido_200: ETL_EQUIVALENCIAS con el JSON mismo (no una ruta) importa igual', async () => {
+    const guardada = process.env.ETL_EQUIVALENCIAS;
+    process.env.ETL_EQUIVALENCIAS = readFileSync(join(carpeta, 'equivalencias.json'), 'utf8');
+    try {
+      const { estado, json } = await subir({ token: t(supervisor) });
+      expect(estado).toBe(200);
+      expect(reporte(json).totales).toMatchObject({ cargados: 44, rechazados: 10 });
+    } finally {
+      process.env.ETL_EQUIVALENCIAS = guardada;
+    }
+    expect(await cargadosEnBase()).toBe(44);
+  });
+
   it('CP-325 respuesta_sin_pii: el cuerpo de la respuesta 200 no contiene ninguna CURP ni NSS completos', async () => {
     const { estado, json } = await subir({ token: t(supervisor) });
     expect(estado).toBe(200);

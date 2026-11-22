@@ -4,6 +4,7 @@ import { parseArgs } from 'node:util';
 import { DataSource } from 'typeorm';
 import { ROL_ID } from '../common/auth/roles-sistema';
 import { EtlService } from './etl.service';
+import { cargarEquivalencias } from './equivalencias';
 import { ArchivoInvalidoError } from './lector-excel';
 import { escribirReporte, subcarpetaDeCorrida } from './reporte';
 
@@ -23,7 +24,7 @@ const USO = `Uso: pnpm etl:importar --archivo ruta.xlsx --ejecutor correo-del-su
   --ejecutor       correo de un Supervisor activo, responsable de la corrida (obligatorio)
   --simulacro      ejecuta todo sin guardar nada en la base
   --lote           renglones por transacción (por defecto 25)
-  --equivalencias  JSON nombre del asesor en el Excel a correo (por defecto, la variable ETL_EQUIVALENCIAS)
+  --equivalencias  JSON nombre del asesor en el Excel a correo (por defecto, la variable ETL_EQUIVALENCIAS; acepta la ruta o el contenido del JSON)
   --salida         carpeta donde se escriben reporte.json y rechazados.csv
                    (por defecto, una subcarpeta propia de ETL_SALIDA, o ./etl-salida)`;
 
@@ -82,16 +83,7 @@ export async function ejecutarCli(
   }
   let equivalencias: Record<string, string>;
   try {
-    const datos: unknown = JSON.parse(await readFile(rutaEquivalencias, 'utf8'));
-    if (
-      typeof datos !== 'object' ||
-      datos === null ||
-      Array.isArray(datos) ||
-      !Object.values(datos).every((v) => typeof v === 'string')
-    ) {
-      throw new Error('formato');
-    }
-    equivalencias = datos as Record<string, string>;
+    equivalencias = await cargarEquivalencias(rutaEquivalencias);
   } catch {
     return uso(
       'no se pudo leer el JSON de equivalencias (nombre del asesor en el Excel a correo).',
