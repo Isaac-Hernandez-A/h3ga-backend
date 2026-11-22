@@ -1,87 +1,92 @@
 # Resultados de pruebas
 
-Generado el 2026-11-17 con `node scripts/reporte-pruebas.mjs` a partir de `jest --json` (apps/api). No se edita a mano.
+Generado el 2026-11-22 con `node scripts/reporte-pruebas.mjs` a partir de `jest --json` (apps/api). No se edita a mano.
 
 ## Resumen por suite
 
 | Suite                                                 | Pruebas | Pasan   | Fallan | Tiempo (s) |
 | ----------------------------------------------------- | ------- | ------- | ------ | ---------- |
-| acceso-matriz.spec.ts                                 | 9       | 9       | 0      | 86.50      |
-| agenda/agenda.e2e.spec.ts                             | 3       | 3       | 0      | 5.46       |
-| auth/auth.e2e.spec.ts                                 | 7       | 7       | 0      | 5.71       |
-| auth/auth.service.spec.ts                             | 9       | 9       | 0      | 3.15       |
-| auth/contrasena.e2e.spec.ts                           | 7       | 7       | 0      | 8.45       |
-| avisos/avisos-enriquecidos.e2e.spec.ts                | 7       | 7       | 0      | 5.76       |
-| avisos/avisos-reapertura.e2e.spec.ts                  | 5       | 5       | 0      | 6.54       |
-| avisos/avisos.service.spec.ts                         | 7       | 7       | 0      | 8.40       |
-| catalogos.e2e.spec.ts                                 | 4       | 4       | 0      | 5.24       |
-| clientes/auxiliares.e2e.spec.ts                       | 3       | 3       | 0      | 5.11       |
-| clientes/cliente-auxiliar.autorizacion.spec.ts        | 4       | 4       | 0      | 1.25       |
-| clientes/clientes-acceso.spec.ts                      | 14      | 14      | 0      | 3.46       |
-| clientes/clientes-lecturas.e2e.spec.ts                | 5       | 5       | 0      | 5.86       |
-| clientes/clientes.controller.roles.spec.ts            | 8       | 8       | 0      | 4.38       |
-| clientes/clientes.e2e.spec.ts                         | 10      | 10      | 0      | 5.11       |
-| clientes/clientes.service.spec.ts                     | 1       | 1       | 0      | 6.22       |
-| clientes/crear-interno.spec.ts                        | 5       | 5       | 0      | 5.60       |
-| clientes/issste.e2e.spec.ts                           | 12      | 12      | 0      | 7.15       |
-| common/auth/cliente-access.guard.spec.ts              | 13      | 13      | 0      | 2.83       |
-| common/auth/clientes-accesibles.spec.ts               | 4       | 4       | 0      | 0.10       |
-| common/auth/dev-token.spec.ts                         | 11      | 11      | 0      | 3.08       |
-| common/auth/jwt-auth.guard.spec.ts                    | 11      | 11      | 0      | 1.83       |
-| common/auth/normalizar-rol.spec.ts                    | 10      | 10      | 0      | 0.10       |
-| common/auth/permisos.spec.ts                          | 4       | 4       | 0      | 0.08       |
-| common/auth/roles.guard.spec.ts                       | 9       | 9       | 0      | 1.05       |
-| common/config/cors.spec.ts                            | 7       | 7       | 0      | 3.44       |
-| common/config/validar-entorno.spec.ts                 | 9       | 9       | 0      | 0.11       |
-| common/fechas.spec.ts                                 | 10      | 10      | 0      | 0.61       |
-| common/filters/all-exceptions.filter.spec.ts          | 4       | 4       | 0      | 0.91       |
-| common/seguridad/password-hasher.spec.ts              | 4       | 4       | 0      | 1.64       |
-| common/testing/bd-pruebas.spec.ts                     | 5       | 5       | 0      | 2.46       |
-| common/testing/defectos.spec.ts                       | 4       | 4       | 0      | 0.09       |
-| dashboard/dashboard.e2e.spec.ts                       | 13      | 13      | 0      | 7.44       |
-| diagnosticos/f1-avance-pdf.e2e.spec.ts                | 8       | 8       | 0      | 16.38      |
-| diagnosticos/f1-cabecera.e2e.spec.ts                  | 8       | 8       | 0      | 8.30       |
-| diagnosticos/f1-listas.e2e.spec.ts                    | 22      | 22      | 0      | 12.71      |
-| diagnosticos/f1-secciones.e2e.spec.ts                 | 10      | 10      | 0      | 11.45      |
-| documentos/documentos.e2e.spec.ts                     | 10      | 10      | 0      | 6.96       |
-| documentos/storage/local-storage.adapter.spec.ts      | 4       | 4       | 0      | 0.14       |
-| documentos/storage/spaces-storage.adapter.spec.ts     | 5       | 5       | 0      | 0.23       |
-| etapas/etapas-auxiliar.e2e.spec.ts                    | 3       | 3       | 0      | 4.79       |
-| etapas/etapas.e2e.spec.ts                             | 6       | 6       | 0      | 5.24       |
-| etapas/etapas.service.spec.ts                         | 5       | 5       | 0      | 6.06       |
-| etapas/reglas-avance.spec.ts                          | 9       | 9       | 0      | 0.12       |
-| etl/aceptacion.e2e.spec.ts                            | 10      | 9       | 0      | 16.36      |
-| etl/cargador.spec.ts                                  | 17      | 17      | 0      | 9.60       |
-| etl/catalogos-etapa.spec.ts                           | 40      | 40      | 0      | 1.79       |
-| etl/cli.spec.ts                                       | 12      | 12      | 0      | 16.93      |
-| etl/etl.e2e.spec.ts                                   | 16      | 16      | 0      | 12.05      |
-| etl/etl.service.spec.ts                               | 25      | 25      | 0      | 88.08      |
-| etl/fecha.spec.ts                                     | 28      | 28      | 0      | 0.96       |
-| etl/identificadores.spec.ts                           | 36      | 36      | 0      | 1.78       |
-| etl/lector-excel.spec.ts                              | 9       | 9       | 0      | 2.75       |
-| etl/mapa-asesores.spec.ts                             | 13      | 13      | 0      | 1.13       |
-| etl/texto.spec.ts                                     | 20      | 20      | 0      | 0.12       |
-| etl/validador.spec.ts                                 | 48      | 48      | 0      | 1.45       |
-| health/health.controller.spec.ts                      | 1       | 1       | 0      | 2.70       |
-| reporte-pruebas.spec.ts                               | 3       | 3       | 0      | 0.32       |
-| reportes/pdf/f0-modelo.spec.ts                        | 12      | 12      | 0      | 0.12       |
-| reportes/pdf/f0-pdf.e2e.spec.ts                       | 2       | 2       | 0      | 12.51      |
-| reportes/pdf/f0-pdf.service.spec.ts                   | 6       | 6       | 0      | 83.85      |
-| reportes/pdf/reporte-pdf.service.spec.ts              | 4       | 4       | 0      | 11.86      |
-| reportes/reportes-pdf.e2e.spec.ts                     | 3       | 3       | 0      | 15.51      |
-| reportes/reportes-trimestral-trazabilidad.e2e.spec.ts | 8       | 8       | 0      | 10.36      |
-| reportes/reportes.e2e.spec.ts                         | 2       | 2       | 0      | 4.70       |
-| reportes/reportes.service.spec.ts                     | 10      | 10      | 0      | 5.38       |
-| scripts/seed-supervisor.spec.ts                       | 4       | 4       | 0      | 8.45       |
-| swagger.e2e.spec.ts                                   | 3       | 3       | 0      | 5.29       |
-| tramites/correcciones-modulo.e2e.spec.ts              | 16      | 16      | 0      | 76.69      |
-| tramites/correcciones.e2e.spec.ts                     | 12      | 12      | 0      | 11.13      |
-| tramites/reglas-correcciones.spec.ts                  | 9       | 9       | 0      | 0.63       |
-| tramites/tramites.e2e.spec.ts                         | 11      | 11      | 0      | 6.68       |
-| usuarios-roles/restablecer-contrasena.e2e.spec.ts     | 7       | 7       | 0      | 6.87       |
-| usuarios-roles/usuarios-roles.e2e.spec.ts             | 11      | 11      | 0      | 5.86       |
-| usuarios-roles/usuarios-roles.service.spec.ts         | 12      | 12      | 0      | 2.56       |
-| **Total**                                             | **738** | **737** | **0**  | **701.97** |
+| acceso-matriz.spec.ts                                 | 9       | 9       | 0      | 24.63      |
+| agenda/agenda.e2e.spec.ts                             | 3       | 3       | 0      | 5.54       |
+| auth/auth.e2e.spec.ts                                 | 7       | 7       | 0      | 6.03       |
+| auth/auth.service.spec.ts                             | 9       | 9       | 0      | 3.10       |
+| auth/contrasena.e2e.spec.ts                           | 7       | 7       | 0      | 7.16       |
+| avisos/avisos-enriquecidos.e2e.spec.ts                | 7       | 7       | 0      | 6.01       |
+| avisos/avisos-reapertura.e2e.spec.ts                  | 5       | 5       | 0      | 8.69       |
+| avisos/avisos.service.spec.ts                         | 7       | 7       | 0      | 8.58       |
+| catalogos.e2e.spec.ts                                 | 4       | 4       | 0      | 6.03       |
+| clientes/auxiliares.e2e.spec.ts                       | 3       | 3       | 0      | 7.01       |
+| clientes/cliente-auxiliar.autorizacion.spec.ts        | 4       | 4       | 0      | 1.67       |
+| clientes/clientes-acceso.spec.ts                      | 14      | 14      | 0      | 5.13       |
+| clientes/clientes-lecturas.e2e.spec.ts                | 5       | 5       | 0      | 5.78       |
+| clientes/clientes.controller.roles.spec.ts            | 8       | 8       | 0      | 3.83       |
+| clientes/clientes.e2e.spec.ts                         | 10      | 10      | 0      | 7.38       |
+| clientes/clientes.service.spec.ts                     | 1       | 1       | 0      | 6.77       |
+| clientes/crear-interno.spec.ts                        | 5       | 5       | 0      | 5.15       |
+| clientes/issste.e2e.spec.ts                           | 12      | 12      | 0      | 7.89       |
+| common/auth/cliente-access.guard.spec.ts              | 13      | 13      | 0      | 3.36       |
+| common/auth/clientes-accesibles.spec.ts               | 4       | 4       | 0      | 0.21       |
+| common/auth/dev-token.spec.ts                         | 11      | 11      | 0      | 3.77       |
+| common/auth/jwt-auth.guard.spec.ts                    | 11      | 11      | 0      | 1.90       |
+| common/auth/normalizar-rol.spec.ts                    | 10      | 10      | 0      | 0.14       |
+| common/auth/permisos.spec.ts                          | 4       | 4       | 0      | 0.14       |
+| common/auth/roles.guard.spec.ts                       | 9       | 9       | 0      | 1.43       |
+| common/config/cors.spec.ts                            | 7       | 7       | 0      | 3.05       |
+| common/config/opciones-bd.spec.ts                     | 3       | 3       | 0      | 0.11       |
+| common/config/ssl-bd.spec.ts                          | 15      | 15      | 0      | 0.97       |
+| common/config/validar-entorno.spec.ts                 | 9       | 9       | 0      | 0.19       |
+| common/fechas.spec.ts                                 | 10      | 10      | 0      | 0.79       |
+| common/filters/all-exceptions.filter.spec.ts          | 4       | 4       | 0      | 1.19       |
+| common/seguridad/password-hasher.spec.ts              | 4       | 4       | 0      | 1.68       |
+| common/testing/bd-pruebas.spec.ts                     | 5       | 5       | 0      | 2.53       |
+| common/testing/defectos.spec.ts                       | 4       | 4       | 0      | 0.18       |
+| dashboard/dashboard.e2e.spec.ts                       | 13      | 13      | 0      | 9.18       |
+| diagnosticos/f1-avance-pdf.e2e.spec.ts                | 8       | 8       | 0      | 17.20      |
+| diagnosticos/f1-cabecera.e2e.spec.ts                  | 8       | 8       | 0      | 7.51       |
+| diagnosticos/f1-listas.e2e.spec.ts                    | 22      | 22      | 0      | 14.31      |
+| diagnosticos/f1-secciones.e2e.spec.ts                 | 10      | 10      | 0      | 10.47      |
+| documentos/documentos.e2e.spec.ts                     | 10      | 10      | 0      | 8.83       |
+| documentos/storage/local-storage.adapter.spec.ts      | 4       | 4       | 0      | 0.19       |
+| documentos/storage/spaces-storage.adapter.spec.ts     | 5       | 5       | 0      | 0.40       |
+| etapas/etapas-auxiliar.e2e.spec.ts                    | 3       | 3       | 0      | 7.49       |
+| etapas/etapas.e2e.spec.ts                             | 6       | 6       | 0      | 7.41       |
+| etapas/etapas.service.spec.ts                         | 5       | 5       | 0      | 5.99       |
+| etapas/reglas-avance.spec.ts                          | 9       | 9       | 0      | 0.17       |
+| etl/aceptacion.e2e.spec.ts                            | 10      | 9       | 0      | 54.76      |
+| etl/cargador.spec.ts                                  | 17      | 17      | 0      | 10.93      |
+| etl/catalogos-etapa.spec.ts                           | 40      | 40      | 0      | 1.47       |
+| etl/cli.spec.ts                                       | 12      | 12      | 0      | 45.06      |
+| etl/equivalencias.spec.ts                             | 9       | 9       | 0      | 0.18       |
+| etl/etl.e2e.spec.ts                                   | 17      | 17      | 0      | 62.64      |
+| etl/etl.service.spec.ts                               | 25      | 25      | 0      | 39.73      |
+| etl/fecha.spec.ts                                     | 28      | 28      | 0      | 0.98       |
+| etl/identificadores.spec.ts                           | 36      | 36      | 0      | 1.70       |
+| etl/lector-excel.spec.ts                              | 9       | 9       | 0      | 2.81       |
+| etl/mapa-asesores.spec.ts                             | 13      | 13      | 0      | 1.22       |
+| etl/texto.spec.ts                                     | 20      | 20      | 0      | 0.14       |
+| etl/validador.spec.ts                                 | 48      | 48      | 0      | 1.83       |
+| health/health.controller.spec.ts                      | 4       | 4       | 0      | 4.05       |
+| reporte-pruebas.spec.ts                               | 3       | 3       | 0      | 0.34       |
+| reportes/pdf/f0-modelo.spec.ts                        | 12      | 12      | 0      | 0.23       |
+| reportes/pdf/f0-pdf.e2e.spec.ts                       | 2       | 2       | 0      | 14.24      |
+| reportes/pdf/f0-pdf.service.spec.ts                   | 6       | 6       | 0      | 22.51      |
+| reportes/pdf/reporte-pdf.service.spec.ts              | 4       | 4       | 0      | 12.37      |
+| reportes/reportes-pdf.e2e.spec.ts                     | 3       | 3       | 0      | 16.27      |
+| reportes/reportes-trimestral-trazabilidad.e2e.spec.ts | 8       | 8       | 0      | 9.41       |
+| reportes/reportes.e2e.spec.ts                         | 2       | 2       | 0      | 6.75       |
+| reportes/reportes.service.spec.ts                     | 10      | 10      | 0      | 7.09       |
+| scripts/seed-supervisor.spec.ts                       | 4       | 4       | 0      | 7.15       |
+| scripts/validar-bd-pruebas.spec.ts                    | 9       | 9       | 0      | 0.33       |
+| swagger.e2e.spec.ts                                   | 3       | 3       | 0      | 5.22       |
+| swagger.setup.spec.ts                                 | 4       | 4       | 0      | 3.52       |
+| tramites/correcciones-modulo.e2e.spec.ts              | 16      | 16      | 0      | 14.71      |
+| tramites/correcciones.e2e.spec.ts                     | 12      | 12      | 0      | 11.47      |
+| tramites/reglas-correcciones.spec.ts                  | 9       | 9       | 0      | 0.72       |
+| tramites/tramites.e2e.spec.ts                         | 11      | 11      | 0      | 9.18       |
+| usuarios-roles/restablecer-contrasena.e2e.spec.ts     | 7       | 7       | 0      | 9.00       |
+| usuarios-roles/usuarios-roles.e2e.spec.ts             | 11      | 11      | 0      | 6.54       |
+| usuarios-roles/usuarios-roles.service.spec.ts         | 12      | 12      | 0      | 2.94       |
+| **Total**                                             | **782** | **781** | **0**  | **624.69** |
 
 Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATABASE_URL`) cuentan en "Pruebas" pero no en "Pasan" ni "Fallan".
 
@@ -89,7 +94,7 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 
 | ID     | Descripción                                                                                                                                                                            | Resultado   |
 | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| CP-01  | sin token responde 401 en todas las rutas salvo las públicas (/health y /auth/login)                                                                                                   | ✔ Pasa      |
+| CP-01  | sin token responde 401 en todas las rutas salvo las públicas (/health, /health/db y /auth/login)                                                                                       | ✔ Pasa      |
 | CP-02  | token vencido o con firma inválida responde 401                                                                                                                                        | ✔ Pasa      |
 | CP-03  | rol no permitido responde 403 en cada ruta                                                                                                                                             | ✔ Pasa      |
 | CP-04  | rol permitido supera los guards en cada ruta                                                                                                                                           | ✔ Pasa      |
@@ -624,3 +629,47 @@ Las pruebas pendientes (`it.todo`, `skip` o suites con base real sin `TEST_DATAB
 | CP-345 | las reglas del Excel real, de punta a punta: lo asumido y lo normalizado queda en la base con su advertencia o ajuste                                                                  | ✔ Pasa      |
 | CP-346 | evidencia_en_docs: docs/etl-corrida-ficticia trae las tres corridas y la comparación de defectos                                                                                       | ✔ Pasa      |
 | CP-347 | genera_evidencia: escribe docs/etl-corrida-ficticia con las tres corridas                                                                                                              | ○ Pendiente |
+| CP-348 | acepta el contenido JSON directamente en la variable                                                                                                                                   | ✔ Pasa      |
+| CP-348 | acepta el contenido con espacios y saltos de línea alrededor                                                                                                                           | ✔ Pasa      |
+| CP-349 | sigue aceptando la ruta de un archivo JSON                                                                                                                                             | ✔ Pasa      |
+| CP-350 | rechaza contenido que no es JSON con un error genérico que no cita el contenido                                                                                                        | ✔ Pasa      |
+| CP-350 | rechaza contenido que es una lista con un error genérico que no cita el contenido                                                                                                      | ✔ Pasa      |
+| CP-350 | rechaza contenido con valores que no son texto con un error genérico que no cita el contenido                                                                                          | ✔ Pasa      |
+| CP-350 | rechaza una ruta que no existe con un error genérico que no cita el contenido                                                                                                          | ✔ Pasa      |
+| CP-350 | rechaza un archivo con JSON roto con un error genérico que no cita el contenido                                                                                                        | ✔ Pasa      |
+| CP-350 | rechaza un valor vacío con un error genérico que no cita el contenido                                                                                                                  | ✔ Pasa      |
+| CP-351 | equivalencias_como_contenido_200: ETL_EQUIVALENCIAS con el JSON mismo (no una ruta) importa igual                                                                                      | ✔ Pasa      |
+| CP-352 | sin TLS cuando DATABASE_SSL es undefined (comportamiento local)                                                                                                                        | ✔ Pasa      |
+| CP-352 | sin TLS cuando DATABASE_SSL es "" (comportamiento local)                                                                                                                               | ✔ Pasa      |
+| CP-352 | sin TLS cuando DATABASE_SSL es " " (comportamiento local)                                                                                                                              | ✔ Pasa      |
+| CP-352 | sin TLS cuando DATABASE_SSL es "false" (comportamiento local)                                                                                                                          | ✔ Pasa      |
+| CP-352 | sin TLS cuando DATABASE_SSL es "0" (comportamiento local)                                                                                                                              | ✔ Pasa      |
+| CP-352 | sin TLS cuando DATABASE_SSL es "disable" (comportamiento local)                                                                                                                        | ✔ Pasa      |
+| CP-353 | con "true" activa TLS verificando el certificado                                                                                                                                       | ✔ Pasa      |
+| CP-353 | con "require" activa TLS verificando el certificado                                                                                                                                    | ✔ Pasa      |
+| CP-353 | con "TRUE" activa TLS verificando el certificado                                                                                                                                       | ✔ Pasa      |
+| CP-353 | con DATABASE_SSL_CA verifica contra esa CA; acepta \n escritos como texto                                                                                                              | ✔ Pasa      |
+| CP-354 | no-verify cifra pero no verifica el certificado (solo para depurar)                                                                                                                    | ✔ Pasa      |
+| CP-355 | un valor desconocido falla nombrando la variable y sin citar el valor                                                                                                                  | ✔ Pasa      |
+| CP-355 | validarEntorno rechaza un DATABASE_SSL inválido y acepta los válidos                                                                                                                   | ✔ Pasa      |
+| CP-356 | quita sslmode de la URL para que mande DATABASE_SSL, y deja lo demás                                                                                                                   | ✔ Pasa      |
+| CP-357 | sin variable no hay TLS; con true verifica; con CA la usa; quita sslmode                                                                                                               | ✔ Pasa      |
+| CP-358 | sin DATABASE_SSL no agrega ssl y deja la URL tal cual (local)                                                                                                                          | ✔ Pasa      |
+| CP-358 | con DATABASE_SSL=true agrega ssl, quita sslmode de la URL y sigue sin synchronize                                                                                                      | ✔ Pasa      |
+| CP-358 | sin DATABASE_URL falla nombrando la variable                                                                                                                                           | ✔ Pasa      |
+| CP-359 | GET /api/v1/health no consulta la base (sigue en 200 aunque la base falle)                                                                                                             | ✔ Pasa      |
+| CP-360 | GET /api/v1/health/db responde 200 y ejecuta SELECT 1                                                                                                                                  | ✔ Pasa      |
+| CP-361 | GET /api/v1/health/db responde 503 si la base falla, sin filtrar el error                                                                                                              | ✔ Pasa      |
+| CP-362 | en production no publica /api/docs ni /api/docs-json (404)                                                                                                                             | ✔ Pasa      |
+| CP-363 | con NODE_ENV=development sí publica /api/docs                                                                                                                                          | ✔ Pasa      |
+| CP-363 | con NODE_ENV=test sí publica /api/docs                                                                                                                                                 | ✔ Pasa      |
+| CP-363 | con NODE_ENV=undefined sí publica /api/docs                                                                                                                                            | ✔ Pasa      |
+| CP-364 | sin flag acepta una base local *_test                                                                                                                                                  | ✔ Pasa      |
+| CP-365 | sin flag rechaza una base remota                                                                                                                                                       | ✔ Pasa      |
+| CP-365 | sin flag rechaza una base remota aunque termine en _test                                                                                                                               | ✔ Pasa      |
+| CP-365 | sin flag rechaza una base local que no termina en _test                                                                                                                                | ✔ Pasa      |
+| CP-366 | con --permitir-staging acepta la remota de staging                                                                                                                                     | ✔ Pasa      |
+| CP-366 | con --permitir-staging acepta la local con otro nombre                                                                                                                                 | ✔ Pasa      |
+| CP-367 | falta de URL o URL inválida siguen fallando, también con el flag                                                                                                                       | ✔ Pasa      |
+| CP-368 | los mensajes de error no incluyen la contraseña ni la URL                                                                                                                              | ✔ Pasa      |
+| CP-369 | dice servidor y base, sin usuario ni contraseña                                                                                                                                        | ✔ Pasa      |
