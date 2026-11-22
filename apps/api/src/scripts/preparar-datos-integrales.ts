@@ -5,6 +5,7 @@ import { hash } from 'bcryptjs';
 import { DataSource } from 'typeorm';
 import { ROL_ID } from '../common/auth/roles-sistema';
 import { tomarBloqueoEtl } from '../common/testing/bloqueo-etl';
+import { recortarLibro } from './recortar-libro';
 import { describirDestino, validarBdPruebas } from './validar-bd-pruebas';
 
 // Prepara h3ga_test para las pruebas integrales de la Actividad 6 (pnpm pruebas:datos). Repetible:
@@ -13,6 +14,9 @@ import { describirDestino, validarBdPruebas } from './validar-bd-pruebas';
 // agenda como en CP-43. Solo corre contra una base local cuyo nombre termina en _test.
 //
 // Con --solo-limpiar solo borra lo de una corrida anterior (útil antes de correr la suite de Jest).
+//
+// Con --clientes N carga solo los primeros N clientes del Excel ficticio (por ejemplo 5 en una base de staging
+// pequeña); sin él carga los 44. Ojo: la carpeta 09 de Newman (ETL) espera la carga completa.
 //
 // Con --permitir-staging acepta una base remota o con otro nombre (staging); sin el flag sigue exigiendo una
 // base local *_test. Para una base administrada, define también DATABASE_SSL (ver .env.example).
@@ -112,8 +116,20 @@ async function limpiar(ds: DataSource): Promise<void> {
   await borrarEn(ds, 'usuarios', 'lower(correo_electronico) = ANY($1)', [correos]);
 }
 
+// --clientes N (o --clientes=N): entero positivo. Sin el flag devuelve undefined (carga completa).
+function leerClientes(argv: string[]): number | undefined {
+  const i = argv.findIndex((a) => a === '--clientes' || a.startsWith('--clientes='));
+  if (i < 0) return undefined;
+  const crudo = argv[i].includes('=') ? argv[i].split('=')[1] : argv[i + 1];
+  if (!/^\d+$/.test(crudo ?? '') || Number(crudo) < 1) {
+    throw new Error('--clientes debe ser un entero positivo.');
+  }
+  return Number(crudo);
+}
+
 async function principal(): Promise<void> {
   const permitirStaging = process.argv.includes('--permitir-staging');
+  const maxClientes = leerClientes(process.argv);
   const url = validarBdPruebas(process.env.TEST_DATABASE_URL, { permitirStaging });
   if (permitirStaging) {
     console.warn(`Aviso: --permitir-staging; se escribirá en ${describirDestino(url)}.`);
@@ -145,7 +161,10 @@ async function principal(): Promise<void> {
     }
 
     const archivo = resolve(FIXTURES, 'FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx');
-    const reporte = await app.get(EtlService, { strict: false }).importar(readFileSync(archivo), {
+    const libro = maxClientes
+      ? await recortarLibro(readFileSync(archivo), maxClientes)
+      : readFileSync(archivo);
+    const reporte = await app.get(EtlService, { strict: false }).importar(libro, {
       nombreArchivo: 'FORMATO_CONTROL_OPERATIVO_FICTICIO.xlsx',
       ejecutorId: ids.supervisor,
       modo: 'comando',
