@@ -1,0 +1,86 @@
+# Especificación de App Platform para el backend de H3GA (NestJS).
+#
+# NO contiene secretos: las variables tipo SECRET van sin valor y se cargan en el panel de DigitalOcean
+# (o con `doctl apps update`) después de crear la app. Los CAMBIAR_* son marcadores que hay que reemplazar.
+# Guía completa: docs/despliegue/guia-paso-a-paso.md
+name: h3ga-api
+region: nyc
+
+services:
+  - name: api
+    github:
+      repo: Isaac-Hernandez-A/h3ga-backend
+      branch: main
+      deploy_on_push: false
+    source_dir: /
+    environment_slug: node-js
+    # pnpm lo toma de "packageManager" en package.json. Se compila solo la API: el `pnpm build` de la raíz
+    # también construiría apps/web, que es un relleno.
+    build_command: pnpm install --frozen-lockfile && pnpm --filter @h3ga/api build
+    run_command: node apps/api/dist/main.js
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-1gb
+    health_check:
+      # Consulta la base (SELECT 1): si PostgreSQL no responde, la plataforma no da el despliegue por bueno.
+      http_path: /api/v1/health/db
+      initial_delay_seconds: 30
+      period_seconds: 15
+      timeout_seconds: 5
+      failure_threshold: 3
+    envs:
+      - key: NODE_ENV
+        value: production
+        scope: RUN_AND_BUILD_TIME
+      # App Platform entrega el puerto en PORT; la API lo lee (apps/api/src/main.ts).
+      - key: PORT
+        value: '8080'
+        scope: RUN_TIME
+      - key: DATABASE_URL
+        type: SECRET
+        scope: RUN_TIME
+      # TLS hacia la base administrada. Si DATABASE_URL trae ?sslmode=require la API lo quita y manda esta variable.
+      - key: DATABASE_SSL
+        value: 'true'
+        scope: RUN_TIME
+      - key: JWT_SECRET
+        type: SECRET
+        scope: RUN_TIME
+      # Origen exacto del frontend publicado (https, sin barra final, sin comodines).
+      - key: CORS_ORIGINS
+        value: https://CAMBIAR-frontend.ondigitalocean.app
+        scope: RUN_TIME
+      # Los documentos van a Spaces: el disco de App Platform es efímero.
+      - key: STORAGE_DRIVER
+        value: spaces
+        scope: RUN_TIME
+      - key: SPACES_KEY
+        type: SECRET
+        scope: RUN_TIME
+      - key: SPACES_SECRET
+        type: SECRET
+        scope: RUN_TIME
+      - key: SPACES_REGION
+        value: nyc3
+        scope: RUN_TIME
+      - key: SPACES_ENDPOINT
+        value: https://nyc3.digitaloceanspaces.com
+        scope: RUN_TIME
+      - key: SPACES_BUCKET
+        value: CAMBIAR-bucket
+        scope: RUN_TIME
+      # JSON de equivalencias asesor -> correo (contenido, no ruta). Opcional: sin él POST /etl/importaciones
+      # responde 503. Son correos de personas: va como secreto.
+      - key: ETL_EQUIVALENCIAS
+        type: SECRET
+        scope: RUN_TIME
+
+# Base administrada que ya existe (se crea aparte; la app solo se conecta).
+databases:
+  - name: h3ga-db
+    engine: PG
+    version: '16'
+    production: true
+    cluster_name: CAMBIAR-nombre-del-cluster
+    db_name: CAMBIAR-nombre-de-la-base
+    db_user: CAMBIAR-usuario
