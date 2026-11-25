@@ -33,6 +33,67 @@ describe('opcionesSslBd', () => {
     ).toEqual({ rejectUnauthorized: true, ca: PEM });
   });
 
+  // Causa del SELF_SIGNED_CERT_IN_CHAIN en DigitalOcean: el panel pega el PEM aplanado y pg descarta la CA
+  // ilegible sin avisar. Se reconstruye el PEM antes de pasarlo.
+  it.each([
+    ['una sola línea con espacios', PEM.replace(/\n/g, ' ')],
+    ['entre comillas con \\n', `"${PEM.replace(/\n/g, '\\n')}"`],
+    ['con CRLF', PEM.replace(/\n/g, '\r\n')],
+    ['con espacios y saltos sobrantes', `\n  ${PEM}  \n\n`],
+    ['solo el cuerpo base64, sin cabeceras', 'FICTICIO'],
+  ])('CP-359 normaliza la CA %s a un PEM válido', (_n, valor) => {
+    expect(opcionesSslBd({ DATABASE_SSL: 'true', DATABASE_SSL_CA: valor })).toEqual({
+      rejectUnauthorized: true,
+      ca: PEM,
+    });
+  });
+
+  it('CP-359 parte el cuerpo en líneas de 64 y conserva varios certificados', () => {
+    const cuerpo = 'A'.repeat(130);
+    const un = (c: string) => `-----BEGIN CERTIFICATE-----\n${c}\n-----END CERTIFICATE-----`;
+    const salida = opcionesSslBd({
+      DATABASE_SSL: 'true',
+      DATABASE_SSL_CA: `${un(cuerpo)} ${un('BBBB')}`,
+    });
+    expect(salida?.ca).toBe(
+      `-----BEGIN CERTIFICATE-----\n${'A'.repeat(64)}\n${'A'.repeat(64)}\nAA\n-----END CERTIFICATE-----\n${un('BBBB')}`,
+    );
+  });
+
+  it('CP-360 DATABASE_SSL_CA_BASE64 se decodifica y manda sobre DATABASE_SSL_CA', () => {
+    const b64 = Buffer.from(PEM, 'utf8').toString('base64');
+    expect(opcionesSslBd({ DATABASE_SSL: 'true', DATABASE_SSL_CA_BASE64: b64 })).toEqual({
+      rejectUnauthorized: true,
+      ca: PEM,
+    });
+    expect(
+      opcionesSslBd({ DATABASE_SSL: 'true', DATABASE_SSL_CA_BASE64: b64, DATABASE_SSL_CA: 'otro' }),
+    ).toEqual({ rejectUnauthorized: true, ca: PEM });
+    // también si el panel lo parte en líneas o lo envuelve en comillas
+    expect(
+      opcionesSslBd({
+        DATABASE_SSL: 'true',
+        DATABASE_SSL_CA_BASE64: `"${b64.slice(0, 10)}\n${b64.slice(10)}"`,
+      }),
+    ).toEqual({ rejectUnauthorized: true, ca: PEM });
+  });
+
+  it('CP-361 una CA ilegible falla nombrando la variable y sin citar el valor', () => {
+    for (const env of [
+      { DATABASE_SSL_CA: 'valor-secreto con !!! basura' },
+      { DATABASE_SSL_CA_BASE64: '***secreto***' },
+    ]) {
+      let error: Error | undefined;
+      try {
+        opcionesSslBd({ DATABASE_SSL: 'true', ...env });
+      } catch (e) {
+        error = e as Error;
+      }
+      expect(error?.message).toMatch(/DATABASE_SSL_CA/);
+      expect(error?.message).not.toContain('secreto');
+    }
+  });
+
   it('CP-354 no-verify cifra pero no verifica el certificado (solo para depurar)', () => {
     expect(opcionesSslBd({ DATABASE_SSL: 'no-verify' })).toEqual({ rejectUnauthorized: false });
   });
@@ -95,6 +156,18 @@ describe('db/ssl-bd.mjs (scripts de migración)', () => {
       rejectUnauthorized: true,
       ca: PEM,
     });
+    expect(
+      ejecutar({ DATABASE_SSL: 'true', DATABASE_SSL_CA: PEM.replace(/\n/g, ' ') }).ssl,
+    ).toEqual({
+      rejectUnauthorized: true,
+      ca: PEM,
+    });
+    expect(
+      ejecutar({
+        DATABASE_SSL: 'true',
+        DATABASE_SSL_CA_BASE64: Buffer.from(PEM, 'utf8').toString('base64'),
+      }).ssl,
+    ).toEqual({ rejectUnauthorized: true, ca: PEM });
     expect(ejecutar({ DATABASE_SSL: 'no-verify' }).ssl).toEqual({ rejectUnauthorized: false });
     expect(ejecutar({}).url).toBe('postgresql://u:p@h/bd');
   });

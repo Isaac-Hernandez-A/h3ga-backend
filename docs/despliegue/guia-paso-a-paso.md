@@ -77,7 +77,7 @@ En el panel: la app, Settings, el componente `api`, Environment Variables. Los v
 | `SPACES_SECRET`     | El secreto de esa llave.                                                                                                                                                   |
 | `ETL_EQUIVALENCIAS` | Opcional. El **contenido** del JSON asesor a correo. Para las pruebas ficticias, el contenido de `test/fixtures/etl/equivalencias-asesores.json`.                          |
 
-La base se conecta con `DATABASE_SSL=true`, que ya viene en el archivo. Si la verificación del certificado falla y necesitas la CA, agrega `DATABASE_SSL_CA` con el contenido del PEM del paso 1.3. Para depurar (no para dejarlo así) existe `DATABASE_SSL=no-verify`.
+La base se conecta con `DATABASE_SSL=true`, que ya viene en el archivo. Si la verificación del certificado falla y necesitas la CA, agrega `DATABASE_SSL_CA_BASE64` (tipo Secret) con el PEM del paso 1.3 en base64, en una sola línea (`base64 -w0 ca-bd.crt`; en PowerShell: `[Convert]::ToBase64String([IO.File]::ReadAllBytes("ca-bd.crt"))`). Así no depende de los saltos de línea del panel, que al pegar el PEM suelen aplanarse y provocan `SELF_SIGNED_CERT_IN_CHAIN`. `DATABASE_SSL_CA` sigue funcionando y la API reconstruye el PEM aplanado. Para depurar (no para dejarlo así) existe `DATABASE_SSL=no-verify`.
 
 Despliega de nuevo:
 

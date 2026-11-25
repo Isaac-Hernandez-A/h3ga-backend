@@ -64,6 +64,7 @@ export const PROVEEDORES_GLOBALES: Provider[] = [
           DATABASE_URL: config.get<string>('DATABASE_URL'),
           DATABASE_SSL: config.get<string>('DATABASE_SSL'),
           DATABASE_SSL_CA: config.get<string>('DATABASE_SSL_CA'),
+          DATABASE_SSL_CA_BASE64: config.get<string>('DATABASE_SSL_CA_BASE64'),
         }),
     }),
     ...MODULOS_DE_DOMINIO,
