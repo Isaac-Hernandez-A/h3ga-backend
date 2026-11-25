@@ -44,8 +44,14 @@ function validarCors(config: Record<string, unknown>): void {
   if (valor !== undefined) origenesPermitidos(typeof valor === 'string' ? valor : '');
 }
 
-// DATABASE_SSL: true, no-verify o false (opcionesSslBd lanza un error que nombra la variable, no su valor).
+// DATABASE_SSL: true, no-verify o false; y la CA (DATABASE_SSL_CA / _BASE64) debe ser legible. opcionesSslBd
+// lanza un error que nombra la variable, no su valor.
 function validarSslBd(config: Record<string, unknown>): void {
-  const valor = config.DATABASE_SSL;
-  if (valor !== undefined) opcionesSslBd({ DATABASE_SSL: typeof valor === 'string' ? valor : '' });
+  const texto = (v: unknown) => (typeof v === 'string' ? v : undefined);
+  if (config.DATABASE_SSL === undefined) return;
+  opcionesSslBd({
+    DATABASE_SSL: texto(config.DATABASE_SSL) ?? '',
+    DATABASE_SSL_CA: texto(config.DATABASE_SSL_CA),
+    DATABASE_SSL_CA_BASE64: texto(config.DATABASE_SSL_CA_BASE64),
+  });
 }
