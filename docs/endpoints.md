@@ -4,7 +4,7 @@ Generado a partir de los controladores de `apps/api/src`. Prefijo global: `/api/
 
 - **Total: 120 rutas.** Implementadas: 118. Siguen en 501 (esbozo) 2: `POST /clientes/:clienteId/etapas` y `GET /catalogos/etapas`. La tabla siguiente y la sección de cada módulo dan el estado ruta por ruta.
 - Roles: los de la Tabla 2 de la Memoria, definidos en un solo lugar (`common/auth/permisos.ts`) y declarados con `@Roles(...)`. Los supuestos que la Tabla 2 no cubre están anotados en ese archivo.
-- **Aplicación real de los guards (las 114 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health`, `/health/db` y `/auth/login` son públicas). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
+- **Aplicación real de los guards (las 120 rutas):** `JwtAuthGuard` y `RolesGuard` son globales y se niega por defecto: toda ruta debe declarar `@Roles(...)` o `@Publico()` (hoy solo `/health`, `/health/db` y `/auth/login` son públicas). `ClienteAccessGuard` se aplica a los controladores con rutas `:clienteId` (`clientes`, `documentos`, `etapas`, `tramites`, `diagnosticos`) e ignora las rutas sin cliente, como los catálogos. La matriz de acceso se prueba sobre las rutas reales (`docs/pruebas-matriz-acceso.csv`).
 - Errores con formato uniforme: `{ statusCode, error, message, path, timestamp }`.
 
 ## Resumen por módulo
