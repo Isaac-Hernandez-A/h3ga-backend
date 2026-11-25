@@ -46,7 +46,8 @@ services:
       - key: JWT_SECRET
         type: SECRET
         scope: RUN_TIME
-      # Origen exacto del frontend publicado (https, sin barra final, sin comodines).
+      # PENDIENTE: reemplazar por el origen exacto del frontend publicado (https, sin barra final, sin comodines)
+      # antes de usar la app desde el navegador; mientras tanto el marcador bloquea todo origen.
       - key: CORS_ORIGINS
         value: https://CAMBIAR-frontend.ondigitalocean.app
         scope: RUN_TIME
@@ -67,7 +68,7 @@ services:
         value: https://nyc3.digitaloceanspaces.com
         scope: RUN_TIME
       - key: SPACES_BUCKET
-        value: CAMBIAR-bucket
+        value: h3ga-expedientes-estadia
         scope: RUN_TIME
       # JSON de equivalencias asesor -> correo (contenido, no ruta). Opcional: sin él POST /etl/importaciones
       # responde 503. Son correos de personas: va como secreto.
@@ -81,6 +82,6 @@ databases:
     engine: PG
     version: '16'
     production: true
-    cluster_name: CAMBIAR-nombre-del-cluster
-    db_name: CAMBIAR-nombre-de-la-base
-    db_user: CAMBIAR-usuario
+    cluster_name: h3ga-db
+    db_name: h3ga
+    db_user: doadmin
